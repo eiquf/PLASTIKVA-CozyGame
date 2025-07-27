@@ -16,7 +16,7 @@ public class PlayerMovement : IMovementBehaviour
         _moveDirection = new Vector2(input.x, 0f).normalized;
         _speed = isSprinting ? _accelerationSpeed : _slowSpeed;
 
-        Vector3 currentVelocity = new(_rb.velocity.x, 0f, _rb.velocity.z);
+        Vector3 currentVelocity = new(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
         float currentSpeed = currentVelocity.magnitude;
 
         float speedDifference = _speed - currentSpeed;
