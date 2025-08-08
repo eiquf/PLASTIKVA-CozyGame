@@ -2,18 +2,23 @@ using UnityEngine;
 
 public class PlayerMovement : IMovementBehaviour
 {
-    private readonly float _slowSpeed = 5f;
-    private readonly float _accelerationSpeed = 10f;
+    private readonly float _slowSpeed;
+    private readonly float _accelerationSpeed;
 
     private float _speed;
 
     private Vector2 _moveDirection;
     private readonly Rigidbody _rb;
 
-    public PlayerMovement(Rigidbody rb) => _rb = rb;
+    public PlayerMovement(IPlayerContext context)
+    {
+        _rb = context.Rigidbody;
+        _slowSpeed = context.SlowSpeed;
+        _accelerationSpeed = context.AccelerationSpeed;
+    }
     public void Execute(Vector2 input, bool isSprinting)
     {
-        _moveDirection = new Vector2(input.x, 0f).normalized;
+        _moveDirection = new Vector2(-input.x, 0f).normalized;
         _speed = isSprinting ? _accelerationSpeed : _slowSpeed;
 
         Vector3 currentVelocity = new(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);

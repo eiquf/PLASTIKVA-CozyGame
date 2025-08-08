@@ -9,7 +9,7 @@ public class CameraZoom : ICamera<Vector2>
     public CameraZoom(ICameraContext context)
     {
         _context = context;
-        _camera = _context.camera;
+        _camera = _context.Camera;
     }
     public void Execute(Transform transform, Vector2 deltaScroll)
     {

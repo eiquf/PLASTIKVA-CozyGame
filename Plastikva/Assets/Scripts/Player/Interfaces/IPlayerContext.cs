@@ -2,6 +2,10 @@
 
 public interface IPlayerContext
 {
+    #region Speed Parametres
+    float SlowSpeed { get; }
+    float AccelerationSpeed { get; }
+    #endregion
     Vector2 CurrentInput { get; }
     bool IsSprinting { get; }
     Rigidbody Rigidbody { get; }

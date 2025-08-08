@@ -1,10 +1,13 @@
+using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using Zenject;
 
 public class IsometricCamera : MonoBehaviour, ICameraContext
 {
-    private GameInput _input;
-    public new Camera camera { get; private set; }
+    [Inject] private readonly CameraInputHandler _input;
+    private bool _initialized = false;
+
+    public Camera Camera { get; private set; }
 
     [field: SerializeField] public float DragSpeed { get; private set; } = 0.5f;
     private bool _isDragging;
@@ -15,21 +18,19 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
     [field: SerializeField] public float ZoomSpeed { get; private set; } = 5f;
     [field: SerializeField] public float ZoomSmoothnes { get; private set; } = 5f;
 
-    [field: Header("Rotation")]
-    [SerializeField] public float RotationSpeed { get; private set; } = 1f;
-    [SerializeField] public float SnapSpeed { get; private set; } = 6f;
-    [SerializeField] public float MinRot { get; private set; } = 0f;
-    [SerializeField] public float MaxRot { get; private set; } = 90f;
+    public float RotationSpeed { get; private set; } = 1f;
+    public float SnapSpeed { get; private set; } = 6f;
+    public float MinRot { get; private set; } = 0f;
+    public float MaxRot { get; private set; } = 90f;
     public bool IsRotating { get; private set; }
 
-    [Header("Follow Target")]
-    [SerializeField] private Transform _followTarget;
+    private Transform _followTarget;
     private bool _followEnabled;
     [field: SerializeField] public float FollowSmoothSpeed { get; private set; } = 5f;
 
     private Vector3 _lastTargetPosition;
 
-    [SerializeField] private BoxCollider _boundaryCollider;
+    private BoxCollider _boundaryCollider;
 
     #region Functions
     private ICamera<BoxCollider> _boundaries;
@@ -39,72 +40,52 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
     private ICamera<Vector2> _zoom;
     #endregion
 
-    private void Awake()
+    public void Initialize()
     {
-        camera = Camera.main;
-        _input = new GameInput();
-        _input.Enable();
+        _input.OnLeftMouseClick += HandleLeftClick;
+        _input.OnRightMouseClick += HandleRightClick;
 
-        _input.Camera.MouseClick.performed += OnMouseClick;
-        _input.Camera.MouseClick.canceled += OnMouseClickEnd;
-
-        SetFollowTarget(_followTarget);
+        Camera = Camera.main;
+        Camera.orthographicSize = MaxZoom;
 
         Init();
+
+        _initialized = true;
     }
 
     private void FixedUpdate()
     {
-        CheckTargetMovement();
+        if (_initialized)
+        {
+            CheckTargetMovement();
 
-        Vector2 delta = _input.Camera.MouseDelta.ReadValue<Vector2>();
-        Vector2 deltaScroll = _input.Camera.MouseScroll.ReadValue<Vector2>();
+            Vector2 delta = _input.Delta();
+            Vector2 deltaScroll = _input.DeltaScroll();
 
-        if (_isDragging && !_followEnabled)
-            _drag.Execute(transform, delta);
+            if (_isDragging && !_followEnabled)
+                _drag.Execute(transform, delta);
 
-        if (_followEnabled && _followTarget != null)
-            _follow.Execute(transform, _followTarget);
+            if (_followEnabled && _followTarget != null)
+                _follow.Execute(transform, _followTarget);
 
-        _zoom.Execute(transform, deltaScroll);
+            _rotate.Execute(transform, delta);
 
-        _rotate.Execute(transform, delta);
-
-        _boundaries.Execute(transform, _boundaryCollider);
+            _boundaries.Execute(transform, _boundaryCollider);
+            _zoom?.Execute(transform, deltaScroll);
+        }
     }
-    private void OnDisable()
-    {
-        _input.Camera.MouseClick.performed -= OnMouseClick;
-        _input.Camera.MouseClick.canceled -= OnMouseClickEnd;
-        _input.Disable();
-    }
+    private void HandleLeftClick(bool isPressed) => _isDragging = isPressed;
+    private void HandleRightClick(bool isPressed) => IsRotating = isPressed;
+
     private void Init()
     {
         _drag = new CameraDrag(this);
+        _follow = new CameraFollowTarget(this);
         _rotate = new CameraRotate(this);
         _zoom = new CameraZoom(this);
-        _follow = new CameraFollowTarget(this);
         _boundaries = new CameraBoundries();
     }
-
-    private void OnMouseClick(InputAction.CallbackContext context)
-    {
-        var control = context.control;
-
-        if (control == Mouse.current.leftButton)
-            _isDragging = true;
-        else if (control == Mouse.current.rightButton)
-            IsRotating = true;
-    }
-    private void OnMouseClickEnd(InputAction.CallbackContext context)
-    {
-        var control = context.control;
-
-        if (control == Mouse.current.leftButton)
-            _isDragging = false;
-        else if (control == Mouse.current.rightButton)
-            IsRotating = false;
-    }
+    public void SetBoundraries(BoxCollider collider) => _boundaryCollider = collider;
     public void SetFollowTarget(Transform target)
     {
         _followTarget = target;
@@ -116,9 +97,13 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
 
         float movedDistance = Vector3.Distance(_followTarget.position, _lastTargetPosition);
 
-        _followEnabled = movedDistance > 0.01f;
+        _followEnabled = movedDistance > 0.001f;
 
         _lastTargetPosition = _followTarget.position;
     }
-
+    private void OnDestroy()
+    {
+        _input.OnLeftMouseClick -= HandleLeftClick;
+        _input.OnRightMouseClick -= HandleRightClick;
+    }
 }

@@ -108,6 +108,33 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Collecting"",
+                    ""type"": ""Button"",
+                    ""id"": ""866fd669-41b0-4baf-8a9e-78ce8fb1b85f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Drag"",
+                    ""type"": ""Value"",
+                    ""id"": ""57953e45-1545-4187-a902-b35f4e567b4f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PointerPos"",
+                    ""type"": ""Value"",
+                    ""id"": ""181868c3-9b6a-4bbe-957d-da9d97107623"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -152,6 +179,50 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Acceleration"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""625ff50a-2b4d-454c-812e-2225c20ebd04"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Collecting"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""501e187d-4dcc-45fe-a712-1f8e2b2167de"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Collecting"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a3b7e0ea-29c9-4d64-a0ae-112237bdc6d1"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drag"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5d5c6f2b-a1c8-4968-8215-efb72ec0bcaf"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PointerPos"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -211,7 +282,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""8e11e2ac-9030-40c5-9916-1d29e3a887cc"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MouseClick"",
@@ -222,7 +293,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""22ef75eb-cedc-43d9-8f16-d17642eb32ca"",
                     ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MouseClick"",
@@ -249,6 +320,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
         m_Gameplay_Acceleration = m_Gameplay.FindAction("Acceleration", throwIfNotFound: true);
+        m_Gameplay_Collecting = m_Gameplay.FindAction("Collecting", throwIfNotFound: true);
+        m_Gameplay_Drag = m_Gameplay.FindAction("Drag", throwIfNotFound: true);
+        m_Gameplay_PointerPos = m_Gameplay.FindAction("PointerPos", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         // Camera
@@ -340,6 +414,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
     private readonly InputAction m_Gameplay_Move;
     private readonly InputAction m_Gameplay_Acceleration;
+    private readonly InputAction m_Gameplay_Collecting;
+    private readonly InputAction m_Gameplay_Drag;
+    private readonly InputAction m_Gameplay_PointerPos;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -359,6 +436,18 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/Acceleration".
         /// </summary>
         public InputAction @Acceleration => m_Wrapper.m_Gameplay_Acceleration;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/Collecting".
+        /// </summary>
+        public InputAction @Collecting => m_Wrapper.m_Gameplay_Collecting;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/Drag".
+        /// </summary>
+        public InputAction @Drag => m_Wrapper.m_Gameplay_Drag;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/PointerPos".
+        /// </summary>
+        public InputAction @PointerPos => m_Wrapper.m_Gameplay_PointerPos;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -391,6 +480,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Acceleration.started += instance.OnAcceleration;
             @Acceleration.performed += instance.OnAcceleration;
             @Acceleration.canceled += instance.OnAcceleration;
+            @Collecting.started += instance.OnCollecting;
+            @Collecting.performed += instance.OnCollecting;
+            @Collecting.canceled += instance.OnCollecting;
+            @Drag.started += instance.OnDrag;
+            @Drag.performed += instance.OnDrag;
+            @Drag.canceled += instance.OnDrag;
+            @PointerPos.started += instance.OnPointerPos;
+            @PointerPos.performed += instance.OnPointerPos;
+            @PointerPos.canceled += instance.OnPointerPos;
         }
 
         /// <summary>
@@ -408,6 +506,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Acceleration.started -= instance.OnAcceleration;
             @Acceleration.performed -= instance.OnAcceleration;
             @Acceleration.canceled -= instance.OnAcceleration;
+            @Collecting.started -= instance.OnCollecting;
+            @Collecting.performed -= instance.OnCollecting;
+            @Collecting.canceled -= instance.OnCollecting;
+            @Drag.started -= instance.OnDrag;
+            @Drag.performed -= instance.OnDrag;
+            @Drag.canceled -= instance.OnDrag;
+            @PointerPos.started -= instance.OnPointerPos;
+            @PointerPos.performed -= instance.OnPointerPos;
+            @PointerPos.canceled -= instance.OnPointerPos;
         }
 
         /// <summary>
@@ -665,6 +772,27 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAcceleration(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Collecting" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCollecting(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Drag" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDrag(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "PointerPos" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPointerPos(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

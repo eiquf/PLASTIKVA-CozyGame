@@ -9,7 +9,7 @@ public class SwimMovementState : IPlayerState
     public SwimMovementState(IPlayerContext context)
     {
         _context = context;
-        _movement = new PlayerMovement(context.Rigidbody);
+        _movement = new PlayerMovement(context);
     }
     public void Enter() { } /*=> Animation();*/
     public void Exit() { }/*=> Animation();*/
@@ -18,7 +18,7 @@ public class SwimMovementState : IPlayerState
     {
         var input = _context.CurrentInput;
 
-        _isMoving = input.magnitude == 1;
+        _isMoving = input.magnitude != 0;
 
         if (_isMoving) _movement.Execute(input, _context.IsSprinting);
         else _context.StateMachine.SetState(_context.IdleState);

@@ -2,7 +2,7 @@
 
 public interface ICameraContext
 {
-    Camera camera { get; }
+    Camera Camera { get; }
     bool IsRotating { get; }
     #region Параметры гспд
     float DragSpeed { get; }
