@@ -14,7 +14,7 @@ public class TrashCollector : MonoBehaviour
     private TrashLevelDef _currentLevel;
 
     private readonly LayerMask TrashMask = 1 << 6;
-    private readonly LayerMask WallMask = 1 << 7;
+    private IHitDetector _hitDetector;
 
     private readonly CompositeDisposable _disposables = new();
     private ReactiveProperty<int> _count = new();
@@ -30,6 +30,7 @@ public class TrashCollector : MonoBehaviour
     {
         _input.LeftMouseClicked += Collect;
 
+        _hitDetector = new CameraRayHitDetector(Camera.main);
         _model = new();
         _count = new ReactiveProperty<int>(1);
 
@@ -55,27 +56,12 @@ public class TrashCollector : MonoBehaviour
     }
     private void Collect()
     {
-        var cam = Camera.main;
-        if (!cam) return;
-
         Vector3 mousePos = _input.GetMousePosition();
-        Ray ray = cam.ScreenPointToRay(mousePos);
 
-        int mask = TrashMask | WallMask;
+        bool collected = _hitDetector.TryHit(TrashMask, mousePos);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, mask, QueryTriggerInteraction.Ignore))
-        {
-            int hitLayerBit = 1 << hit.collider.gameObject.layer;
-
-            if ((hitLayerBit & WallMask) != 0)
-                return;
-
-            if ((hitLayerBit & TrashMask) != 0)
-            {
-                Destroy(hit.collider.gameObject);
-                _model.Collect();
-            }
-        }
+        if (collected == true)
+            _model.Collect();
     }
 
     private void OnDestroy()

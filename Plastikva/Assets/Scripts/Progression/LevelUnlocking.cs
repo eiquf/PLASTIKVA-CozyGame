@@ -30,6 +30,10 @@ public class LevelUnlocking : MonoBehaviour
 
     private void OnDestroy() => _subUnlock?.Dispose();
 
+    private void LoadSortOutLevel()
+    {
+
+    }
     private void UnlockLevel()
     {
         var idx = Array.IndexOf(_levelSet.Levels, _currentLevel.Value);
