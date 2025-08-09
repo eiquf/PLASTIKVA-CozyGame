@@ -55,25 +55,29 @@ public class TrashCollector : MonoBehaviour
     }
     private void Collect()
     {
-        Vector2 mousePos = _input.GetMousePosition();
-        Ray ray = Camera.main.ScreenPointToRay(mousePos);
-        if (Physics.Raycast(ray, out _, Mathf.Infinity, WallMask))
-            return;
+        var cam = Camera.main;
+        if (!cam) return;
 
-        if (Physics.Raycast(ray, out RaycastHit trashHit, Mathf.Infinity, TrashMask))
+        Vector3 mousePos = _input.GetMousePosition();
+        Ray ray = cam.ScreenPointToRay(mousePos);
+
+        int mask = TrashMask | WallMask;
+
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, mask, QueryTriggerInteraction.Ignore))
         {
-            Vector3 trashPos = trashHit.point;
-            Vector3 cameraPos = Camera.main.transform.position;
-            Vector3 direction = (trashPos - cameraPos).normalized;
-            float distance = Vector3.Distance(cameraPos, trashPos);
+            int hitLayerBit = 1 << hit.collider.gameObject.layer;
 
-            if (!Physics.Raycast(cameraPos, direction, distance, WallMask))
+            if ((hitLayerBit & WallMask) != 0)
+                return;
+
+            if ((hitLayerBit & TrashMask) != 0)
             {
-                Destroy(trashHit.transform.gameObject);
+                Destroy(hit.collider.gameObject);
                 _model.Collect();
             }
         }
     }
+
     private void OnDestroy()
     {
         _disposables.Dispose();
