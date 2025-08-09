@@ -49,8 +49,9 @@ public class TrashCollector : MonoBehaviour
 
         _model.AllCollected
             .Where(collected => collected)
-            .Subscribe(_ => Debug.Log("Do here tick for level unlock"))
+            .Subscribe(_ => _levelUnlocking.ReportTrashCollected())
             .AddTo(_disposables);
+
     }
     private void Collect()
     {

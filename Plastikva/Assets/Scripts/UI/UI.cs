@@ -21,13 +21,13 @@ public class UI : MonoBehaviour
         //_trashLabel = _root.Q<Label>("trashLabel");
 
         _viewTrash.CurrentCount
-      .Subscribe(count =>
-      {
-          Debug.Log(count);
+            .Subscribe(count =>
+            {
+                Debug.Log(count);
 
           //_trashLabel.text = $"{count}/{_viewTrash.MaxCount}";
 
-      });
+            });
 
     }
     private void OnDestroy()
