@@ -17,10 +17,10 @@ public class Bootstrapper : MonoBehaviour
     private UI _uiInstance;
     private TrashCollector _trashCollector;
 
-    private LevelData _data;
+    private GameData _data;
     private void Start()
     {
-        _data = SaveLoadLevel.Load<LevelData>() ?? new LevelData();
+        _data = SaveLoadLevel.Load<GameData>() ?? new GameData();
         SaveLoadLevel.Save(_data);
 
         _playerInstance = _diContainer.InstantiatePrefab(_playerPrefab).GetComponent<Player>();

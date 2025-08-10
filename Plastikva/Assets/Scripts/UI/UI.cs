@@ -9,6 +9,8 @@ public class UI : MonoBehaviour
     private VisualElement _root;
     private Label _trashLabel;
 
+    private ProgressBar _progressBar;
+
     [Inject] private TrashView _viewTrash;
 
     private readonly CompositeDisposable _disposables = new();

@@ -1,16 +1,14 @@
 using UnityEngine;
+using Zenject;
 
 public class TrashSorter : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [Inject] private TrashInputHandler _input;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private TrashLevelDef _currentLevel;
+
+    private readonly LayerMask TrashMask = 1 << 6;
+    private readonly LayerMask BioMask = 1 << 6;
+    private IHitDetector _hitDetector;
+
 }

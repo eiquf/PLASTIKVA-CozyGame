@@ -6,7 +6,37 @@
 .button:hover {
     width: auto;
     height: auto;
-    scale: 1.3 1.3;
+    scale: 1.2 1.2;
     -unity-background-image-tint-color: rgb(255, 0, 0);
-    background-image: url("project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-1008301579157283121&guid=8240bc2063c06e54795f49c1eec99d97&type=3#arrow-left@2x");
+}
+
+.exitButton:button:hover {
+    width: auto;
+    height: auto;
+    scale: 1.4 1.4;
+    rotate: 10deg;
+}
+
+.resetButton:button:hover {
+    --hover-scale: 1.05;
+    --hover-x: 2px;
+    --hover-y: 3px;
+    rotate: -10deg;
+    scale: 1.3 1.3;
+}
+
+.soundButton:button:hover {
+    --hover-scale: 1.04;
+    --hover-x: 0;
+    --hover-y: -3px;
+    --rotate: 10deg;
+    rotate: 10deg;
+    scale: 1.4 1.4;
+}
+
+.settingsButton:button:hover {
+    width: auto;
+    height: auto;
+    scale: 1.6 1.6;
+    rotate: 10deg;
 }

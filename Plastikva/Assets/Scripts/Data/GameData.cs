@@ -1,5 +1,5 @@
 [System.Serializable]
-public class LevelData
+public class GameData
 {
     public enum EnvironmentType
     {

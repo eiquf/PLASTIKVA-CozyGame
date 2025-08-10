@@ -6,7 +6,7 @@ public class LevelUnlocking : MonoBehaviour
 {
     [SerializeField] private TrashLevelSet _levelSet;
 
-    private LevelData _levelData;
+    private GameData _levelData;
     private readonly ReactiveProperty<TrashLevelDef> _currentLevel = new();
     public Observable<TrashLevelDef> CurrentLevel => _currentLevel;
 
@@ -17,12 +17,12 @@ public class LevelUnlocking : MonoBehaviour
 
     public void Initialize()
     {
-        _levelData = SaveLoadLevel.Load<LevelData>();
+        _levelData = SaveLoadLevel.Load<GameData>();
 
         if (_levelData.isFirstLaunch)
         {
             _levelData.currentLevelIndex = 0;
-            _levelData.currentEnvironment = LevelData.EnvironmentType.Sewerage;
+            _levelData.currentEnvironment = GameData.EnvironmentType.Sewerage;
             _levelData.isFirstLaunch = false;
         }
 
@@ -36,7 +36,7 @@ public class LevelUnlocking : MonoBehaviour
         _isTrashCollected.Value = _levelData.isTrashCollected;
         _isAnimalRescued.Value = _levelData.isAnimalRescued;
 
-        SaveLevelData();
+        SaveGameData();
         Debug.Log(_isTrashCollected.Value + "" + _isAnimalRescued.Value);
 
         ChangeStates();
@@ -49,7 +49,7 @@ public class LevelUnlocking : MonoBehaviour
     }
     public void ReportTrashCollected() => _isTrashCollected.Value = true;
     public void ReportAnimalsRescued() => _isAnimalRescued.Value = true;
-    private void SaveLevelData()
+    private void SaveGameData()
     {
         _levelData.currentLevelIndex = Array.IndexOf(_levelSet.Levels, _currentLevel.Value);
         SaveLoadLevel.Save(_levelData);
@@ -66,19 +66,19 @@ public class LevelUnlocking : MonoBehaviour
             _isAnimalRescued.Value = false;
             _isTrashCollected.Value = false;
 
-            SaveLevelData();
+            SaveGameData();
         }
     }
     private void ChangeStates()
     {
         _isAnimalRescued.Subscribe(value => { 
             _levelData.isAnimalRescued = value; 
-            SaveLevelData(); });
+            SaveGameData(); });
 
 
         _isTrashCollected.Subscribe(value => {
             _levelData.isTrashCollected = value;
-            SaveLevelData();
+            SaveGameData();
         });
     }
     private void OnDestroy()

@@ -4,6 +4,11 @@
         <ui:ProgressBar value="22" title="my-progress" style="width: 584px; position: absolute; top: 14px; left: 13px; height: 24px;" />
         <ui:Button text="Button" name="MapButton" class="button" style="width: 361px; height: 366px; left: -45px; bottom: -4px; justify-content: flex-end; align-content: flex-end; -unity-font-definition: initial; font-size: 0; position: absolute;" />
         <ui:Button text="Button" name="TrashButton" class="button" style="width: 361px; height: 366px; left: 176px; bottom: -100px; justify-content: flex-end; align-content: flex-end; -unity-font-definition: url(&quot;project://database/Library/unity%20default%20resources?fileID=10102&amp;guid=0000000000000000e000000000000000&amp;type=0#LegacyRuntime&quot;); font-size: 40px; position: absolute;" />
-        <ui:Button text="Button" name="SettingsButton" class="button" style="width: 297px; height: 236px; left: 85%; bottom: -81%; justify-content: flex-end; align-content: flex-end; -unity-font-definition: initial; font-size: 0;" />
+        <ui:Button text="Button" name="SettingsButton" selectable="false" class="button settingsButton" style="width: 297px; height: 236px; left: 85%; bottom: -81%; justify-content: flex-end; align-content: flex-end; -unity-font-definition: initial; font-size: 0; background-image: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-1304905567622442630&amp;guid=8240bc2063c06e54795f49c1eec99d97&amp;type=3#arrow-down@2x&quot;); transition-timing-function: ease;" />
+        <ui:VisualElement name="SettingsContainer" enabled="true" style="flex-grow: 1; position: absolute; height: 606px; width: 281px; left: auto; right: -2px; bottom: 225px; top: auto;">
+            <ui:Button text="Button" name="ExitButton" class="exitButton button" style="position: absolute; height: 161px; width: 157px; top: 437px; left: 101px;" />
+            <ui:Button text="Button" name="ResetButton" class="resetButton button" style="height: 122px; width: 140px; position: absolute; top: 268px; left: 36px;" />
+            <ui:Button text="Button" name="SoundButton" class="button soundButton" style="position: absolute; height: 161px; width: 157px; top: 64px; left: 106px;" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
