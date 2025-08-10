@@ -17,8 +17,12 @@ public class Bootstrapper : MonoBehaviour
     private UI _uiInstance;
     private TrashCollector _trashCollector;
 
+    private LevelData _data;
     private void Start()
     {
+        _data = SaveLoadLevel.Load<LevelData>() ?? new LevelData();
+        SaveLoadLevel.Save(_data);
+
         _playerInstance = _diContainer.InstantiatePrefab(_playerPrefab).GetComponent<Player>();
         _cameraInstance = _diContainer.InstantiatePrefab(_cameraPrefab).GetComponent<IsometricCamera>();
         _uiInstance = _diContainer.InstantiatePrefab(_uiPrefab).GetComponent<UI>();
