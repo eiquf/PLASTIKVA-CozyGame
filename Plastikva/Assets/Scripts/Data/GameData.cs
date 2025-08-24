@@ -13,5 +13,9 @@ public class GameData
     public bool isFirstLaunch = true;
 
     public bool isTrashCollected;
+    public bool isTrashSorted;
     public bool isAnimalRescued;
+
+    public int currentScore;
+
 }

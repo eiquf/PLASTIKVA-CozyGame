@@ -145,8 +145,30 @@
         {
             "name": "UI",
             "id": "7543b2be-a93f-4b78-9e32-536c88d160e4",
-            "actions": [],
-            "bindings": []
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "3fac5bba-07c2-40ab-88d5-8346eb85be80",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "fcfddf05-a358-4a0f-98b9-d98cecf4e53f",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         },
         {
             "name": "Camera",

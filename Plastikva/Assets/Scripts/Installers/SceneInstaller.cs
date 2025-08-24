@@ -5,7 +5,7 @@ public class SceneInstaller : MonoInstaller
     public override void InstallBindings()
     {
         BindInputs();
-        BindUI();
+        BindViews();
     }
     private void BindInputs()
     {
@@ -15,8 +15,9 @@ public class SceneInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<CameraInputHandler>().AsSingle();
         Container.BindInterfacesAndSelfTo<TrashInputHandler>().AsSingle();
     }
-    private void BindUI()
+    private void BindViews()
     {
-        Container.Bind<TrashView>().AsSingle();
+        Container.BindInterfacesAndSelfTo<ScoreView>().AsSingle();
+        Container.Bind<TrashSortView>().AsSingle();
     }
 }

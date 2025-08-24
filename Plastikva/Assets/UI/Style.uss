@@ -40,3 +40,45 @@
     scale: 1.6 1.6;
     rotate: 10deg;
 }
+
+.unity-progress-bar__progress {
+    background-image: url("project://database/Assets/Sprites/UIPlastikva.png?fileID=835782644&guid=09779ded0abebd9429d23f946345f5c0&type=3#UIPlastikva_3");
+    justify-content: flex-start;
+    position: absolute;
+    left: 7px;
+    -unity-slice-type: sliced;
+    -unity-background-scale-mode: stretch-to-fill;
+    background-size: 100% 100%;
+    background-position-x: right 0%;
+    background-position-y: bottom 0%;
+    -unity-slice-scale: 0;
+    overflow: visible;
+    background-color: rgba(255, 255, 255, 0);
+    visibility: visible;
+    display: flex;
+}
+
+.scoreBar {
+}
+
+.unity-progress-bar__background {
+    background-image: url("project://database/Assets/Sprites/UIPlastikva.png?fileID=-1324763204&guid=09779ded0abebd9429d23f946345f5c0&type=3#UIPlastikva_2");
+    background-position-x: center 0;
+    background-position-y: center 0;
+    height: -136px;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.unity-progress-bar__container {
+    background-image: none;
+    background-position-x: center 0;
+    background-position-y: center 0;
+    background-color: rgba(0, 0, 0, 0);
+    background-size: 100% 100%;
+    width: 118%;
+    height: 11px;
+    position: absolute;
+    scale: 1 7;
+    -unity-background-image-tint-color: rgba(255, 255, 255, 0);
+}

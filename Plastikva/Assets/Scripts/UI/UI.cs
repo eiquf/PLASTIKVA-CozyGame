@@ -1,39 +1,21 @@
-using R3;
 using UnityEngine;
-using UnityEngine.UIElements;
-using Zenject;
+using UnityEngine.UI;
 
-public class UI : MonoBehaviour
+public sealed class UI : MonoBehaviour
 {
-    private UIDocument _doc;
-    private VisualElement _root;
-    private Label _trashLabel;
+    [Header("Trash Sort UI")]
+    [SerializeField] private Image _trashImage;
+    [SerializeField] private Button _yesButton;
+    [SerializeField] private Button _noButton;
+    [SerializeField] private TextMesh _finalText;
 
-    private ProgressBar _progressBar;
+    [Header("Score UI")]
+    [SerializeField] private Image _scoreBar;
 
-    [Inject] private TrashView _viewTrash;
+    public Image TrashImage => _trashImage;
+    public Button YesButton => _yesButton;
+    public Button NoButton => _noButton;
+    public TextMesh FinalText => _finalText;
 
-    private readonly CompositeDisposable _disposables = new();
-
-    public void Initialize()
-    {
-        _doc = GetComponent<UIDocument>();
-        _root = _doc.rootVisualElement;
-
-        //_trashLabel = _root.Q<Label>("trashLabel");
-
-        _viewTrash.CurrentCount
-            .Subscribe(count =>
-            {
-                Debug.Log(count);
-
-          //_trashLabel.text = $"{count}/{_viewTrash.MaxCount}";
-
-            });
-
-    }
-    private void OnDestroy()
-    {
-        _disposables.Dispose();
-    }
+    public Image ScoreBar => _scoreBar;
 }

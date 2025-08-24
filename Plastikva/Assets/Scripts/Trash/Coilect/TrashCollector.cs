@@ -2,12 +2,12 @@
 using UnityEngine;
 using Zenject;
 
-public class TrashCollector : MonoBehaviour
+public class TrashCollector : MonoBehaviour, IScore
 {
     private TrashInputHandler _input;
 
-    private TrashView _view;
-    private TrashCollectorModel _model;
+    private readonly TrashView _view = new();
+    private readonly TrashCollectorModel _model = new();
 
     private LevelUnlocking _levelUnlocking;
 
@@ -19,19 +19,19 @@ public class TrashCollector : MonoBehaviour
     private readonly CompositeDisposable _disposables = new();
     private ReactiveProperty<int> _count = new();
 
+    public ReactiveCommand TakenCommand { get; } = new ReactiveCommand();
+
     [Inject]
-    private void Container(LevelUnlocking levelUnlocking, TrashInputHandler input, TrashView view)
+    private void Container(LevelUnlocking levelUnlocking, TrashInputHandler input)
     {
         _input = input;
         _levelUnlocking = levelUnlocking;
-        _view = view;
     }
     public void Initialize()
     {
         _input.LeftMouseClicked += Collect;
 
         _hitDetector = new CameraRayHitDetector(Camera.main);
-        _model = new();
         _count = new ReactiveProperty<int>(1);
 
         _levelUnlocking.CurrentLevel
@@ -45,7 +45,11 @@ public class TrashCollector : MonoBehaviour
               .AddTo(_disposables);
 
         _model.CurrentCount
-            .Subscribe(count => _view.SetCurrentCount(count))
+            .Subscribe(count =>
+            {
+                _view.SetCurrentCount(count);
+                TakenCommand.Execute(Unit.Default);
+            })
             .AddTo(_disposables);
 
         _model.AllCollected

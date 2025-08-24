@@ -10,10 +10,13 @@ public class LevelUnlocking : MonoBehaviour
     private readonly ReactiveProperty<TrashLevelDef> _currentLevel = new();
     public Observable<TrashLevelDef> CurrentLevel => _currentLevel;
 
+    private readonly ReactiveProperty<bool> _isTrashSort = new(false);
+    public Observable<bool> IsTrashSortLevel => _isTrashSort;
+
     private readonly ReactiveProperty<bool> _isTrashCollected = new(false);
     private readonly ReactiveProperty<bool> _isAnimalRescued = new(false);
 
-    private IDisposable _subUnlock;
+    private readonly CompositeDisposable _disposables = new();
 
     public void Initialize()
     {
@@ -35,17 +38,18 @@ public class LevelUnlocking : MonoBehaviour
 
         _isTrashCollected.Value = _levelData.isTrashCollected;
         _isAnimalRescued.Value = _levelData.isAnimalRescued;
+        _isTrashSort.Value = _levelData.isTrashSorted;
 
         SaveGameData();
-        Debug.Log(_isTrashCollected.Value + "" + _isAnimalRescued.Value);
 
         ChangeStates();
 
-        _subUnlock = Observable
-            .CombineLatest(_isTrashCollected, _isAnimalRescued, (t, a) => t && a)
-            .DistinctUntilChanged()
-            .Where(x => x)
-            .Subscribe(_ => UnlockLevel());
+        Observable
+        .CombineLatest(_isTrashCollected, _isAnimalRescued, (t, a) => t && a)
+        .DistinctUntilChanged()
+        .Where(x => x)
+        .Subscribe(value => _isTrashSort.Value = value)
+        .AddTo(_disposables);
     }
     public void ReportTrashCollected() => _isTrashCollected.Value = true;
     public void ReportAnimalsRescued() => _isAnimalRescued.Value = true;
@@ -56,6 +60,8 @@ public class LevelUnlocking : MonoBehaviour
     }
     private void UnlockLevel()
     {
+       
+
         var nextIdx = Mathf.Clamp(_levelData.currentLevelIndex + 1, 0, _levelSet.Levels.Length - 1);
 
         if (nextIdx != _levelData.currentLevelIndex)
@@ -65,24 +71,31 @@ public class LevelUnlocking : MonoBehaviour
 
             _isAnimalRescued.Value = false;
             _isTrashCollected.Value = false;
+            _isTrashSort.Value = false;
 
             SaveGameData();
         }
     }
     private void ChangeStates()
     {
-        _isAnimalRescued.Subscribe(value => { 
-            _levelData.isAnimalRescued = value; 
-            SaveGameData(); });
+        _isAnimalRescued.Subscribe(value =>
+        {
+            _levelData.isAnimalRescued = value;
+            SaveGameData();
+        });
 
 
-        _isTrashCollected.Subscribe(value => {
+        _isTrashCollected.Subscribe(value =>
+        {
             _levelData.isTrashCollected = value;
             SaveGameData();
         });
+
+        _isTrashSort.Subscribe(value =>
+        {
+            _levelData.isTrashSorted = value;
+            SaveGameData();
+        });
     }
-    private void OnDestroy()
-    {
-        _subUnlock?.Dispose();
-    }
+    private void OnDestroy() => _disposables?.Dispose();
 }
