@@ -368,6 +368,7 @@ MonoBehaviour:
   _levelUnlockingPref: {fileID: 902440204205391956, guid: 559914ac0ac0eea46aa457bafe308937, type: 3}
   _trashCollectorPref: {fileID: 8372662664204164496, guid: a1cd055f5c231e54c9a46d4bb04d3f76, type: 3}
   _uiPrefab: {fileID: 352215816784450711, guid: decc6f2326e0a2a46bcc86273f60afb1, type: 3}
+  _cameraPrefab: {fileID: 78458585951031675, guid: f65c20a1d5b263a4fab2caa287cfc412, type: 3}
 --- !u!4 &460273275
 Transform:
   m_ObjectHideFlags: 0

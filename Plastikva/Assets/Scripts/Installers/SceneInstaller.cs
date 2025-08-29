@@ -17,7 +17,7 @@ public class SceneInstaller : MonoInstaller
     }
     private void BindViews()
     {
-        Container.BindInterfacesAndSelfTo<ScoreView>().AsSingle();
+        Container.Bind<ScoreView>().AsSingle();
         Container.Bind<TrashSortView>().AsSingle();
     }
 }

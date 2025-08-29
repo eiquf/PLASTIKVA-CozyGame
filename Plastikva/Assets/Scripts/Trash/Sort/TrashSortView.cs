@@ -1,6 +1,7 @@
 using R3;
 using System;
 using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -17,7 +18,7 @@ public class TrashSortView : IDisposable
     private Image _image;
     private Button _yesButton;
     private Button _noButton;
-    private TextMesh _finalText;
+    private TextMeshProUGUI _finalText;
 
     private UnityAction _yesHandler;
     private UnityAction _noHandler;

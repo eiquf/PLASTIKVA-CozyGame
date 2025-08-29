@@ -1,4 +1,5 @@
 using R3;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -12,7 +13,7 @@ public class Score : MonoBehaviour
 
     private GameData _levelData;
 
-    private readonly IScore _trashCollector;
+    private List<IScore> _scores = new();
 
     private UI _ui;
     private readonly ScoreModel _model = new();
@@ -25,8 +26,10 @@ public class Score : MonoBehaviour
     {
         _scoreView = view;
     }
-    private void Initialize()
+    public void Initialize(List<IScore> scoresList)
     {
+        _scores = scoresList;
+
         _ui = GetComponent<UI>();
         _scoreView.SetUp(_ui);
 
@@ -44,7 +47,7 @@ public class Score : MonoBehaviour
         _model.SetParametres(_currentScore, UPDATE_SCORE);
         _scoreView.SetMax(MAX_SCORE);
 
-        _trashCollector.TakenCommand.Subscribe(count => _model.UpdateCount()).AddTo(_disposables);
+        _scores[0].TakenCommand.Subscribe(count => _model.UpdateCount()).AddTo(_disposables);
 
         _model.Score.Subscribe(count => _scoreView.ChangeCount(count)).AddTo(_disposables);
     }

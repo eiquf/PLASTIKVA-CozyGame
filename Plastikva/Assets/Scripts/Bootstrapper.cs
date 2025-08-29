@@ -9,6 +9,7 @@ public class Bootstrapper : MonoBehaviour
     [SerializeField] private LevelUnlocking _levelUnlockingPref;
     [SerializeField] private TrashCollector _trashCollectorPref;
     [SerializeField] private UI _uiPrefab;
+    [SerializeField] private IsometricCamera _cameraPrefab;
 
     private LevelUnlocking _levelUnlocking;
 
@@ -28,16 +29,16 @@ public class Bootstrapper : MonoBehaviour
         SaveLoadLevel.Save(_data);
 
         _playerInstance = _diContainer.InstantiatePrefab(_playerPrefab).GetComponent<Player>();
-        _cameraInstance = _playerInstance.GetComponent<IsometricCamera>();
+        _cameraInstance = _diContainer.InstantiatePrefab(_cameraPrefab).GetComponent<IsometricCamera>();
 
         _uiInstance = _diContainer.InstantiatePrefab(_uiPrefab).GetComponent<UI>();
         _diContainer.Bind<UI>().FromInstance(_uiInstance).AsSingle();
+        _score = _uiInstance.GetComponent<Score>();
 
         _levelUnlocking = _diContainer.InstantiatePrefab(_levelUnlockingPref).GetComponent<LevelUnlocking>();
-        _score = _levelUnlocking.gameObject.GetComponent<Score>();
+        _diContainer.Bind<LevelUnlocking>().FromInstance(_levelUnlocking).AsSingle();
 
         _levelUnlocking.Initialize();
-        _diContainer.Bind<LevelUnlocking>().FromInstance(_levelUnlocking).AsSingle();
 
         _trashCollector = _diContainer.InstantiatePrefab(_trashCollectorPref).GetComponent<TrashCollector>();
         _trashSorter = _trashCollector.GetComponent<TrashSorter>();
@@ -50,5 +51,6 @@ public class Bootstrapper : MonoBehaviour
 
         _trashCollector.Initialize();
         _trashSorter.Initialize();
+        _score.Initialize();
     }
 }

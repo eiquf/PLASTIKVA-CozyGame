@@ -1,7 +1,6 @@
 ﻿using R3;
 using System;
 using UnityEngine.UI;
-using Zenject;
 
 public class ScoreView : IDisposable
 {
