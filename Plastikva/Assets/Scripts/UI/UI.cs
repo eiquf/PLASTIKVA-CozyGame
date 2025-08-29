@@ -1,0 +1,21 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public sealed class UI : MonoBehaviour
+{
+    [Header("Trash Sort UI")]
+    [SerializeField] private Image _trashImage;
+    [SerializeField] private Button _yesButton;
+    [SerializeField] private Button _noButton;
+    [SerializeField] private TextMesh _finalText;
+
+    [Header("Score UI")]
+    [SerializeField] private Image _scoreBar;
+
+    public Image TrashImage => _trashImage;
+    public Button YesButton => _yesButton;
+    public Button NoButton => _noButton;
+    public TextMesh FinalText => _finalText;
+
+    public Image ScoreBar => _scoreBar;
+}
