@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Rescue",
+                    "type": "Button",
+                    "id": "229924be-aad7-487a-99c7-a8c93a995586",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "MultiTap(tapCount=5)",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -137,6 +146,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "PointerPos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8daee4c7-0978-4447-9350-7536c8c4eac1",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rescue",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

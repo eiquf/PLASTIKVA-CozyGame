@@ -1,6 +1,6 @@
 ﻿using R3;
 
-interface IScore
+public interface IScore
 {
     public ReactiveCommand TakenCommand { get; }
 

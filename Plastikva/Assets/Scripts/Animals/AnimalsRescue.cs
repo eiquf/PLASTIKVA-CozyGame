@@ -1,0 +1,110 @@
+using R3;
+using UnityEngine;
+using Zenject;
+
+public class AnimalsRescue : MonoBehaviour, IScore
+{
+    private AnimalsInputHandler _input;
+    private readonly AnimationContext _animationContext = new();
+
+    private readonly AnimalsRescueModel _model = new();
+    private readonly AnimalsRescueView _view = new();
+
+    private LevelUnlocking _levelUnlocking;
+    private TrashLevelDef _currentLevel;
+
+    private UI _ui;
+    private readonly LayerMask AnimalMask = 1 << 8;
+    private IHitDetector _hitDetector;
+
+    private GameObject _lastHitAnimal;
+
+    private readonly CompositeDisposable _disposables = new();
+
+    public ReactiveCommand TakenCommand { get; } = new ReactiveCommand();
+
+    [Inject]
+    private void Container(LevelUnlocking levelUnlocking, AnimalsInputHandler input, UI ui)
+    {
+        _input = input;
+        _levelUnlocking = levelUnlocking;
+        _ui = ui;
+    }
+
+    public void Initialize()
+    {
+        _input.Rescued += Rescue;
+        _input.Help += Help;
+
+        _hitDetector = new CameraRayHitDetector(Camera.main);
+        _animationContext.SetAnimationStrategy(new TapAnimation());
+
+        _view.Setup(_ui);
+        _model.Setup();
+
+        _model.CurrentCount
+            .Subscribe(count =>
+            {
+                _view.Render(count);
+                TakenCommand.Execute(Unit.Default);
+            })
+            .AddTo(_disposables);
+
+        _model.AllCollected
+             .Where(collected => collected)
+             .Subscribe(_ => _levelUnlocking.ReportAnimalsRescued())
+             .AddTo(_disposables);
+
+        _levelUnlocking.CurrentLevel
+           .Take(1)
+           .Subscribe(level =>
+           {
+               _currentLevel = level;
+               if (_currentLevel == null) return;
+
+               _model.UpdateGoal(_currentLevel.RequiredAnimalsCount, resetProgress: false);
+           })
+           .AddTo(_disposables);
+
+        _levelUnlocking.CurrentLevel
+          .Skip(1)
+            .Subscribe(level =>
+            {
+                _currentLevel = level;
+                if (_currentLevel == null) return;
+
+                _model.UpdateGoal(_currentLevel.RequiredAnimalsCount, resetProgress: true);
+                _view.Render(0);
+            })
+            .AddTo(_disposables);
+    }
+    private void Help()
+    {
+        Vector3 mousePos = _input.GetMousePosition();
+
+        bool hit = _hitDetector.TryHit(AnimalMask, mousePos, false);
+
+        if (!hit)
+        {
+            _lastHitAnimal = null;
+            return;
+        }
+
+        GameObject candidate = _hitDetector.TryGetHitObject(AnimalMask, mousePos);
+        if (candidate == null) return;
+
+        _animationContext.PlayAnimation(candidate.transform);
+    }
+    private void Rescue()
+    {
+        Vector3 mousePos = _input.GetMousePosition();
+        bool collected = _hitDetector.TryHit(AnimalMask, mousePos, true);
+        if (collected) _model.Rescue();
+    }
+    private void OnDestroy()
+    {
+        _disposables.Dispose();
+        _input.Rescued -= Rescue;
+        _input.Help -= Help;
+    }
+}

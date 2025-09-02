@@ -8,7 +8,7 @@ public class CameraRayHitDetector : IHitDetector
     private readonly LayerMask DefaultMask = 1 << 0;
 
     public CameraRayHitDetector(Camera camera) => _camera = camera;
-    public bool TryHit(LayerMask layerMask, Vector2 input)
+    public bool TryHit(LayerMask layerMask, Vector2 input, bool destroy)
     {
         if (!_camera) return false;
 
@@ -25,11 +25,34 @@ public class CameraRayHitDetector : IHitDetector
 
             if ((hitLayerBit & mask) != 0)
             {
-                Object.Destroy(hit.collider.gameObject);
+                if (destroy == true)
+                    Object.Destroy(hit.collider.gameObject);
+
                 return true;
             }
         }
 
         return false;
+    }
+    public GameObject TryGetHitObject(LayerMask layerMask, Vector2 input)
+    {
+        if (!_camera) return null;
+
+        Vector3 mousePos = input;
+        Ray ray = _camera.ScreenPointToRay(mousePos);
+
+        int mask = layerMask | DefaultMask;
+
+        if (Physics.Raycast(ray, out RaycastHit hit, _maxDistance, mask, QueryTriggerInteraction.Ignore))
+        {
+            int hitLayerBit = 1 << hit.collider.gameObject.layer;
+
+            if ((hitLayerBit & DefaultMask) != 0) return null;
+
+            if ((hitLayerBit & mask) != 0)
+                return hit.collider.gameObject;
+        }
+
+        return null;
     }
 }

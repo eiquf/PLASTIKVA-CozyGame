@@ -17,5 +17,7 @@ public class GameData
     public bool isAnimalRescued;
 
     public int currentScore;
+    public int trashCount;
+    public int animalsCount;
 
 }

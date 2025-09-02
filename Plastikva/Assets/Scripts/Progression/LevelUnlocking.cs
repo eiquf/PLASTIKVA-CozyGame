@@ -10,6 +10,9 @@ public class LevelUnlocking : MonoBehaviour
     private readonly ReactiveProperty<TrashLevelDef> _currentLevel = new();
     public Observable<TrashLevelDef> CurrentLevel => _currentLevel;
 
+    private readonly ReactiveProperty<TrashLevelDef> _unlockedLevel = new();
+    public Observable<TrashLevelDef> UnlockedLevel => _unlockedLevel;
+
     private readonly ReactiveProperty<bool> _isTrashSort = new(false);
     public Observable<bool> IsTrashSortLevel => _isTrashSort;
 
@@ -20,7 +23,9 @@ public class LevelUnlocking : MonoBehaviour
 
     public void Initialize()
     {
+        //SaveLoadLevel.ClearSaveData();
         _levelData = SaveLoadLevel.Load<GameData>();
+
 
         if (_levelData.isFirstLaunch)
         {

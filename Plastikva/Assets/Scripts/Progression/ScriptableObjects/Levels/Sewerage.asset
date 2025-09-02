@@ -13,18 +13,28 @@ MonoBehaviour:
   m_Name: Sewerage
   m_EditorClassIdentifier: 
   <Title>k__BackingField: 
-  <AnimalsPref>k__BackingField: []
-  <TrashPref>k__BackingField: []
+  <AnimalsPref>k__BackingField:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  <TrashPref>k__BackingField:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   <Trash>k__BackingField:
   - <Icon>k__BackingField: {fileID: 0}
-    <IsCorrect>k__BackingField: 1
+    <IsRecyclable>k__BackingField: 0
   - <Icon>k__BackingField: {fileID: 0}
-    <IsCorrect>k__BackingField: 0
+    <IsRecyclable>k__BackingField: 0
   - <Icon>k__BackingField: {fileID: 0}
-    <IsCorrect>k__BackingField: 0
+    <IsRecyclable>k__BackingField: 0
   - <Icon>k__BackingField: {fileID: 0}
-    <IsCorrect>k__BackingField: 1
+    <IsRecyclable>k__BackingField: 1
   - <Icon>k__BackingField: {fileID: 0}
-    <IsCorrect>k__BackingField: 0
+    <IsRecyclable>k__BackingField: 1
   <RequiredTrashCount>k__BackingField: 5
   <RequiredAnimalsCount>k__BackingField: 5

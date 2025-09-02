@@ -14,6 +14,7 @@ public class SceneInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<PlayerInputHandler>().AsSingle();
         Container.BindInterfacesAndSelfTo<CameraInputHandler>().AsSingle();
         Container.BindInterfacesAndSelfTo<TrashInputHandler>().AsSingle();
+        Container.BindInterfacesAndSelfTo<AnimalsInputHandler>().AsSingle();
     }
     private void BindViews()
     {

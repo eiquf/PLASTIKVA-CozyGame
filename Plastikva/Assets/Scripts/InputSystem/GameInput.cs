@@ -135,6 +135,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Rescue"",
+                    ""type"": ""Button"",
+                    ""id"": ""229924be-aad7-487a-99c7-a8c93a995586"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""MultiTap(tapCount=5)"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -223,6 +232,17 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""PointerPos"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8daee4c7-0978-4447-9350-7536c8c4eac1"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rescue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -345,6 +365,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Gameplay_Collecting = m_Gameplay.FindAction("Collecting", throwIfNotFound: true);
         m_Gameplay_Drag = m_Gameplay.FindAction("Drag", throwIfNotFound: true);
         m_Gameplay_PointerPos = m_Gameplay.FindAction("PointerPos", throwIfNotFound: true);
+        m_Gameplay_Rescue = m_Gameplay.FindAction("Rescue", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
@@ -440,6 +461,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Collecting;
     private readonly InputAction m_Gameplay_Drag;
     private readonly InputAction m_Gameplay_PointerPos;
+    private readonly InputAction m_Gameplay_Rescue;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -471,6 +493,10 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/PointerPos".
         /// </summary>
         public InputAction @PointerPos => m_Wrapper.m_Gameplay_PointerPos;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/Rescue".
+        /// </summary>
+        public InputAction @Rescue => m_Wrapper.m_Gameplay_Rescue;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -512,6 +538,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @PointerPos.started += instance.OnPointerPos;
             @PointerPos.performed += instance.OnPointerPos;
             @PointerPos.canceled += instance.OnPointerPos;
+            @Rescue.started += instance.OnRescue;
+            @Rescue.performed += instance.OnRescue;
+            @Rescue.canceled += instance.OnRescue;
         }
 
         /// <summary>
@@ -538,6 +567,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @PointerPos.started -= instance.OnPointerPos;
             @PointerPos.performed -= instance.OnPointerPos;
             @PointerPos.canceled -= instance.OnPointerPos;
+            @Rescue.started -= instance.OnRescue;
+            @Rescue.performed -= instance.OnRescue;
+            @Rescue.canceled -= instance.OnRescue;
         }
 
         /// <summary>
@@ -827,6 +859,13 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPointerPos(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Rescue" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRescue(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

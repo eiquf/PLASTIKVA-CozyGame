@@ -11,17 +11,23 @@ public class TrashCollectorModel : IDisposable
     private readonly ReactiveProperty<bool> _allCollected = new(false);
     public Observable<bool> AllCollected => _allCollected;
 
-    public TrashCollectorModel()
-    {
-        _currentCount = new ReactiveProperty<int>(0);
-        _allCollected = new ReactiveProperty<bool>(false);
-    }
-
-    public void UpdateGoal(int maxCount)
+    private GameData _levelData;
+    public void Setup() => _levelData = SaveLoadLevel.Load<GameData>();
+    public void UpdateGoal(int maxCount, bool resetProgress = true)
     {
         _maxCount = maxCount;
-        _currentCount.Value = 0;
-        _allCollected.Value = false;
+        if (resetProgress)
+        {
+            _currentCount.Value = 0;
+            _levelData.trashCount = 0;
+            _allCollected.Value = false;
+            SaveData();
+        }
+        else
+        {
+            _currentCount.Value = _levelData.trashCount;
+            _allCollected.Value = _currentCount.Value >= _maxCount && _maxCount > 0;
+        }
     }
     public void Collect()
     {
@@ -36,9 +42,13 @@ public class TrashCollectorModel : IDisposable
                 _currentCount.Value = _maxCount;
                 _allCollected.Value = true;
             }
+
+            _levelData.trashCount = _currentCount.Value;
+            SaveData();
         }
     }
 
+    private void SaveData() => SaveLoadLevel.Save(_levelData);
     public void Dispose()
     {
         _currentCount.Dispose();

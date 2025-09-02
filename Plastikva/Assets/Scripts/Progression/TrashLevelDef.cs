@@ -11,7 +11,4 @@ public class TrashLevelDef : ScriptableObject
     [field: SerializeField] public TrashData[] Trash { get; private set; }
     [field: SerializeField][Min(1)] public int RequiredTrashCount { get; private set; } = 5;
     [field: SerializeField][Min(1)] public int RequiredAnimalsCount { get; private set; } = 5;
-    [field: SerializeField][Min(1)] public int TrashCollectedPoints { get; private set; } = 5;
-    [field: SerializeField][Min(1)] public int TrashSortedPoints { get; private set; } = 5;
-    [field: SerializeField][Min(1)] public int AnimalsRescuePoint { get; private set; } = 5;
 }

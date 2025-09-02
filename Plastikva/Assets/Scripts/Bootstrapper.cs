@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -21,8 +22,10 @@ public class Bootstrapper : MonoBehaviour
 
     private TrashCollector _trashCollector;
     private TrashSorter _trashSorter;
+    private AnimalsRescue _animals;
 
     private GameData _data;
+    private readonly List<IScore> _scores = new();
     private void Start()
     {
         _data = SaveLoadLevel.Load<GameData>() ?? new GameData();
@@ -42,6 +45,11 @@ public class Bootstrapper : MonoBehaviour
 
         _trashCollector = _diContainer.InstantiatePrefab(_trashCollectorPref).GetComponent<TrashCollector>();
         _trashSorter = _trashCollector.GetComponent<TrashSorter>();
+        _animals = _trashCollector.GetComponent<AnimalsRescue>();
+
+        _scores.Add(_trashCollector);
+        _scores.Add(_trashSorter);
+        _scores.Add(_animals);
 
         _playerInstance.Initialize();
         _cameraInstance.Initialize();
@@ -51,6 +59,7 @@ public class Bootstrapper : MonoBehaviour
 
         _trashCollector.Initialize();
         _trashSorter.Initialize();
-        _score.Initialize();
+        _animals.Initialize();
+        _score.Initialize(_scores);
     }
 }

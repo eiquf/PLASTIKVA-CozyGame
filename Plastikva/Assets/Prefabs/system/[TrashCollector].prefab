@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 47956564604970199}
   - component: {fileID: 8372662664204164496}
   - component: {fileID: 8080502345007080320}
+  - component: {fileID: 7592994024706189421}
   m_Layer: 0
   m_Name: '[TrashCollector]'
   m_TagString: Untagged
@@ -55,5 +56,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d42b6fa7b33fba243997a6c67eddadc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7592994024706189421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3891651638222501405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9825ecc1d2dcc394db37b6ef9ad1ffe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
