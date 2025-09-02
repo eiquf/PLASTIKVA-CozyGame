@@ -1,6 +1,7 @@
 using R3;
+using Zenject;
 
-public class AnimalsRescueModel
+public class AnimalsRescueModel : System.IDisposable
 {
     private int _maxCount;
 
@@ -10,43 +11,51 @@ public class AnimalsRescueModel
     private readonly ReactiveProperty<bool> _allCollected = new(false);
     public Observable<bool> AllCollected => _allCollected;
 
-    private GameData _levelData;
-    public void Setup() => _levelData = SaveLoadLevel.Load<GameData>();
+    private ISaveService _save;
+
+    [Inject]
+    public void Construct(ISaveService save) => _save = save;
+
+    public void Setup()
+    {
+        _currentCount.Value = _save.Data.animalsCount;
+        _allCollected.Value = false;
+    }
+
     public void UpdateGoal(int maxCount, bool resetProgress = true)
     {
         _maxCount = maxCount;
+
         if (resetProgress)
         {
             _currentCount.Value = 0;
-            _levelData.animalsCount = 0;
+            _save.Data.animalsCount = 0;
             _allCollected.Value = false;
-            SaveData();
+            _save.Save();
         }
         else
         {
-            _currentCount.Value = _levelData.animalsCount;
+            _currentCount.Value = _save.Data.animalsCount;
             _allCollected.Value = _currentCount.Value >= _maxCount && _maxCount > 0;
         }
     }
+
     public void Rescue()
     {
-        if (_maxCount <= 0) return;
+        if (_maxCount <= 0 || _allCollected.Value) return;
 
-        if (!_allCollected.Value)
+        _currentCount.Value++;
+
+        if (_currentCount.Value >= _maxCount)
         {
-            _currentCount.Value++;
-
-            if (_currentCount.Value >= _maxCount)
-            {
-                _currentCount.Value = _maxCount;
-                _allCollected.Value = true;
-            }
-
-            _levelData.animalsCount = _currentCount.Value;
-            SaveData();
+            _currentCount.Value = _maxCount;
+            _allCollected.Value = true;
         }
+
+        _save.Data.animalsCount = _currentCount.Value;
+        _save.Save();
     }
-    private void SaveData() => SaveLoadLevel.Save(_levelData);
+
     public void Dispose()
     {
         _currentCount.Dispose();

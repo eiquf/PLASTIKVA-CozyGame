@@ -24,12 +24,13 @@ public class Bootstrapper : MonoBehaviour
     private TrashSorter _trashSorter;
     private AnimalsRescue _animals;
 
-    private GameData _data;
+    private ISaveService _save;
     private readonly List<IScore> _scores = new();
     private void Start()
     {
-        _data = SaveLoadLevel.Load<GameData>() ?? new GameData();
-        SaveLoadLevel.Save(_data);
+        _save = new SaveService();
+        _save.LoadOrCreate();
+        _diContainer.Bind<ISaveService>().FromInstance(_save).AsSingle();
 
         _playerInstance = _diContainer.InstantiatePrefab(_playerPrefab).GetComponent<Player>();
         _cameraInstance = _diContainer.InstantiatePrefab(_cameraPrefab).GetComponent<IsometricCamera>();
@@ -61,5 +62,7 @@ public class Bootstrapper : MonoBehaviour
         _trashSorter.Initialize();
         _animals.Initialize();
         _score.Initialize(_scores);
+
+        _save.Save();
     }
 }
