@@ -1,13 +1,6 @@
 [System.Serializable]
 public class GameData
 {
-    public enum EnvironmentType
-    {
-        Sewerage,
-        River,
-        Ocean
-    }
-
     public EnvironmentType currentEnvironment;
     public int currentLevelIndex;
     public bool isFirstLaunch = true;
@@ -20,4 +13,10 @@ public class GameData
     public int trashCount;
     public int animalsCount;
 
+}
+public enum EnvironmentType
+{
+    Sewerage,
+    River,
+    Ocean
 }

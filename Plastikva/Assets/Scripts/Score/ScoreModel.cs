@@ -9,31 +9,26 @@ public class ScoreModel
     private readonly ReactiveProperty<int> _score = new(0);
     public Observable<int> Score => _score;
 
-    private GameData _levelData;
+    private ISaveService _save;
 
-    public void Setup()
+    public void Setup(ISaveService save)
     {
-        _levelData = SaveLoadLevel.Load<GameData>();
+        _save = save;   
 
-        if (_levelData.isFirstLaunch)
+        if (_save.Data.isFirstLaunch)
         {
-            _levelData.currentScore = START_SCORE;
+            _save.Data.currentScore = START_SCORE;
             _score.Value = START_SCORE;
         }
-        else _score.Value = _levelData.currentScore;
-
-        SaveData();
+        else _score.Value = _save.Data.currentScore;
     }
     public void UpdateCount()
     {
         if (_score.Value < MAX_SCORE)
         {
             _score.Value += UPDATE_SCORE;
-            _levelData.currentScore = _score.Value;
+            _save.Data.currentScore = _score.Value;
         }
         else return;
-
-        SaveData();
     }
-    private void SaveData() => SaveLoadLevel.Save(_levelData);
 }

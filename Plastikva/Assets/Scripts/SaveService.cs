@@ -4,13 +4,7 @@
 
     public GameData Data => _data;
 
-    public void LoadOrCreate()
-    {
-        _data = SaveLoadLevel.Load<GameData>() ?? new GameData();
-    }
+    public void LoadOrCreate() => _data = SaveLoadLevel.Load<GameData>() ?? new GameData();
 
-    public void Save()
-    {
-        SaveLoadLevel.Save(_data);
-    }
+    public void Save() => SaveLoadLevel.Save(_data);
 }

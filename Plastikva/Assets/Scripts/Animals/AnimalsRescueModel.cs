@@ -13,11 +13,9 @@ public class AnimalsRescueModel : System.IDisposable
 
     private ISaveService _save;
 
-    [Inject]
-    public void Construct(ISaveService save) => _save = save;
-
-    public void Setup()
+    public void Setup(ISaveService save)
     {
+        _save = save;
         _currentCount.Value = _save.Data.animalsCount;
         _allCollected.Value = false;
     }

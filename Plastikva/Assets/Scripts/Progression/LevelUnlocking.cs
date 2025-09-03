@@ -6,7 +6,8 @@ public class LevelUnlocking : MonoBehaviour
 {
     [SerializeField] private TrashLevelSet _levelSet;
 
-    private GameData _levelData;
+    private ISaveService _save;
+
     private readonly ReactiveProperty<TrashLevelDef> _currentLevel = new();
     public Observable<TrashLevelDef> CurrentLevel => _currentLevel;
 
@@ -21,29 +22,27 @@ public class LevelUnlocking : MonoBehaviour
 
     private readonly CompositeDisposable _disposables = new();
 
-    public void Initialize()
+    public void Initialize(ISaveService save)
     {
-        //SaveLoadLevel.ClearSaveData();
-        _levelData = SaveLoadLevel.Load<GameData>();
+        _save = save; 
 
-
-        if (_levelData.isFirstLaunch)
+        if (_save.Data.isFirstLaunch)
         {
-            _levelData.currentLevelIndex = 0;
-            _levelData.currentEnvironment = GameData.EnvironmentType.Sewerage;
-            _levelData.isFirstLaunch = false;
+            _save.Data.currentLevelIndex = 0;
+            _save.Data.currentEnvironment = EnvironmentType.Sewerage;
+            _save.Data.isFirstLaunch = false;
         }
 
         if (_levelSet.Levels == null || _levelSet.Levels.Length == 0)
             return;
 
-        _levelData.currentLevelIndex = Mathf.Clamp(_levelData.currentLevelIndex, 0, _levelSet.Levels.Length - 1);
+        _save.Data.currentLevelIndex = Mathf.Clamp(_save.Data.currentLevelIndex, 0, _levelSet.Levels.Length - 1);
 
-        _currentLevel.Value = _levelSet.Levels[_levelData.currentLevelIndex];
+        _currentLevel.Value = _levelSet.Levels[_save.Data.currentLevelIndex];
 
-        _isTrashCollected.Value = _levelData.isTrashCollected;
-        _isAnimalRescued.Value = _levelData.isAnimalRescued;
-        _isTrashSort.Value = _levelData.isTrashSorted;
+        _isTrashCollected.Value = _save.Data.isTrashCollected;
+        _isAnimalRescued.Value = _save.Data.isAnimalRescued;
+        _isTrashSort.Value = _save.Data.isTrashSorted;
 
         SaveGameData();
 
@@ -58,20 +57,16 @@ public class LevelUnlocking : MonoBehaviour
     }
     public void ReportTrashCollected() => _isTrashCollected.Value = true;
     public void ReportAnimalsRescued() => _isAnimalRescued.Value = true;
-    private void SaveGameData()
-    {
-        _levelData.currentLevelIndex = Array.IndexOf(_levelSet.Levels, _currentLevel.Value);
-        SaveLoadLevel.Save(_levelData);
-    }
+    private void SaveGameData() => _save.Data.currentLevelIndex = Array.IndexOf(_levelSet.Levels, _currentLevel.Value);
     private void UnlockLevel()
     {
        
 
-        var nextIdx = Mathf.Clamp(_levelData.currentLevelIndex + 1, 0, _levelSet.Levels.Length - 1);
+        var nextIdx = Mathf.Clamp(_save.Data.currentLevelIndex + 1, 0, _levelSet.Levels.Length - 1);
 
-        if (nextIdx != _levelData.currentLevelIndex)
+        if (nextIdx != _save.Data.currentLevelIndex)
         {
-            _levelData.currentLevelIndex = nextIdx;
+            _save.Data.currentLevelIndex = nextIdx;
             _currentLevel.Value = _levelSet.Levels[nextIdx];
 
             _isAnimalRescued.Value = false;
@@ -85,20 +80,20 @@ public class LevelUnlocking : MonoBehaviour
     {
         _isAnimalRescued.Subscribe(value =>
         {
-            _levelData.isAnimalRescued = value;
+            _save.Data.isAnimalRescued = value;
             SaveGameData();
         });
 
 
         _isTrashCollected.Subscribe(value =>
         {
-            _levelData.isTrashCollected = value;
+            _save.Data.isTrashCollected = value;
             SaveGameData();
         });
 
         _isTrashSort.Subscribe(value =>
         {
-            _levelData.isTrashSorted = value;
+            _save.Data.isTrashSorted = value;
             SaveGameData();
         });
     }

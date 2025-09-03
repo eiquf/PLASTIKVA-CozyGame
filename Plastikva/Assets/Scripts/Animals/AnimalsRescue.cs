@@ -17,22 +17,25 @@ public class AnimalsRescue : MonoBehaviour, IScore
     private readonly LayerMask AnimalMask = 1 << 8;
     private IHitDetector _hitDetector;
 
-    private GameObject _lastHitAnimal;
+    private ISaveService _save;
 
     private readonly CompositeDisposable _disposables = new();
 
     public ReactiveCommand TakenCommand { get; } = new ReactiveCommand();
 
     [Inject]
-    private void Container(LevelUnlocking levelUnlocking, AnimalsInputHandler input, UI ui)
+    private void Container(LevelUnlocking levelUnlocking, AnimalsInputHandler input, UI ui, ISaveService save)
     {
         _input = input;
         _levelUnlocking = levelUnlocking;
         _ui = ui;
+        _save = save;
     }
 
-    public void Initialize()
+    public void Initialize(ISaveService save)
     {
+        _save = save;
+
         _input.Rescued += Rescue;
         _input.Help += Help;
 
@@ -40,7 +43,7 @@ public class AnimalsRescue : MonoBehaviour, IScore
         _animationContext.SetAnimationStrategy(new TapAnimation());
 
         _view.Setup(_ui);
-        _model.Setup();
+        _model.Setup(_save);
 
         _model.CurrentCount
             .Subscribe(count =>
@@ -84,11 +87,7 @@ public class AnimalsRescue : MonoBehaviour, IScore
 
         bool hit = _hitDetector.TryHit(AnimalMask, mousePos, false);
 
-        if (!hit)
-        {
-            _lastHitAnimal = null;
-            return;
-        }
+        if (!hit) return;
 
         GameObject candidate = _hitDetector.TryGetHitObject(AnimalMask, mousePos);
         if (candidate == null) return;

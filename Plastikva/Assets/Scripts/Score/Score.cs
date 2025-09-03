@@ -10,18 +10,20 @@ public class Score : MonoBehaviour
     private UI _ui;
     private readonly ScoreModel _model = new();
     private ScoreView _scoreView;
+    private ISaveService _save;
 
     private readonly CompositeDisposable _disposables = new();
 
     [Inject]
     private void Container(ScoreView view) => _scoreView = view;
-    public void Initialize(List<IScore> scores)
+    public void Initialize(List<IScore> scores, ISaveService save)
     {
+        _save = save;
         _scores = scores;
 
         _ui = GetComponent<UI>();
         _scoreView.SetUp(_ui);
-        _model.Setup();
+        _model.Setup(_save);
 
         _model.Score
               .Subscribe(score => _scoreView.Render(score))

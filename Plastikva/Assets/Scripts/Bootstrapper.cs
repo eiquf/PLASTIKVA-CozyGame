@@ -42,7 +42,7 @@ public class Bootstrapper : MonoBehaviour
         _levelUnlocking = _diContainer.InstantiatePrefab(_levelUnlockingPref).GetComponent<LevelUnlocking>();
         _diContainer.Bind<LevelUnlocking>().FromInstance(_levelUnlocking).AsSingle();
 
-        _levelUnlocking.Initialize();
+        _levelUnlocking.Initialize(_save);
 
         _trashCollector = _diContainer.InstantiatePrefab(_trashCollectorPref).GetComponent<TrashCollector>();
         _trashSorter = _trashCollector.GetComponent<TrashSorter>();
@@ -58,11 +58,15 @@ public class Bootstrapper : MonoBehaviour
         _cameraInstance.SetFollowTarget(_playerInstance.transform);
         _cameraInstance.SetBoundraries(_playerInstance.Boundry);
 
-        _trashCollector.Initialize();
+        _trashCollector.Initialize(_save);
         _trashSorter.Initialize();
-        _animals.Initialize();
-        _score.Initialize(_scores);
+        _animals.Initialize(_save);
+        _score.Initialize(_scores, _save);
 
         _save.Save();
     }
+#if UNITY_EDITOR
+    public void ClearData() => SaveLoadLevel.ClearSaveData();
+#endif
+    private void OnDestroy() => _save.Save();
 }

@@ -10,12 +10,14 @@ public class TrashCollector : MonoBehaviour, IScore
 
     private LevelUnlocking _levelUnlocking;
     private TrashLevelDef _currentLevel;
+
     private UI _ui;
     private readonly LayerMask TrashMask = 1 << 6;
     private IHitDetector _hitDetector;
 
-    private readonly CompositeDisposable _disposables = new();
+    private ISaveService _save;
 
+    private readonly CompositeDisposable _disposables = new();
     public ReactiveCommand TakenCommand { get; } = new ReactiveCommand();
 
     [Inject]
@@ -26,14 +28,15 @@ public class TrashCollector : MonoBehaviour, IScore
         _ui = ui;
     }
 
-    public void Initialize()
+    public void Initialize(ISaveService save)
     {
+        _save = save;
         _input.LeftMouseClicked += Collect;
 
         _hitDetector = new CameraRayHitDetector(Camera.main);
 
         _view.SetUp(_ui);
-        _model.Setup();
+        _model.Setup(_save);
 
         _model.CurrentCount
               .DistinctUntilChanged()
