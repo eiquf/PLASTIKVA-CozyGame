@@ -24,7 +24,7 @@ public class LevelUnlocking : MonoBehaviour
 
     public void Initialize(ISaveService save)
     {
-        _save = save; 
+        _save = save;
 
         if (_save.Data.isFirstLaunch)
         {
@@ -57,11 +57,10 @@ public class LevelUnlocking : MonoBehaviour
     }
     public void ReportTrashCollected() => _isTrashCollected.Value = true;
     public void ReportAnimalsRescued() => _isAnimalRescued.Value = true;
+    public void ReportTrashSorted() => _isTrashSort.Value = false;
     private void SaveGameData() => _save.Data.currentLevelIndex = Array.IndexOf(_levelSet.Levels, _currentLevel.Value);
     private void UnlockLevel()
     {
-       
-
         var nextIdx = Mathf.Clamp(_save.Data.currentLevelIndex + 1, 0, _levelSet.Levels.Length - 1);
 
         if (nextIdx != _save.Data.currentLevelIndex)
@@ -93,6 +92,9 @@ public class LevelUnlocking : MonoBehaviour
 
         _isTrashSort.Subscribe(value =>
         {
+            if (value == false)
+                UnlockLevel();
+
             _save.Data.isTrashSorted = value;
             SaveGameData();
         });

@@ -1,4 +1,5 @@
 using R3;
+using UnityEngine;
 using Zenject;
 
 public class AnimalsRescueModel : System.IDisposable
@@ -13,12 +14,7 @@ public class AnimalsRescueModel : System.IDisposable
 
     private ISaveService _save;
 
-    public void Setup(ISaveService save)
-    {
-        _save = save;
-        _currentCount.Value = _save.Data.animalsCount;
-        _allCollected.Value = false;
-    }
+    public void Setup(ISaveService save) => _save = save;
 
     public void UpdateGoal(int maxCount, bool resetProgress = true)
     {

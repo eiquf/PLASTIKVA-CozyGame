@@ -66,7 +66,7 @@ public class Bootstrapper : MonoBehaviour
         _save.Save();
     }
 #if UNITY_EDITOR
-    public void ClearData() => SaveLoadLevel.ClearSaveData();
+    public void ClearData() => _save.Clear();
 #endif
     private void OnDestroy() => _save.Save();
 }

@@ -15,6 +15,7 @@ public class TrashSortView : IDisposable
 
     private readonly StringBuilder _sb = new();
 
+    private GameObject _panel;
     private Image _image;
     private Button _yesButton;
     private Button _noButton;
@@ -25,6 +26,7 @@ public class TrashSortView : IDisposable
 
     public void SetUp(UI ui)
     {
+        _panel = ui.PanelSort;
         _image = ui.TrashImage;
         _yesButton = ui.YesButton;
         _noButton = ui.NoButton;
@@ -38,7 +40,7 @@ public class TrashSortView : IDisposable
         _finalText.text = string.Empty;
         SetButtonsInteractable(true);
     }
-
+    public void ShowPanel(bool activate) => _panel.SetActive(activate);
     public void Dispose()
     {
         if (_yesButton != null && _yesHandler != null)
@@ -49,7 +51,6 @@ public class TrashSortView : IDisposable
         _yesClicks.OnCompleted();
         _noClicks.OnCompleted();
     }
-
     public void SetSprite(Sprite sprite)
     {
         if (_image != null) _image.sprite = sprite;

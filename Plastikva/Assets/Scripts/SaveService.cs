@@ -1,8 +1,11 @@
-﻿public class SaveService : ISaveService
+﻿[System.Serializable]
+public class SaveService : ISaveService
 {
     private GameData _data;
 
     public GameData Data => _data;
+
+    public void Clear() => SaveLoadLevel.ClearSaveData();
 
     public void LoadOrCreate() => _data = SaveLoadLevel.Load<GameData>() ?? new GameData();
 

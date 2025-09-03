@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public sealed class UI : MonoBehaviour
 {
     [Header("Trash Sort UI")]
+    [SerializeField] private GameObject _panelSort;
     [SerializeField] private Image _trashImage;
     [SerializeField] private Button _yesButton;
     [SerializeField] private Button _noButton;
@@ -24,5 +25,5 @@ public sealed class UI : MonoBehaviour
     public Image ScoreBar => _scoreBar;
     public TextMeshProUGUI TrashCountText => _trashCountText; 
     public TextMeshProUGUI AnimalsCountText => _animalsCountText;
-
+    public GameObject PanelSort => _panelSort;
 }

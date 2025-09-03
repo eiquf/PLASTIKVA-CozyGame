@@ -25,16 +25,22 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   <Trash>k__BackingField:
-  - <Icon>k__BackingField: {fileID: 0}
+  - <Icon>k__BackingField: {fileID: 982150961, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
     <IsRecyclable>k__BackingField: 0
-  - <Icon>k__BackingField: {fileID: 0}
-    <IsRecyclable>k__BackingField: 0
-  - <Icon>k__BackingField: {fileID: 0}
-    <IsRecyclable>k__BackingField: 0
-  - <Icon>k__BackingField: {fileID: 0}
+  - <Icon>k__BackingField: {fileID: 372571918, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
     <IsRecyclable>k__BackingField: 1
-  - <Icon>k__BackingField: {fileID: 0}
+  - <Icon>k__BackingField: {fileID: -672723059, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
+    <IsRecyclable>k__BackingField: 0
+  - <Icon>k__BackingField: {fileID: 2015952740, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
+    <IsRecyclable>k__BackingField: 0
+  - <Icon>k__BackingField: {fileID: -332782507, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
     <IsRecyclable>k__BackingField: 1
-  <RequiredTrashCount>k__BackingField: 5
+  - <Icon>k__BackingField: {fileID: 1138672840, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
+    <IsRecyclable>k__BackingField: 1
+  - <Icon>k__BackingField: {fileID: 813831339, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
+    <IsRecyclable>k__BackingField: 1
+  <RequiredTrashCount>k__BackingField: 7
   <RequiredAnimalsCount>k__BackingField: 5

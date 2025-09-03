@@ -19,6 +19,8 @@ public class AnimalsRescue : MonoBehaviour, IScore
 
     private ISaveService _save;
 
+    private GameObject _lastAnimal;
+
     private readonly CompositeDisposable _disposables = new();
 
     public ReactiveCommand TakenCommand { get; } = new ReactiveCommand();
@@ -87,18 +89,23 @@ public class AnimalsRescue : MonoBehaviour, IScore
 
         bool hit = _hitDetector.TryHit(AnimalMask, mousePos, false);
 
-        if (!hit) return;
+        if (!hit)
+        {
+            _lastAnimal = null;
+            return;
+        }
 
-        GameObject candidate = _hitDetector.TryGetHitObject(AnimalMask, mousePos);
-        if (candidate == null) return;
+        _lastAnimal = _hitDetector.TryGetHitObject(AnimalMask, mousePos);
+        if (_lastAnimal == null) return;
 
-        _animationContext.PlayAnimation(candidate.transform);
+        _animationContext.PlayAnimation(_lastAnimal.transform);
     }
     private void Rescue()
     {
         Vector3 mousePos = _input.GetMousePosition();
         bool collected = _hitDetector.TryHit(AnimalMask, mousePos, true);
-        if (collected) _model.Rescue();
+        if (collected)
+            _model.Rescue();
     }
     private void OnDestroy()
     {

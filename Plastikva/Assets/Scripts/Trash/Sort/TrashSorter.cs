@@ -8,7 +8,7 @@ public sealed class TrashSorter : MonoBehaviour, IScore
     private readonly TrashSortModel _model = new();
     private TrashSortView _view;
 
-   private LevelUnlocking _unlock;
+    private LevelUnlocking _unlock;
     private UI _ui;
 
     private readonly CompositeDisposable _disposables = new();
@@ -37,11 +37,45 @@ public sealed class TrashSorter : MonoBehaviour, IScore
                        return;
                    }
 
+                   _view.ShowPanel(false);
                    _model.SetData(level.Trash);
                    _view.SetButtonsInteractable(true);
                })
                .AddTo(_disposables);
 
+        _unlock.IsTrashSortLevel
+            .Subscribe(show => { _view.ShowPanel(show); })
+            .AddTo(_disposables);
+
+        _model.OnCompleted
+            .Where(done => done)
+            .Subscribe(x =>
+            {
+                _unlock.ReportTrashSorted();
+                _view.ShowPanel(false);
+            })
+            .AddTo(_disposables);
+
+        _model.OnProgress
+            .WithLatestFrom(_model.OnScore, (p, s) => (progress: p, score: s))
+            .Where(x => x.progress.total > 0 && x.progress.current == x.progress.total)
+            .Subscribe(x =>
+            {
+                bool allCorrect = x.score == x.progress.total;
+                if (allCorrect)
+                {
+                    _unlock.ReportTrashSorted();
+                    _view.ShowPanel(false);
+                }
+                else
+                {
+                    //можно крч сделать эффект текста или попа
+                    // _view.ShowRetry(); 
+                    // _model.SetData(_model.GetLastData()); 
+                }
+            })
+            .AddTo(_disposables);
+            
         _view.YesClicks
             .Subscribe(_ =>
             {
@@ -49,9 +83,9 @@ public sealed class TrashSorter : MonoBehaviour, IScore
                 TakenCommand.Execute(Unit.Default);
             })
             .AddTo(_disposables);
-
+        
         _view.NoClicks.Subscribe(_ => _model.Submit(false)).AddTo(_disposables);
-
+        
         _model.OnSprite.Subscribe(sprite =>
         {
             _view.SetSprite(sprite);

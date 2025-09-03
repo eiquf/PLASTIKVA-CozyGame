@@ -5,11 +5,13 @@ public sealed class TrashSortModel
 {
     public Observable<Sprite> OnSprite => _currentSprite;
     public Observable<bool> OnCheck => _isCorrect;
+    public Observable<bool> OnCompleted => _isCompleted;
     public Observable<int> OnScore => _score;
     public Observable<(int current, int total)> OnProgress => _progress;
 
     private readonly ReactiveProperty<Sprite> _currentSprite = new(null);
     private readonly ReactiveProperty<bool> _isCorrect = new(false);
+    private readonly ReactiveProperty<bool> _isCompleted = new(false);
     private readonly ReactiveProperty<int> _score = new(0);
     private readonly ReactiveProperty<(int, int)> _progress = new((0, 0));
 
@@ -23,6 +25,7 @@ public sealed class TrashSortModel
         _total = _data.Length;
         _index = 0;
         _score.Value = 0;
+        _isCompleted.Value = false;
         _progress.Value = (_total == 0) ? (0, 0) : (1, _total);
         PushCurrentSprite();
     }
@@ -40,6 +43,8 @@ public sealed class TrashSortModel
         {
             _progress.Value = (_total, _total);
             _currentSprite.Value = null;
+            
+            _isCompleted.Value = true;
             return;
         }
 
