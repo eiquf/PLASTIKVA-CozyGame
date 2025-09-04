@@ -619,9 +619,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2468828585194482939}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!1 &2528292084379309200
 GameObject:
@@ -1581,7 +1581,8 @@ MonoBehaviour:
   _scoreBar: {fileID: 6623583994632922357}
   _trashCountText: {fileID: 7430648245584468389}
   _animalsCountText: {fileID: 4739192114993914346}
-  _levelPanelShow: {fileID: 0}
+  _levelText: {fileID: 2735395253384192903}
+  _levelCanvasGroup: {fileID: 317763274861634464}
 --- !u!114 &2173115358521343022
 MonoBehaviour:
   m_ObjectHideFlags: 0

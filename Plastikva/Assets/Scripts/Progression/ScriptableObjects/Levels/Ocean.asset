@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f73778162bc77498449b25e79804e7, type: 3}
   m_Name: Ocean
   m_EditorClassIdentifier: 
-  <Title>k__BackingField: 
+  <Title>k__BackingField: Ocean
+  <ID>k__BackingField: 2
   <AnimalsPref>k__BackingField: []
-  <TrashPref>k__BackingField: []
   <Trash>k__BackingField: []
   <RequiredTrashCount>k__BackingField: 7
   <RequiredAnimalsCount>k__BackingField: 5

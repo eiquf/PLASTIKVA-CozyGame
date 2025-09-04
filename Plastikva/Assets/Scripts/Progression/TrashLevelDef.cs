@@ -4,6 +4,7 @@
 public class TrashLevelDef : ScriptableObject
 {
     [field: SerializeField] public string Title { get; private set; }
+    [field: SerializeField] public int ID { get; private set; }
 
     [field: SerializeField] public GameObject[] AnimalsPref { get; private set; }
     [field: SerializeField] public TrashData[] Trash { get; private set; }
