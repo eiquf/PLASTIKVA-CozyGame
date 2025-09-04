@@ -18,6 +18,10 @@ public sealed class UI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _trashCountText;
     [SerializeField] private TextMeshProUGUI _animalsCountText;
 
+    [Header("Level")]
+    [SerializeField] private TextMeshProUGUI _levelText;
+    [SerializeField] private CanvasGroup _levelCanvasGroup;
+
     public Image TrashImage => _trashImage;
     public Button YesButton => _yesButton;
     public Button NoButton => _noButton;
@@ -26,4 +30,7 @@ public sealed class UI : MonoBehaviour
     public TextMeshProUGUI TrashCountText => _trashCountText; 
     public TextMeshProUGUI AnimalsCountText => _animalsCountText;
     public GameObject PanelSort => _panelSort;
+    public CanvasGroup CanvasGroup => _levelCanvasGroup;
+    public TextMeshProUGUI LevelText => _levelText;
+
 }

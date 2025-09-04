@@ -5,7 +5,7 @@ using Zenject;
 public class AnimalsRescue : MonoBehaviour, IScore
 {
     private AnimalsInputHandler _input;
-    private readonly AnimationContext _animationContext = new();
+    private readonly AnimationContext<Transform> _animationContext = new();
 
     private readonly AnimalsRescueModel _model = new();
     private readonly AnimalsRescueView _view = new();

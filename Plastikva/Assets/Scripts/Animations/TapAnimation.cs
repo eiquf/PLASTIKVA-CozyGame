@@ -1,6 +1,6 @@
 ﻿using DG.Tweening;
 using UnityEngine;
-public class TapAnimation : IAnimation
+public class TapAnimation : IAnimation<Transform>
 {
     private readonly float _scaleFactor = 0.9f;
     private readonly float _animationDuration = 0.1f;
