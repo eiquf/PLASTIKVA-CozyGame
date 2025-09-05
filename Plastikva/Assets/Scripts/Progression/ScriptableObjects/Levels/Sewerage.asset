@@ -14,33 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Title>k__BackingField: Sewerage
   <ID>k__BackingField: 0
-  <AnimalsPref>k__BackingField:
-  - {fileID: 2543139915602433563, guid: 7cf95615f9e7fcf4db7b7caa64075f9a, type: 3}
-  - {fileID: 2543139915602433563, guid: 7cf95615f9e7fcf4db7b7caa64075f9a, type: 3}
-  - {fileID: 2543139915602433563, guid: 7cf95615f9e7fcf4db7b7caa64075f9a, type: 3}
-  - {fileID: 2543139915602433563, guid: 7cf95615f9e7fcf4db7b7caa64075f9a, type: 3}
-  - {fileID: 2543139915602433563, guid: 7cf95615f9e7fcf4db7b7caa64075f9a, type: 3}
   <Trash>k__BackingField:
   - <Icon>k__BackingField: {fileID: 982150961, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
-    <Pref>k__BackingField: {fileID: 5481731693250682286, guid: 88ce124ef4275f14a942fcd97fcbddad, type: 3}
     <IsRecyclable>k__BackingField: 0
   - <Icon>k__BackingField: {fileID: 372571918, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
-    <Pref>k__BackingField: {fileID: 5481731693250682286, guid: 88ce124ef4275f14a942fcd97fcbddad, type: 3}
     <IsRecyclable>k__BackingField: 1
   - <Icon>k__BackingField: {fileID: -672723059, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
-    <Pref>k__BackingField: {fileID: 5481731693250682286, guid: 88ce124ef4275f14a942fcd97fcbddad, type: 3}
     <IsRecyclable>k__BackingField: 0
   - <Icon>k__BackingField: {fileID: 2015952740, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
-    <Pref>k__BackingField: {fileID: 5481731693250682286, guid: 88ce124ef4275f14a942fcd97fcbddad, type: 3}
     <IsRecyclable>k__BackingField: 0
   - <Icon>k__BackingField: {fileID: -332782507, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
-    <Pref>k__BackingField: {fileID: 5481731693250682286, guid: 88ce124ef4275f14a942fcd97fcbddad, type: 3}
     <IsRecyclable>k__BackingField: 1
   - <Icon>k__BackingField: {fileID: 1138672840, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
-    <Pref>k__BackingField: {fileID: 5481731693250682286, guid: 88ce124ef4275f14a942fcd97fcbddad, type: 3}
     <IsRecyclable>k__BackingField: 1
   - <Icon>k__BackingField: {fileID: 813831339, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
-    <Pref>k__BackingField: {fileID: 5481731693250682286, guid: 88ce124ef4275f14a942fcd97fcbddad, type: 3}
     <IsRecyclable>k__BackingField: 1
+  <Animals>k__BackingField: []
   <RequiredTrashCount>k__BackingField: 7
-  <RequiredAnimalsCount>k__BackingField: 5
+  <RequiredAnimalsCount>k__BackingField: 0

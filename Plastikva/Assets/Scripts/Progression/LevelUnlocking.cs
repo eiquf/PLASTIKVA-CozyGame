@@ -72,6 +72,8 @@ public class LevelUnlocking : MonoBehaviour
             _isTrashCollected.Value = false;
             _isTrashSort.Value = false;
 
+            _save.Data.collectedTrashIds?.Clear();
+
             SaveGameData();
         }
     }

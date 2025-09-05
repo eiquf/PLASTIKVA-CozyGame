@@ -79,8 +79,22 @@ public class TrashCollector : MonoBehaviour, IScore
     private void Collect()
     {
         Vector3 mousePos = _input.GetMousePosition();
-        bool collected = _hitDetector.TryHit(TrashMask, mousePos, true);
-        if (collected) _model.Collect();
+        if (_hitDetector.TryHit(TrashMask, mousePos, true))
+        {
+            var hitGo = _hitDetector.TryGetHitObject(TrashMask, mousePos);
+            if (hitGo != null)
+            {
+                if (hitGo.TryGetComponent<TrashInstance>(out var inst))
+                {
+                    _save.Data.collectedTrashIds ??= new();
+                    _save.Data.collectedTrashIds.Add(inst.Id);
+                }
+
+                Destroy(hitGo);
+                Debug.Log("Lilo");
+            }
+            _model.Collect();
+        }
     }
 
     private void OnDestroy()

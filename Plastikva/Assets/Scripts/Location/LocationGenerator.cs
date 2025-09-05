@@ -14,6 +14,7 @@ public class LocationGenerator : MonoBehaviour
     [SerializeField] private GameObject _trashPref;
     [SerializeField] private GameObject _animalPref;
 
+    private ISaveService _save;
     private readonly CompositeDisposable _disposables = new();
 
     [Inject]
@@ -23,8 +24,11 @@ public class LocationGenerator : MonoBehaviour
         _ui = ui;
     }
 
-    public void Initialize()
+    public void Initialize(ISaveService save)
     {
+        _save = save;
+
+        _model.Setup(_trashPref, _animalPref, _save);
         _view.Setup(_ui);
 
         _unlocking.CurrentLevel
@@ -38,7 +42,7 @@ public class LocationGenerator : MonoBehaviour
         if (_planes == null || _planes.Length == 0 || _planes[idx] == null)
             return;
 
-        _model.Setup(level.Trash, level.Animals, _planes[idx], _trashPref, _animalPref);
+        _model.SetupData(level.Trash, level.Animals, _planes[idx]);
         _model.Generate();
     })
     .AddTo(_disposables);

@@ -47,7 +47,7 @@ public class Bootstrapper : MonoBehaviour
         _levelUnlocking.Initialize(_save);
 
         _generator = _diContainer.InstantiatePrefab(_locationGenerator).GetComponent<LocationGenerator>();
-        _generator.Initialize();
+        _generator.Initialize(_save);
 
         _trashCollector = _diContainer.InstantiatePrefab(_trashCollectorPref).GetComponent<TrashCollector>();
         _trashSorter = _trashCollector.GetComponent<TrashSorter>();

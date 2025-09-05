@@ -1,6 +1,10 @@
+using System.Collections.Generic;
+
 [System.Serializable]
 public class GameData
 {
+    public HashSet<int> collectedTrashIds = new();
+
     public EnvironmentType currentEnvironment;
     public int currentLevelIndex;
     public bool isFirstLaunch = true;
