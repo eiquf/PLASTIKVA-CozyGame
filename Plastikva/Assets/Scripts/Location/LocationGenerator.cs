@@ -11,6 +11,8 @@ public class LocationGenerator : MonoBehaviour
     private UI _ui;
 
     [SerializeField] private Transform[] _planes;
+    [SerializeField] private GameObject _trashPref;
+    [SerializeField] private GameObject _animalPref;
 
     private readonly CompositeDisposable _disposables = new();
 
@@ -34,12 +36,9 @@ public class LocationGenerator : MonoBehaviour
 
         var idx = Mathf.Clamp(level.ID, 0, _planes.Length - 1);
         if (_planes == null || _planes.Length == 0 || _planes[idx] == null)
-        {
-            Debug.LogError("Planes not set or invalid level.ID");
             return;
-        }
 
-        _model.Setup(level.Trash, _planes[idx]);
+        _model.Setup(level.Trash, level.Animals, _planes[idx], _trashPref, _animalPref);
         _model.Generate();
     })
     .AddTo(_disposables);

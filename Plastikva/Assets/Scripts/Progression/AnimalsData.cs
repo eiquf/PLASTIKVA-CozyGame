@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
 [System.Serializable]
-public struct TrashData
+public struct AnimalsData
 {
     [field: SerializeField] public Sprite Icon { get; private set; }
-    [field: SerializeField] public bool IsRecyclable { get; private set; }
 }
