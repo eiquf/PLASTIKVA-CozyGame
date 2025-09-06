@@ -4,7 +4,8 @@ using System.Collections.Generic;
 [System.Serializable]
 public class GameData
 {
-    public List<int> collectedTrashIds = new List<int>();
+    public List<int> collectedTrashIds = new();
+    public List<int> rescuedAnimalsIds = new();
 
     public EnvironmentType currentEnvironment;
     public int currentLevelIndex;

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 271438515300211592}
   - component: {fileID: 659101082355602642}
   - component: {fileID: 1867443372812195043}
+  - component: {fileID: 1170998154138809886}
   m_Layer: 8
   m_Name: Animal
   m_TagString: Untagged
@@ -134,3 +135,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1170998154138809886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9032349300926416116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64794dab769357545bace9d6e64d5ccf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Render>k__BackingField: {fileID: 659101082355602642}
+  Id: 0

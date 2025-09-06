@@ -3,9 +3,6 @@
 public class CameraRayHitDetector : IHitDetector
 {
     private readonly Camera _camera;
-    private readonly float _maxDistance = Mathf.Infinity;
-
-    private readonly LayerMask DefaultMask = 1 << 0;
 
     public CameraRayHitDetector(Camera camera) => _camera = camera;
 

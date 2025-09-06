@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LevelGeneratorModel
 {
@@ -24,14 +23,14 @@ public class LevelGeneratorModel
     public void Generate()
     {
         float planeXSize = _plane.localScale.x * 50f;
-        float planeZSize = _plane.localScale.z *20f;
+        float planeZSize = _plane.localScale.z * 20f;
         Vector3 center = _plane.position;
 
         var collected = _save.Data.collectedTrashIds;
 
         for (int i = 0; i < _trashData.Length; i++)
         {
-            if (collected != null && collected.Contains(i))
+            if (collected != null && collected.Contains(_trashData[i].PersistentId))
                 continue;
 
             var td = _trashData[i];
@@ -49,18 +48,26 @@ public class LevelGeneratorModel
             inst.Id = td.PersistentId;
         }
 
+        var rescued = _save.Data.rescuedAnimalsIds;
+
         for (int i = 0; i < _animalsData.Length; i++)
         {
-            var td = _animalsData[i];
+            var ad = _animalsData[i];
 
             float x = Random.Range(center.x - planeXSize / 2f, center.x + planeXSize / 2f);
             float z = Random.Range(center.z - planeZSize / 2f, center.z + planeZSize / 2f);
             Vector3 pos = new(x, center.y, z);
 
-            var trash = Object.Instantiate(_animalPref, pos, Quaternion.identity);
+            var go = Object.Instantiate(_animalPref, pos, Quaternion.identity);
 
-            SpriteRenderer render = trash.GetComponent<SpriteRenderer>();
-            render.sprite = td.Icon;
+            var inst = go.GetComponent<AnimalInstance>() ?? go.AddComponent<AnimalInstance>();
+            inst.Id = ad.PersistentId;
+
+            var wasRescued = rescued != null && rescued.Contains(ad.PersistentId);
+            var spriteToUse = wasRescued && ad.ChangeIcon != null ? ad.ChangeIcon : ad.Icon;
+
+            if (inst.Render != null)
+                inst.Render.sprite = spriteToUse;
         }
     }
 }

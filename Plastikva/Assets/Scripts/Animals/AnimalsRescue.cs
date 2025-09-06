@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using R3;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +14,8 @@ public class AnimalsRescue : MonoBehaviour, IScore
 
     private LevelUnlocking _levelUnlocking;
     private TrashLevelDef _currentLevel;
+
+    private AnimalsData[] _animalsData = System.Array.Empty<AnimalsData>();
 
     private UI _ui;
     private readonly LayerMask AnimalMask = 1 << 8;
@@ -47,6 +51,7 @@ public class AnimalsRescue : MonoBehaviour, IScore
         _view.Setup(_ui);
         _model.Setup(_save);
 
+
         _model.CurrentCount
             .Subscribe(count =>
             {
@@ -68,6 +73,7 @@ public class AnimalsRescue : MonoBehaviour, IScore
                if (_currentLevel == null) return;
 
                _model.UpdateGoal(_currentLevel.RequiredAnimalsCount, resetProgress: false);
+               _animalsData = level.Animals ?? System.Array.Empty<AnimalsData>();
            })
            .AddTo(_disposables);
 
@@ -87,13 +93,13 @@ public class AnimalsRescue : MonoBehaviour, IScore
     {
         Vector3 mousePos = _input.GetMousePosition();
 
-        //bool hit = _hitDetector.TryHit(AnimalMask, mousePos, false);
+        bool hit = _hitDetector.TryHit(AnimalMask, mousePos);
 
-        //if (!hit)
-        //{
-        //    _lastAnimal = null;
-        //    return;
-        //}
+        if (!hit)
+        {
+            _lastAnimal = null;
+            return;
+        }
 
         _lastAnimal = _hitDetector.TryGetHitObject(AnimalMask, mousePos);
         if (_lastAnimal == null) return;
@@ -103,10 +109,46 @@ public class AnimalsRescue : MonoBehaviour, IScore
     private void Rescue()
     {
         Vector3 mousePos = _input.GetMousePosition();
-        //bool collected = _hitDetector.TryHit(AnimalMask, mousePos, true);
-        //if (collected)
-        //    _model.Rescue();
+        bool collected = _hitDetector.TryHit(AnimalMask, mousePos);
+
+        if (_save == null || _save.Data == null) return;
+        _save.Data.rescuedAnimalsIds ??= new List<int>();
+
+        if (_lastAnimal == null) return;
+
+        if (!_lastAnimal.TryGetComponent<AnimalInstance>(out var inst))
+        {
+            Destroy(_lastAnimal);
+            return;
+        }
+
+        var icon = GetRescuedIconById(inst.Id);
+
+        var list = _save.Data.rescuedAnimalsIds;
+        if (!list.Contains(inst.Id))
+        {
+            list.Add(inst.Id);
+            _save.Save();
+        }
+
+        if (collected)
+        {
+            _model.Rescue();
+            if (icon != null && inst.Render != null)
+                inst.Render.sprite = icon;
+        }
+
     }
+    private Sprite GetRescuedIconById(int id)
+    {
+        for (int i = 0; i < _animalsData.Length; i++)
+        {
+            if (_animalsData[i].PersistentId == id)
+                return _animalsData[i].ChangeIcon != null ? _animalsData[i].ChangeIcon : _animalsData[i].Icon;
+        }
+        return null;
+    }
+
     private void OnDestroy()
     {
         _disposables.Dispose();
