@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class LevelGeneratorModel
 {
@@ -23,11 +24,11 @@ public class LevelGeneratorModel
     public void Generate()
     {
         float planeXSize = _plane.localScale.x * 50f;
-        float planeZSize = _plane.localScale.z * 10f;
+        float planeZSize = _plane.localScale.z *20f;
         Vector3 center = _plane.position;
 
         var collected = _save.Data.collectedTrashIds;
-        
+
         for (int i = 0; i < _trashData.Length; i++)
         {
             if (collected != null && collected.Contains(i))
@@ -45,7 +46,7 @@ public class LevelGeneratorModel
                 render.sprite = td.Icon;
 
             var inst = go.GetComponent<TrashInstance>() ?? go.AddComponent<TrashInstance>();
-            inst.Id = i;
+            inst.Id = td.PersistentId;
         }
 
         for (int i = 0; i < _animalsData.Length; i++)

@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 
 [System.Serializable]
 public class GameData
 {
-    public HashSet<int> collectedTrashIds = new();
+    public List<int> collectedTrashIds = new List<int>();
 
     public EnvironmentType currentEnvironment;
     public int currentLevelIndex;

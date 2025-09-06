@@ -30,6 +30,7 @@ public class Bootstrapper : MonoBehaviour
     private readonly List<IScore> _scores = new();
     private void Start()
     {
+        //_save.Clear();
         _save = new SaveService();
         _save.LoadOrCreate();
         _diContainer.Bind<ISaveService>().FromInstance(_save).AsSingle();

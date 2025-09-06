@@ -1,4 +1,5 @@
 ﻿using R3;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -78,24 +79,35 @@ public class TrashCollector : MonoBehaviour, IScore
 
     private void Collect()
     {
-        Vector3 mousePos = _input.GetMousePosition();
-        if (_hitDetector.TryHit(TrashMask, mousePos, true))
-        {
-            var hitGo = _hitDetector.TryGetHitObject(TrashMask, mousePos);
-            if (hitGo != null)
-            {
-                if (hitGo.TryGetComponent<TrashInstance>(out var inst))
-                {
-                    _save.Data.collectedTrashIds ??= new();
-                    _save.Data.collectedTrashIds.Add(inst.Id);
-                }
+        if (_save == null || _save.Data == null) return;
+        _save.Data.collectedTrashIds ??= new List<int>();
 
-                Destroy(hitGo);
-                Debug.Log("Lilo");
-            }
+        if (Camera.main == null) return;
+
+        Vector3 mousePos = _input.GetMousePosition();
+
+        var hitGo = _hitDetector.TryGetHitObject(TrashMask, mousePos);
+        if (hitGo == null)
+            return;
+
+        if (!hitGo.TryGetComponent<TrashInstance>(out var inst))
+        {
+            Destroy(hitGo);
             _model.Collect();
+            return;
         }
+
+        var list = _save.Data.collectedTrashIds;
+        if (!list.Contains(inst.Id))
+        {
+            list.Add(inst.Id);
+            _save.Save();
+        }
+
+        Destroy(hitGo);
+        _model.Collect();
     }
+
 
     private void OnDestroy()
     {

@@ -9,8 +9,8 @@ public class Player : MonoBehaviour, IPlayerContext
     public Vector2 CurrentInput { get; private set; }
     public bool IsSprinting { get; private set; }
 
-    public float SlowSpeed { get; private set; } = 5f;
-    public float AccelerationSpeed { get; private set; } = 10f;
+    public float SlowSpeed { get; private set; } = 10f;
+    public float AccelerationSpeed { get; private set; } = 15f;
 
     public Animator Animator { get; private set; }
     public Rigidbody Rigidbody { get; private set; }

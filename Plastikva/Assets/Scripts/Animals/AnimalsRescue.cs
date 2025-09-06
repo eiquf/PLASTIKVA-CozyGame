@@ -87,13 +87,13 @@ public class AnimalsRescue : MonoBehaviour, IScore
     {
         Vector3 mousePos = _input.GetMousePosition();
 
-        bool hit = _hitDetector.TryHit(AnimalMask, mousePos, false);
+        //bool hit = _hitDetector.TryHit(AnimalMask, mousePos, false);
 
-        if (!hit)
-        {
-            _lastAnimal = null;
-            return;
-        }
+        //if (!hit)
+        //{
+        //    _lastAnimal = null;
+        //    return;
+        //}
 
         _lastAnimal = _hitDetector.TryGetHitObject(AnimalMask, mousePos);
         if (_lastAnimal == null) return;
@@ -103,9 +103,9 @@ public class AnimalsRescue : MonoBehaviour, IScore
     private void Rescue()
     {
         Vector3 mousePos = _input.GetMousePosition();
-        bool collected = _hitDetector.TryHit(AnimalMask, mousePos, true);
-        if (collected)
-            _model.Rescue();
+        //bool collected = _hitDetector.TryHit(AnimalMask, mousePos, true);
+        //if (collected)
+        //    _model.Rescue();
     }
     private void OnDestroy()
     {

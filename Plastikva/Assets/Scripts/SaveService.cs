@@ -1,4 +1,7 @@
-﻿[System.Serializable]
+﻿using System.Collections.Generic;
+using UnityEngine;
+
+[System.Serializable]
 public class SaveService : ISaveService
 {
     private GameData _data;
@@ -7,7 +10,12 @@ public class SaveService : ISaveService
 
     public void Clear() => SaveLoadLevel.ClearSaveData();
 
-    public void LoadOrCreate() => _data = SaveLoadLevel.Load<GameData>() ?? new GameData();
+    public void LoadOrCreate()
+    {
+        _data = SaveLoadLevel.Load<GameData>() ?? new GameData();
+        Debug.Log(_data.collectedTrashIds.Count);
+
+    }
 
     public void Save() => SaveLoadLevel.Save(_data);
 }
