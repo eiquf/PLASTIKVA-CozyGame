@@ -7,14 +7,16 @@ public class TapAnimation : IAnimation<Transform>
     public void PlayAnimation(Transform tr)
     {
         if (tr == null) return;
-        tr.DOKill(false);
-        var originalScale = tr.localScale;
-        var targetScale = originalScale * _scaleFactor;
+
+        tr.DOKill(true);
+
+        var baseScale = tr.localScale;
+        var targetScale = baseScale * _scaleFactor;
+
         DOTween.Sequence()
             .SetLink(tr.gameObject, LinkBehaviour.KillOnDestroy)
-            .Append(tr.DOScale(targetScale, _animationDuration)
-            .SetEase(Ease.OutCirc))
-            .Append(tr.DOScale(originalScale, _animationDuration)
-            .SetEase(Ease.InOutCirc));
+            .Append(tr.DOScale(targetScale, _animationDuration).SetEase(Ease.OutCirc))
+            .Append(tr.DOScale(baseScale, _animationDuration).SetEase(Ease.InOutCirc));
     }
+
 }

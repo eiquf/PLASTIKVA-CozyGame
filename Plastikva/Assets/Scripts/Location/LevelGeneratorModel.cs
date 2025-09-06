@@ -56,7 +56,7 @@ public class LevelGeneratorModel
 
             float x = Random.Range(center.x - planeXSize / 2f, center.x + planeXSize / 2f);
             float z = Random.Range(center.z - planeZSize / 2f, center.z + planeZSize / 2f);
-            Vector3 pos = new(x, center.y, z);
+            Vector3 pos = new(x, center.y * -1f, z);
 
             var go = Object.Instantiate(_animalPref, pos, Quaternion.identity);
 

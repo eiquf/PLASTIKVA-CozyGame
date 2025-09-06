@@ -9,6 +9,8 @@ public class TrashCollector : MonoBehaviour, IScore
     private readonly TrashView _view = new();
     private readonly TrashCollectorModel _model = new();
 
+    private readonly AnimationContext<Transform> _animationContext = new();
+
     private LevelUnlocking _levelUnlocking;
     private TrashLevelDef _currentLevel;
 
@@ -35,6 +37,7 @@ public class TrashCollector : MonoBehaviour, IScore
         _input.LeftMouseClicked += Collect;
 
         _hitDetector = new CameraRayHitDetector(Camera.main);
+        _animationContext.SetAnimationStrategy(new TapAnimation());
 
         _view.SetUp(_ui);
         _model.Setup(_save);
@@ -103,6 +106,7 @@ public class TrashCollector : MonoBehaviour, IScore
             list.Add(inst.Id);
             _save.Save();
         }
+        _animationContext.PlayAnimation(hitGo.transform);
 
         Destroy(hitGo);
         _model.Collect();

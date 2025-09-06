@@ -33,6 +33,7 @@ public class Bootstrapper : MonoBehaviour
         //_save.Clear();
         _save = new SaveService();
         _save.LoadOrCreate();
+
         _diContainer.Bind<ISaveService>().FromInstance(_save).AsSingle();
 
         _playerInstance = _diContainer.InstantiatePrefab(_playerPrefab).GetComponent<Player>();
@@ -64,15 +65,19 @@ public class Bootstrapper : MonoBehaviour
         _cameraInstance.SetFollowTarget(_playerInstance.transform);
         _cameraInstance.SetBoundraries(_playerInstance.Boundry);
 
-        _trashCollector.Initialize(_save);
-        _trashSorter.Initialize();
-        _animals.Initialize(_save);
-        _score.Initialize(_scores, _save);
+        Initializing();
 
         _save.Save();
     }
 #if UNITY_EDITOR
     public void ClearData() => _save.Clear();
 #endif
+    private void Initializing()
+    {
+        _trashCollector.Initialize(_save);
+        _trashSorter.Initialize();
+        _animals.Initialize(_save);
+        _score.Initialize(_scores, _save);
+    }
     private void OnDestroy() => _save.Save();
 }
