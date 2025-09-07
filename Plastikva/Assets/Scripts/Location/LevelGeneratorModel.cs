@@ -23,7 +23,7 @@ public class LevelGeneratorModel
     public void Generate()
     {
         float planeXSize = _plane.localScale.x * 50f;
-        float planeZSize = _plane.localScale.z * 20f;
+        float planeZSize = _plane.localScale.z * 40f;
         Vector3 center = _plane.position;
 
         var collected = _save.Data.collectedTrashIds;
@@ -37,7 +37,7 @@ public class LevelGeneratorModel
 
             float x = Random.Range(center.x - planeXSize / 2f, center.x + planeXSize / 2f);
             float z = Random.Range(center.z - planeZSize / 2f, center.z + planeZSize / 2f);
-            Vector3 pos = new(x, center.y * -1f, z);
+            Vector3 pos = new(x, center.y * -0.05f, z);
 
             var go = Object.Instantiate(_trashPref, pos, Quaternion.identity);
 
@@ -56,7 +56,7 @@ public class LevelGeneratorModel
 
             float x = Random.Range(center.x - planeXSize / 2f, center.x + planeXSize / 2f);
             float z = Random.Range(center.z - planeZSize / 2f, center.z + planeZSize / 2f);
-            Vector3 pos = new(x, center.y * -1f, z);
+            Vector3 pos = new(x, center.y * -0.05f, z);
 
             var go = Object.Instantiate(_animalPref, pos, Quaternion.identity);
 

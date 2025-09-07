@@ -20,12 +20,17 @@ public class Player : MonoBehaviour, IPlayerContext
     public PlayerStateMachine StateMachine { get; private set; }
     public IPlayerState SwimState { get; private set; }
     public IPlayerState IdleState { get; private set; }
+
+    public SpriteRenderer Renderer { get; private set; }
+
+    [field:SerializeField] public Sprite[] Sprites { get; private set; }
     #endregion
 
     [Inject] private readonly PlayerInputHandler _inputHandler;
     public void Initialize()
     {
         Rigidbody = GetComponent<Rigidbody>();
+        Renderer = GetComponent<SpriteRenderer>();
 
         StateMachine = new PlayerStateMachine();
         StatesInit();

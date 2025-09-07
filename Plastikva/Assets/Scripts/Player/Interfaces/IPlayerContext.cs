@@ -10,6 +10,9 @@ public interface IPlayerContext
     bool IsSprinting { get; }
     Rigidbody Rigidbody { get; }
     Animator Animator { get; }
+    //part time
+    SpriteRenderer Renderer { get; }
+    Sprite[] Sprites { get; }
 
     #region State Machine
     PlayerStateMachine StateMachine { get; }
