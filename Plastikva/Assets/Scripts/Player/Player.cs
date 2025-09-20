@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Zenject;
 
@@ -23,10 +22,18 @@ public class Player : MonoBehaviour, IPlayerContext
 
     public SpriteRenderer Renderer { get; private set; }
 
-    [field:SerializeField] public Sprite[] Sprites { get; private set; }
+    [field: SerializeField] public Sprite[] Sprites { get; private set; }
     #endregion
 
-    [Inject] private readonly PlayerInputHandler _inputHandler;
+    private PlayerInputHandler _inputHandler;
+    private ISaveService _save;
+
+    [Inject]
+    public void Container(ISaveService save, PlayerInputHandler inputHandler)
+    {
+        _save = save;
+        _inputHandler = inputHandler;
+    }
     public void Initialize()
     {
         Rigidbody = GetComponent<Rigidbody>();
@@ -40,13 +47,18 @@ public class Player : MonoBehaviour, IPlayerContext
         _inputHandler.OnSprintChanged += HandleSprintChanged;
         _inputHandler.OnMoveInputChanged += HandleMoveChanged;
 
+        transform.position = _save.Data.playerPos;
+
         _initialized = true;
     }
 
     void FixedUpdate()
     {
         if (_initialized)
+        {
+            _save.Data.playerPos = transform.position;
             StateMachine.Tick();
+        }
     }
     private void StatesInit()
     {

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
 public class SaveService : ISaveService
@@ -14,7 +13,6 @@ public class SaveService : ISaveService
     {
         _data = SaveLoadLevel.Load<GameData>() ?? new GameData();
         Debug.Log(_data.collectedTrashIds.Count);
-
     }
 
     public void Save() => SaveLoadLevel.Save(_data);

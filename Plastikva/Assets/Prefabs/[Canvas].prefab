@@ -501,7 +501,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2172760554501666670
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1269,7 +1269,7 @@ GameObject:
   - component: {fileID: 5299643842908543282}
   - component: {fileID: 6280139827066470196}
   m_Layer: 5
-  m_Name: incorrectbutton (1)
+  m_Name: delete
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1576,7 +1576,7 @@ MonoBehaviour:
   _panelSort: {fileID: 2314257503172404699}
   _trashImage: {fileID: 7661993052491250567}
   _yesButton: {fileID: 5867090339352508948}
-  _noButton: {fileID: 5867090339352508948}
+  _noButton: {fileID: 7228414331267240569}
   _finalText: {fileID: 787335798078379041}
   _scoreBar: {fileID: 6623583994632922357}
   _trashCountText: {fileID: 7430648245584468389}

@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class GameData
@@ -19,6 +19,7 @@ public class GameData
     public int trashCount;
     public int animalsCount;
 
+    public Vector3 playerPos;
 }
 public enum EnvironmentType
 {

@@ -6,6 +6,7 @@ public class CameraRotate : ICamera<Vector2>
     private readonly float _minRot;
     private readonly float _maxRot;
     private float _currentRot;
+
     public CameraRotate(ICameraContext context)
     {
         _context = context;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 public class Bootstrapper : MonoBehaviour
@@ -70,7 +71,11 @@ public class Bootstrapper : MonoBehaviour
         _save.Save();
     }
 #if UNITY_EDITOR
-    public void ClearData() => _save.Clear();
+    public void ClearData()
+    {
+        _save.Clear();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 #endif
     private void Initializing()
     {
@@ -79,5 +84,5 @@ public class Bootstrapper : MonoBehaviour
         _animals.Initialize(_save);
         _score.Initialize(_scores, _save);
     }
-    //private void OnDestroy() => _save.Save();
+    private void OnDestroy() => _save.Save();
 }

@@ -11,9 +11,6 @@ public class LevelUnlocking : MonoBehaviour
     private readonly ReactiveProperty<TrashLevelDef> _currentLevel = new();
     public Observable<TrashLevelDef> CurrentLevel => _currentLevel;
 
-    private readonly ReactiveProperty<TrashLevelDef> _unlockedLevel = new();
-    public Observable<TrashLevelDef> UnlockedLevel => _unlockedLevel;
-
     private readonly ReactiveProperty<bool> _isTrashSort = new(false);
     public Observable<bool> IsTrashSortLevel => _isTrashSort;
 
@@ -57,7 +54,7 @@ public class LevelUnlocking : MonoBehaviour
     }
     public void ReportTrashCollected() => _isTrashCollected.Value = true;
     public void ReportAnimalsRescued() => _isAnimalRescued.Value = true;
-    public void ReportTrashSorted() => _isTrashSort.Value = true;
+    public void ReportTrashSorted() => UnlockLevel();
     private void SaveGameData() => _save.Data.currentLevelIndex = Array.IndexOf(_levelSet.Levels, _currentLevel.Value);
     private void UnlockLevel()
     {
@@ -93,9 +90,6 @@ public class LevelUnlocking : MonoBehaviour
 
         _isTrashSort.Subscribe(value =>
         {
-            if (value == true) 
-                UnlockLevel();
-
             _save.Data.isTrashSorted = value;
             SaveGameData();
         });

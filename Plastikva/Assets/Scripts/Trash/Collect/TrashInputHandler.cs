@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
+
 public class TrashInputHandler : IInitializable, IDisposable
 {
     private readonly InputController _controller;
@@ -24,7 +25,7 @@ public class TrashInputHandler : IInitializable, IDisposable
         _pointerPosAction = gameplay.PointerPos;
         _dragAction = gameplay.Drag;
 
-        
+
         _collectingAction.performed += _ => LeftMouseClicked?.Invoke();
         _collectingAction.Enable();
     }

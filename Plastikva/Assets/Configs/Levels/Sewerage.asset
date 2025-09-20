@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f73778162bc77498449b25e79804e7, type: 3}
+  m_Name: Sewerage
+  m_EditorClassIdentifier: 
+  <Title>k__BackingField: Sewerage
+  <ID>k__BackingField: 0
+  <Trash>k__BackingField:
+  - <PersistentId>k__BackingField: 0
+    <Icon>k__BackingField: {fileID: 982150961, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
+    <IsRecyclable>k__BackingField: 0
+  - <PersistentId>k__BackingField: 1
+    <Icon>k__BackingField: {fileID: 372571918, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
+    <IsRecyclable>k__BackingField: 1
+  - <PersistentId>k__BackingField: 2
+    <Icon>k__BackingField: {fileID: -672723059, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
+    <IsRecyclable>k__BackingField: 0
+  - <PersistentId>k__BackingField: 4
+    <Icon>k__BackingField: {fileID: 2015952740, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
+    <IsRecyclable>k__BackingField: 0
+  - <PersistentId>k__BackingField: 3
+    <Icon>k__BackingField: {fileID: -332782507, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
+    <IsRecyclable>k__BackingField: 1
+  - <PersistentId>k__BackingField: 5
+    <Icon>k__BackingField: {fileID: 1138672840, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
+    <IsRecyclable>k__BackingField: 1
+  - <PersistentId>k__BackingField: 6
+    <Icon>k__BackingField: {fileID: 813831339, guid: 8b5c194ad237c1b4687f577ef1ef539f, type: 3}
+    <IsRecyclable>k__BackingField: 1
+  <Animals>k__BackingField:
+  - <PersistentId>k__BackingField: 0
+    <Icon>k__BackingField: {fileID: 21300000, guid: 9bb5d2f9ab460e34bb88e0762bef5099, type: 2}
+    <ChangeIcon>k__BackingField: {fileID: 21300000, guid: 80b95922a1692404fbedcffd7f90a665, type: 2}
+  - <PersistentId>k__BackingField: 1
+    <Icon>k__BackingField: {fileID: 21300000, guid: 7d5dfce4e177d5944a3fe492b52bcad2, type: 2}
+    <ChangeIcon>k__BackingField: {fileID: 21300000, guid: 2276b49318e31424493e3298964ca2d9, type: 2}
+  - <PersistentId>k__BackingField: 2
+    <Icon>k__BackingField: {fileID: 21300000, guid: 65b72ecc90b51274da8a78c110e16d9a, type: 2}
+    <ChangeIcon>k__BackingField: {fileID: 21300000, guid: b56960381838d994e90227b10cc69808, type: 2}
+  - <PersistentId>k__BackingField: 3
+    <Icon>k__BackingField: {fileID: 21300000, guid: 5cc8de0b2b32f0a4e988f832d0779f03, type: 2}
+    <ChangeIcon>k__BackingField: {fileID: 21300000, guid: ad04924e74975c547b5cf665bc438065, type: 2}
+  - <PersistentId>k__BackingField: 4
+    <Icon>k__BackingField: {fileID: 21300000, guid: e39ae5006ee647e47aa6e5180aecf1c2, type: 2}
+    <ChangeIcon>k__BackingField: {fileID: 21300000, guid: 6ca3933bae4361d428b2c5a13b36d994, type: 2}
+  <RequiredTrashCount>k__BackingField: 7
+  <RequiredAnimalsCount>k__BackingField: 5

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Zenject;
 
@@ -20,8 +19,8 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
 
     public float RotationSpeed { get; private set; } = 1f;
     public float SnapSpeed { get; private set; } = 6f;
-    public float MinRot { get; private set; } = 0f;
-    public float MaxRot { get; private set; } = 90f;
+    public float MinRot { get; private set; } = -20f;
+    public float MaxRot { get; private set; } = 110f;
     public bool IsRotating { get; private set; }
 
     private Transform _followTarget;

@@ -32,20 +32,25 @@ public class LocationGenerator : MonoBehaviour
         _view.Setup(_ui);
 
         _unlocking.CurrentLevel
-    .Subscribe(level =>
-    {
-        if (level == null) return;
+        .Subscribe(level =>
+        {
+            if (level == null) return;
+        
+            _view.ShowPanel(level.Title);
+        
+            if (_planes == null || _planes.Length == 0)
+                return;
+        
+            var idx = Mathf.Clamp(level.ID, 0, _planes.Length - 1);
+            var plane = _planes[idx];
+            if (plane == null)
+                return;
+        
+            _model.SetupData(level.Trash, level.Animals, plane);
+            _model.Generate();
+        })
+        .AddTo(_disposables);
 
-        _view.ShowPanel(level.Title);
-
-        var idx = Mathf.Clamp(level.ID, 0, _planes.Length - 1);
-        if (_planes == null || _planes.Length == 0 || _planes[idx] == null)
-            return;
-
-        _model.SetupData(level.Trash, level.Animals, _planes[idx]);
-        _model.Generate();
-    })
-    .AddTo(_disposables);
     }
     private void OnDestroy() => _disposables.Dispose();
 }

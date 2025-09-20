@@ -1,5 +1,4 @@
 using R3;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -111,7 +110,6 @@ public class AnimalsRescue : MonoBehaviour, IScore
         bool collected = _hitDetector.TryHit(AnimalMask, mousePos);
 
         if (_save == null || _save.Data == null) return;
-        _save.Data.rescuedAnimalsIds ??= new List<int>();
 
         if (_lastAnimal == null) return;
 
@@ -124,19 +122,15 @@ public class AnimalsRescue : MonoBehaviour, IScore
         var icon = GetRescuedIconById(inst.Id);
 
         var list = _save.Data.rescuedAnimalsIds;
-        if (!list.Contains(inst.Id))
+        if (!list.Contains(inst.Id) && collected)
         {
             list.Add(inst.Id);
             _save.Save();
-        }
 
-        if (collected)
-        {
             _model.Rescue();
             if (icon != null && inst.Render != null)
                 inst.Render.sprite = icon;
         }
-
     }
     private Sprite GetRescuedIconById(int id)
     {

@@ -1,0 +1,707 @@
+fileFormatVersion: 2
+guid: 58504f00b2e020847aec4042633419f4
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_0
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 4281
+        width: 625
+        height: 718
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d1e98f59f2c2a54d9a16c9e69be9f9b
+      internalID: 1935127709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_1
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 4125
+        width: 879
+        height: 868
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cee701a4ba633384d9346a51ffb0a1bd
+      internalID: 1289765121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_2
+      rect:
+        serializedVersion: 2
+        x: 1876
+        y: 4388
+        width: 547
+        height: 520
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 290add2ed6afaf14aa8afda54e9a118d
+      internalID: 101357785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_3
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 3790
+        width: 688
+        height: 481
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9685c0a628ea21e4793b7fd0c2027684
+      internalID: -1755339424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_4
+      rect:
+        serializedVersion: 2
+        x: 709
+        y: 3419
+        width: 623
+        height: 696
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b505ef1df559d6f449d53e652a1f81a1
+      internalID: -1698883738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_5
+      rect:
+        serializedVersion: 2
+        x: 1498
+        y: 3866
+        width: 547
+        height: 520
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf169750b07556b438c4a1da613f7400
+      internalID: -1007556050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_6
+      rect:
+        serializedVersion: 2
+        x: 2076
+        y: 3925
+        width: 389
+        height: 417
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dd6e3a7b27ec69468c90bf24ce4961d
+      internalID: -247889370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_7
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 3156
+        width: 607
+        height: 612
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6537eed16cc25e4588e30a8d0e7cd84
+      internalID: -1069998153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_8
+      rect:
+        serializedVersion: 2
+        x: 663
+        y: 2771
+        width: 686
+        height: 626
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33e7dadb6a54f714b966c3676045dcbe
+      internalID: 1201958056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_9
+      rect:
+        serializedVersion: 2
+        x: 1368
+        y: 3314
+        width: 513
+        height: 508
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 523fa1eb9858a7543ae979589257cf3d
+      internalID: 458434246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_10
+      rect:
+        serializedVersion: 2
+        x: 1896
+        y: 3129
+        width: 583
+        height: 703
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e4a5d7513efc154785f85823c5e5057
+      internalID: 855858598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_11
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 2645
+        width: 429
+        height: 496
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6207c0883d58a164285019c1bb5a7465
+      internalID: 273774692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_12
+      rect:
+        serializedVersion: 2
+        x: 1398
+        y: 2843
+        width: 471
+        height: 431
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bb4eb53c906fb44eb2a66fd291dc851
+      internalID: -1572919514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_13
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 2679
+        width: 547
+        height: 430
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5ac0e8d033302b47bad6732a6cf2ddb
+      internalID: 1257481667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_14
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 1908
+        width: 854
+        height: 732
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dabd271daaadb6a44ae772633fe95b9a
+      internalID: -31810252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_15
+      rect:
+        serializedVersion: 2
+        x: 983
+        y: 2113
+        width: 641
+        height: 625
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cc8087b65b053044a69d63de48e320c
+      internalID: 1464226087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_16
+      rect:
+        serializedVersion: 2
+        x: 1774
+        y: 1796
+        width: 700
+        height: 776
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20a974bed1c494a4e8b230cfda798d6f
+      internalID: -1121386372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_17
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 1273
+        width: 544
+        height: 613
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f780bb55d35486459d71f9dbf900395
+      internalID: 1331768374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_18
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 1246
+        width: 588
+        height: 633
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79be86981448afa48b28d496569cb401
+      internalID: -1261573001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_19
+      rect:
+        serializedVersion: 2
+        x: 1303
+        y: 1168
+        width: 817
+        height: 410
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b744b5932f96ad941939f8b3df50e684
+      internalID: 1907770469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_20
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 874
+        width: 541
+        height: 392
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 156181b0a8226eb4ab4ca50364beb6e4
+      internalID: -1080910565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_21
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 457
+        width: 539
+        height: 418
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6119ed057f5206c4894ee1a0d565b962
+      internalID: -1494120780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_22
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 700
+        width: 654
+        height: 537
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: daf5e652440057845a575104c365aec6
+      internalID: -15100640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_23
+      rect:
+        serializedVersion: 2
+        x: 1478
+        y: 511
+        width: 706
+        height: 611
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6712850615e49544d82e51c3e127b4ba
+      internalID: -466579192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimalsPlastikva_20250919004202_26
+      rect:
+        serializedVersion: 2
+        x: 670
+        y: 82
+        width: 818
+        height: 410
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69aab378507a06e47a9040361652039c
+      internalID: 1583568377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: c90981dcb0f1cc64aae0d2b30ec16fbc
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      AnimalsPlastikva_20250919004202_0: 1935127709
+      AnimalsPlastikva_20250919004202_1: 1289765121
+      AnimalsPlastikva_20250919004202_10: 855858598
+      AnimalsPlastikva_20250919004202_11: 273774692
+      AnimalsPlastikva_20250919004202_12: -1572919514
+      AnimalsPlastikva_20250919004202_13: 1257481667
+      AnimalsPlastikva_20250919004202_14: -31810252
+      AnimalsPlastikva_20250919004202_15: 1464226087
+      AnimalsPlastikva_20250919004202_16: -1121386372
+      AnimalsPlastikva_20250919004202_17: 1331768374
+      AnimalsPlastikva_20250919004202_18: -1261573001
+      AnimalsPlastikva_20250919004202_19: 1907770469
+      AnimalsPlastikva_20250919004202_2: 101357785
+      AnimalsPlastikva_20250919004202_20: -1080910565
+      AnimalsPlastikva_20250919004202_21: -1494120780
+      AnimalsPlastikva_20250919004202_22: -15100640
+      AnimalsPlastikva_20250919004202_23: -466579192
+      AnimalsPlastikva_20250919004202_24: 1873596786
+      AnimalsPlastikva_20250919004202_25: -772930551
+      AnimalsPlastikva_20250919004202_26: 1583568377
+      AnimalsPlastikva_20250919004202_3: -1755339424
+      AnimalsPlastikva_20250919004202_4: -1698883738
+      AnimalsPlastikva_20250919004202_5: -1007556050
+      AnimalsPlastikva_20250919004202_6: -247889370
+      AnimalsPlastikva_20250919004202_7: -1069998153
+      AnimalsPlastikva_20250919004202_8: 1201958056
+      AnimalsPlastikva_20250919004202_9: 458434246
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
