@@ -7,27 +7,29 @@ public class LevelGeneratorModel
     private GameObject _animalPref;
 
     private Transform _currentPlane;
+    private Transform _currentWall;
     private readonly List<Vector2> _points = new();
 
-    float minDistance = -2f;
-    float maxDistance = 2f;
+    readonly float minDistance = -2f;
 
     private TrashData[] _trashData;
     private AnimalsData[] _animalsData;
     private ISaveService _save;
-    public void Setup(GameObject trashPref, GameObject animalPref, ISaveService save)
+    public void SetupPrefs(GameObject trashPref, GameObject animalPref, ISaveService save)
     {
         _trashPref = trashPref;
         _animalPref = animalPref;
         _save = save;
     }
-    public void SetupData(TrashData[] trashData, AnimalsData[] animalsData, Transform plane)
+    public void SetupPlane(Transform plane)
+    {
+        _currentPlane = plane;
+        _currentPlane.gameObject.SetActive(true);
+    }
+    public void SetupData(TrashData[] trashData, AnimalsData[] animalsData)
     {
         _trashData = trashData;
         _animalsData = animalsData;
-        _currentPlane = plane;
-
-        _currentPlane.gameObject.SetActive(true);
     }
     public void Generate()
     {
@@ -80,7 +82,7 @@ public class LevelGeneratorModel
         for (int attempt = 0; attempt < 100; attempt++)
         {
             float x = Random.Range(center.x - planeXSize / 2f, center.x + planeXSize / 2f);
-            float z = Random.Range(center.z - planeZSize / 2f, center.z + planeZSize / 2f);
+            float z = Random.Range(center.z - 5 - planeZSize / 2f, center.z + 5 + planeZSize / 2f);
             Vector3 candidate = new(x, center.y * -0.05f, z);
 
             bool valid = true;

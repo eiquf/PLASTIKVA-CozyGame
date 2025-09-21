@@ -106,10 +106,14 @@ public class TrashCollector : MonoBehaviour, IScore
             list.Add(inst.Id);
             _save.Save();
         }
-        _animationContext.PlayAnimation(hitGo.transform);
 
+        _animationContext.PlayAnimation(hitGo.transform, ()=>
+        {
+            Debug.Log("JEu");
+_model.Collect();
         Destroy(hitGo);
-        _model.Collect();
+        });
+        
     }
 
 

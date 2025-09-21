@@ -84,5 +84,5 @@ public class Bootstrapper : MonoBehaviour
         _animals.Initialize(_save);
         _score.Initialize(_scores, _save);
     }
-    private void OnDestroy() => _save.Save();
+    //private void OnDestroy() => _save.Save();
 }

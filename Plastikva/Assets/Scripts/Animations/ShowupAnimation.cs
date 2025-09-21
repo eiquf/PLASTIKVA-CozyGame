@@ -1,11 +1,12 @@
 ﻿using DG.Tweening;
+using System;
 using UnityEngine;
 
 public class ShowupAnimation : IAnimation<CanvasGroup>
 {
     private readonly float _fadeDuration = 0.5f;
     private readonly float _pauseDuration = 2f;
-    public void PlayAnimation(CanvasGroup canvasGroup)
+    public void PlayAnimation(CanvasGroup canvasGroup, Action onComplete = null)
     {
         canvasGroup.DOKill();
 
