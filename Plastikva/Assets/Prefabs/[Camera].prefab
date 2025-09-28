@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100acd1d1db3eb143a646c7f4a7c7d84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <DragSpeed>k__BackingField: -3
+  <DragSpeed>k__BackingField: -10
   <MinZoom>k__BackingField: 5
   <MaxZoom>k__BackingField: 10
   <ZoomSpeed>k__BackingField: 200

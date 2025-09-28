@@ -64,7 +64,6 @@ public class Bootstrapper : MonoBehaviour
         _cameraInstance.Initialize();
 
         _cameraInstance.SetFollowTarget(_playerInstance.transform);
-        _cameraInstance.SetBoundraries(_playerInstance.Boundry);
 
         Initializing();
 

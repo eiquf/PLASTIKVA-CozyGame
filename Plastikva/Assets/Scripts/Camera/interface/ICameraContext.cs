@@ -2,6 +2,7 @@
 
 public interface ICameraContext
 {
+    Transform Target { get; }
     Camera Camera { get; }
     bool IsRotating { get; }
     #region Параметры гспд
