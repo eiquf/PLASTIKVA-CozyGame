@@ -13,20 +13,17 @@ public class TapAnimation : IAnimation<Transform>
 
         tr.DOKill(false);
 
-        var baseScale = tr.localScale;
-        var targetScale = baseScale * _scaleFactor;
+        Vector3 targetScale = tr.localScale * _scaleFactor;
 
         var seq = DOTween.Sequence();
         seq.Append(tr.DOScale(targetScale, _animationDuration).SetEase(Ease.OutCirc));
-        seq.Append(tr.DOScale(baseScale, _animationDuration).SetEase(Ease.InOutCirc));
+        seq.Append(tr.DOScale(tr.localScale, _animationDuration).SetEase(Ease.InOutCirc));
 
         seq.SetLink(tr.gameObject, LinkBehaviour.KillOnDestroy);
 
         seq.OnComplete(() =>
         {
-            Debug.Log("Animation complete for " + tr.name);
             onComplete?.Invoke();
         });
-
     }
 }

@@ -41,5 +41,8 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Sand
+    uniqueID: 712019263
+    locked: 0
   m_RenderingLayers:
   - Default

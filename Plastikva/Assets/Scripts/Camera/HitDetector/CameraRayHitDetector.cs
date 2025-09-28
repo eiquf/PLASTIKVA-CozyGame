@@ -14,8 +14,7 @@ public class CameraRayHitDetector : IHitDetector
             return false;
 
         Ray ray = _camera.ScreenPointToRay(screenPos);
-        RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity, layerMask);
-        return hit.collider != null;
+        return Physics.Raycast(ray, out _, Mathf.Infinity, layerMask);
     }
 
     public GameObject TryGetHitObject(LayerMask layerMask, Vector2 input)
@@ -23,13 +22,12 @@ public class CameraRayHitDetector : IHitDetector
         if (!_camera) return null;
 
         if (input.x < 0 || input.x > Screen.width || input.y < 0 || input.y > Screen.height)
-        {
-            Debug.LogWarning($"Invalid screen position: {input}");
             return null;
-        }
 
         Ray ray = _camera.ScreenPointToRay(input);
-        RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity, layerMask);
-        return hit.collider ? hit.collider.gameObject : null;
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask))
+            return hit.collider.gameObject;
+
+        return null;
     }
 }
