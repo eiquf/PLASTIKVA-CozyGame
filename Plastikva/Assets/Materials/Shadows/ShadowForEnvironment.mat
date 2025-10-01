@@ -27,6 +27,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _LineTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -42,15 +46,30 @@ Material:
     m_Ints: []
     m_Floats:
     - PixelSnap: 0
+    - _BlendStrength: 1
     - _Cutoff: 0
+    - _EdgeWidth: 0.3
     - _EnableExternalAlpha: 0
-    - _WindFrequency: 2.8
-    - _WindSpeed: 8.7
-    - _WindStrength: 0.028
+    - _FillAlpha: 0.6
+    - _HighlightIntensity: 1
+    - _LineIntensity: 1
+    - _LineScale: 1
+    - _LineSpeed: 1
+    - _OutlineWidth: 0.02
+    - _PulseSpeed: 2
+    - _WaveFrequency: 34
+    - _WaveSpeed: 2
+    - _WaveStrength: 0.2
+    - _WindFrequency: 3
+    - _WindSpeed: 5
+    - _WindStrength: 0.1
     - _ZWrite: 0
     m_Colors:
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _HighlightColor: {r: 0.41176468, g: 0.7229527, b: 0.9490196, a: 1}
+    - _OutlineColor: {r: 1, g: 1, b: 0, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
