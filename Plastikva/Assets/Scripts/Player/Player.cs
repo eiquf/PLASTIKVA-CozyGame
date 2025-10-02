@@ -13,7 +13,6 @@ public class Player : MonoBehaviour, IPlayerContext
 
     public Animator Animator { get; private set; }
     public Rigidbody Rigidbody { get; private set; }
-    [field: SerializeField] public BoxCollider Boundry { get; private set; }
 
     #region State Machine
     public PlayerStateMachine StateMachine { get; private set; }

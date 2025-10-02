@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: wmremove-transformed (1) 6
+  m_Name: Waves
   m_Shader: {fileID: 4800000, guid: ee3516508b158484dbfb28df7b8d33e3, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -45,7 +45,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: adf90cf05c7dfcc4985bcd0dd9cd83a5, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: -5.3, y: -4}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -61,30 +61,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _WaveTex:
         m_Texture: {fileID: 2800000, guid: 64245e28b38ea65499103ee71cf3737d, type: 3}
-        m_Scale: {x: -2, y: 1}
+        m_Scale: {x: -6, y: -1.6}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _Alpha: 1
-    - _AlphaContrast: 0.5
-    - _AlphaInfluence: 0.5
-    - _AlphaMode: 0
-    - _BlendDst: 1
-    - _BlendMode: 0
-    - _BlendSrc: 1
     - _BumpScale: 1
-    - _Cutoff: 0.542
+    - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _FadeEnd: 10
-    - _FadeStart: 2
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HDRMultiplier: 1
-    - _InvFade: 1
-    - _LightCount: 0
-    - _LightingMode: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -92,15 +80,13 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Thickness: 0.05
     - _UVSec: 0
-    - _WaveFrequency: 7.5
-    - _WaveSpeed: 1.41
-    - _WaveStrength: 0.0266
+    - _WaveFrequency: 8.8
+    - _WaveSpeed: 1.04
+    - _WaveStrength: 0.05
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

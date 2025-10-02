@@ -50,12 +50,10 @@
                 return o;
             }
 
-            // hash function for pseudo-random
             float hash(float n) { return frac(sin(n) * 43758.5453); }
 
             fixed4 frag (v2f i) : SV_Target
             {
-                // UV normalized to [-1,1]
                 float2 uv = i.uv * 2.0 - 1.0;
 
                 float t = _Time.y * _Speed;
@@ -70,7 +68,6 @@
 
                     float2 center = float2(x + sin(t * 0.5 + id) * 0.1, y);
 
-                    // local uv inside bubble
                     float2 bubUV = (uv - center) / (r * 2.0) + 0.5;
 
                     if (bubUV.x >= 0 && bubUV.x <= 1 && bubUV.y >= 0 && bubUV.y <= 1)

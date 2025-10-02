@@ -8,8 +8,8 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: 9fc0d4010bbf28b4594072e72b8655ab
+  m_OcclusionCullingData: {fileID: 36300000, guid: 8929769524656fa4a8c09552abbd2811, type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -134,7 +134,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &460273274
 MonoBehaviour:
@@ -150,10 +150,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: 3600161686246638426, guid: 2deaad51d572ad847828ccd81cc5b025, type: 3}
   _levelUnlockingPref: {fileID: 902440204205391956, guid: 559914ac0ac0eea46aa457bafe308937, type: 3}
-  _locationGenerator: {fileID: 3684054978623975879, guid: a122ff4003484024e9f7873131f5769c, type: 3}
+  _locationGenerator: {fileID: 5967980040357631155, guid: a122ff4003484024e9f7873131f5769c, type: 3}
   _trashCollectorPref: {fileID: 8372662664204164496, guid: a1cd055f5c231e54c9a46d4bb04d3f76, type: 3}
   _uiPrefab: {fileID: 352215816784450711, guid: decc6f2326e0a2a46bcc86273f60afb1, type: 3}
-  _cameraPrefab: {fileID: 78458585951031675, guid: f65c20a1d5b263a4fab2caa287cfc412, type: 3}
+  _cameraPrefab: {fileID: 8277187692977897337, guid: f65c20a1d5b263a4fab2caa287cfc412, type: 3}
 --- !u!4 &460273275
 Transform:
   m_ObjectHideFlags: 0
@@ -286,7 +286,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!108 &705507994
 Light:
@@ -299,7 +299,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -361,13 +361,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.18989694, y: 0.3146444, z: -0.6811311, w: 0.63324445}
+  m_LocalRotation: {x: 0.043167908, y: 0.4401843, z: -0.70578784, w: 0.5533876}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 42, y: 10.843, z: -90}
+  m_LocalEulerAnglesHint: {x: 42, y: 35, z: -90}
 --- !u!1 &797545254
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,7 +565,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &1336022979
 MonoBehaviour:

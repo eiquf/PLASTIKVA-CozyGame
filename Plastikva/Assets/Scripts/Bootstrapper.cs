@@ -29,6 +29,7 @@ public class Bootstrapper : MonoBehaviour
 
     private ISaveService _save;
     private readonly List<IScore> _scores = new();
+
     private void Start()
     {
         //_save.Clear();

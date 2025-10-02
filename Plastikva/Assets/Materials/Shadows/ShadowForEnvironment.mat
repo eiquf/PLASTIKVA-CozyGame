@@ -47,7 +47,7 @@ Material:
     m_Floats:
     - PixelSnap: 0
     - _BlendStrength: 1
-    - _Cutoff: 0
+    - _Cutoff: 0.444
     - _EdgeWidth: 0.3
     - _EnableExternalAlpha: 0
     - _FillAlpha: 0.6

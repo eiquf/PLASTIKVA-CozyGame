@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class SwimMovementState : IPlayerState
 {
     private readonly IPlayerContext _context;
