@@ -6,21 +6,30 @@ public class PlayerMovement : IMovementBehaviour
     private readonly float _accelerationSpeed;
 
     private float _speed;
-    private bool _facingForward = false;
+    private bool _facingRight = true;
 
     private Vector2 _moveDirection;
     private readonly Rigidbody _rb;
+
+    private readonly Transform _bubblesPos;
+    private readonly float _bubblesOffsetX;
+
     private readonly SpriteRenderer _spriteRenderer;
-    private Sprite[] _sprites;
+    private readonly Sprite[] _sprites;
 
     public PlayerMovement(IPlayerContext context)
     {
         _rb = context.Rigidbody;
+        _bubblesPos = context.Bubbles;
+
+        _bubblesOffsetX = _bubblesPos.localPosition.x;
+
         _slowSpeed = context.SlowSpeed;
         _accelerationSpeed = context.AccelerationSpeed;
         _spriteRenderer = context.Renderer;
         _sprites = context.Sprites;
     }
+
     public void Execute(Vector2 input, bool isSprinting)
     {
         _moveDirection = new Vector2(-input.x, 0f).normalized;
@@ -35,20 +44,28 @@ public class PlayerMovement : IMovementBehaviour
 
         _rb.AddForce(_moveDirection * movementForce, ForceMode.Acceleration);
 
-        if (_moveDirection.x > 0 && !_facingForward)
+        if (_moveDirection.x > 0 && _facingRight)
         {
             Flip();
-            _spriteRenderer.sprite = _sprites[1];
+            _spriteRenderer.sprite = _sprites[1]; 
+            SetBubblesOffset(-_bubblesOffsetX);
         }
-        else if (_moveDirection.x < 0 && _facingForward)
+        else if (_moveDirection.x < 0 && !_facingRight)
         {
             Flip();
             _spriteRenderer.sprite = _sprites[0];
+            SetBubblesOffset(_bubblesOffsetX);
         }
     }
-    void Flip()
+
+    private void Flip()
     {
-        _facingForward = !_facingForward;
+        _facingRight = !_facingRight;
         _spriteRenderer.flipX = !_spriteRenderer.flipX;
+    }
+
+    private void SetBubblesOffset(float offsetX)
+    {
+        _bubblesPos.localPosition = new Vector3(offsetX, _bubblesPos.localPosition.y, _bubblesPos.localPosition.z);
     }
 }

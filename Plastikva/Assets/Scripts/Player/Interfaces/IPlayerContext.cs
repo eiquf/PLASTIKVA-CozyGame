@@ -8,6 +8,7 @@ public interface IPlayerContext
     #endregion
     Vector2 CurrentInput { get; }
     bool IsSprinting { get; }
+    Transform Bubbles { get; }
     Rigidbody Rigidbody { get; }
     Animator Animator { get; }
     //part time

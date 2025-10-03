@@ -1,4 +1,4 @@
-Shader "Custom/SpriteShadowShader3D"
+ï»¿Shader "Custom/SpriteShadowShader3D"
 {
     Properties
     {
@@ -43,9 +43,10 @@ Shader "Custom/SpriteShadowShader3D"
         Blend One OneMinusSrcAlpha
 
         CGPROGRAM
-        #pragma surface surf Lambert vertex:vert alphatest:_Cutoff addshadow nofog nolightmap nodynlightmap keepalpha noinstancing
+        #pragma surface surf Lambert vertex:vert alphatest:_Cutoff addshadow nofog nolightmap nodynlightmap keepalpha
         #pragma multi_compile_local _ PIXELSNAP_ON
         #pragma multi_compile _ ETC1_EXTERNAL_ALPHA
+        #pragma instancing_options assumeuniformscaling
         #include "UnitySprites.cginc"
 
         struct Input
@@ -66,16 +67,18 @@ Shader "Custom/SpriteShadowShader3D"
         float _WaveFrequency;
         float _BlendStrength;
 
+        UNITY_INSTANCING_BUFFER_START(Props)
+        // If you want per-instance properties, declare them here, e.g.:
+        // UNITY_DEFINE_INSTANCED_PROP(float, _PerInstanceValue)
+        UNITY_INSTANCING_BUFFER_END(Props)
+
         void vert(inout appdata_full v, out Input o)
         {
             v.vertex = UnityFlipSprite(v.vertex, _Flip);
 
-            // Wind sway only modifies X, keeps Y and Z intact
+            // Wind sway only modifies X
             float wave = sin(_Time.y * _WindSpeed + v.vertex.y * _WindFrequency);
             v.vertex.x += wave * _WindStrength;
-
-            // Keep Z as provided by mesh/transform for proper 3D placement
-            // (no override needed)
 
             #if defined(PIXELSNAP_ON)
             v.vertex = UnityPixelSnap(v.vertex);
@@ -94,7 +97,7 @@ Shader "Custom/SpriteShadowShader3D"
 
             // Wave highlight overlay
             float wave = sin((IN.uv_MainTex.y * _WaveFrequency) + (_Time.y * _WaveSpeed));
-            wave = (wave * 0.5 + 0.5); // normalize 0–1
+            wave = (wave * 0.5 + 0.5);
             wave *= _WaveStrength;
 
             finalCol = lerp(finalCol, _HighlightColor.rgb, wave * _BlendStrength);

@@ -10,7 +10,7 @@ public class SwimMovementState : IPlayerState
         _movement = new PlayerMovement(context);
     }
     public void Enter() { } /*=> Animation();*/
-    public void Exit() { }/*=> Animation();*/
+    public void Exit() { } /*=> Animation();*/
 
     public void Execute()
     {
@@ -21,5 +21,8 @@ public class SwimMovementState : IPlayerState
         if (_isMoving) _movement.Execute(input, _context.IsSprinting);
         else _context.StateMachine.SetState(_context.IdleState);
     }
-    //private void Animation() => _context.Animator.SetBool(PlayerConfigs.IDLE_ANIM, _isMoving);
+    private void Animation()
+    {
+        _context.Animator.SetBool(PlayerConfigs.IDLE_ANIM, _isMoving);
+    }
 }

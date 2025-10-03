@@ -11,6 +11,7 @@ public class Player : MonoBehaviour, IPlayerContext
     public float SlowSpeed { get; private set; } = 10f;
     public float AccelerationSpeed { get; private set; } = 15f;
 
+    public Transform Bubbles { get; private set; }
     public Animator Animator { get; private set; }
     public Rigidbody Rigidbody { get; private set; }
 
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour, IPlayerContext
     {
         Rigidbody = GetComponent<Rigidbody>();
         Renderer = GetComponent<SpriteRenderer>();
+        Bubbles = transform.GetChild(0);
 
         StateMachine = new PlayerStateMachine();
         StatesInit();

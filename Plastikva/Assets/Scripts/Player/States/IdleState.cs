@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class IdleState : IPlayerState
 {
     private readonly IPlayerContext _context;
