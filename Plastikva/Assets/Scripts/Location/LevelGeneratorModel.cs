@@ -6,8 +6,8 @@ public class LevelGeneratorModel
     private GameObject _trashPref;
     private GameObject _animalPref;
 
+    private Transform[] _stuffPos = new Transform[2];
     private Transform _currentPlane;
-    private Transform _currentWall;
     private readonly List<Vector2> _points = new();
 
     readonly float minDistance = -2f;
@@ -15,11 +15,12 @@ public class LevelGeneratorModel
     private TrashData[] _trashData;
     private AnimalsData[] _animalsData;
     private ISaveService _save;
-    public void SetupPrefs(GameObject trashPref, GameObject animalPref, ISaveService save)
+    public void SetupPrefs(GameObject trashPref, GameObject animalPref, ISaveService save, Transform[] stuffPos)
     {
         _trashPref = trashPref;
         _animalPref = animalPref;
         _save = save;
+        _stuffPos = stuffPos;
     }
     public void SetupPlane(Transform plane)
     {
@@ -48,7 +49,7 @@ public class LevelGeneratorModel
 
             Vector3 pos = GeneratePoint(center, planeXSize, planeZSize);
 
-            var go = Object.Instantiate(_trashPref, pos, Quaternion.identity);
+            var go = Object.Instantiate(_trashPref, pos, Quaternion.identity, _stuffPos[0]);
 
             if (go.TryGetComponent<SpriteRenderer>(out var render))
                 render.sprite = td.Icon;
@@ -65,10 +66,13 @@ public class LevelGeneratorModel
 
             Vector3 pos = GeneratePoint(center, planeXSize, planeZSize);
 
-            var go = Object.Instantiate(_animalPref, pos, Quaternion.identity);
+            var go = Object.Instantiate(_animalPref, pos, Quaternion.identity, _stuffPos[1]);
 
             var inst = go.GetComponent<AnimalInstance>() ?? go.AddComponent<AnimalInstance>();
             inst.Id = ad.PersistentId;
+            inst.IsStatic = ad.IsStatic;
+            if (ad.IsStatic)
+                Object.Destroy(inst.Bubbles);
 
             var wasRescued = rescued != null && rescued.Contains(ad.PersistentId);
             var spriteToUse = wasRescued && ad.ChangeIcon != null ? ad.ChangeIcon : ad.Icon;

@@ -1,4 +1,4 @@
-﻿Shader "Custom/BubblesSurfaceWithTex"
+﻿Shader "Custom/BubblesSurface"
 {
     Properties
     {

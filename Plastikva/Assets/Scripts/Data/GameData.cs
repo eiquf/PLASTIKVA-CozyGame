@@ -7,6 +7,8 @@ public class GameData
     public List<int> collectedTrashIds = new();
     public List<int> rescuedAnimalsIds = new();
 
+    public List<int> wallsIds = new();
+
     public EnvironmentType currentEnvironment;
     public int currentLevelIndex;
     public bool isFirstLaunch = true;

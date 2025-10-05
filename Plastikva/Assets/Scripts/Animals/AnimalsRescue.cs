@@ -4,6 +4,9 @@ using Zenject;
 
 public class AnimalsRescue : MonoBehaviour, IScore
 {
+#if UNITY_EDITOR
+    public bool finished;
+#endif
     private AnimalsInputHandler _input;
     private readonly AnimationContext<Transform> _animationContext = new();
 
@@ -49,7 +52,12 @@ public class AnimalsRescue : MonoBehaviour, IScore
         _view.Setup(_ui);
         _model.Setup(_save);
 
-
+#if UNITY_EDITOR
+if(finished == true)
+        {
+            _levelUnlocking.ReportAnimalsRescued();
+        }
+#endif
         _model.CurrentCount
             .Subscribe(count =>
             {

@@ -46,8 +46,8 @@ Material:
     m_Ints: []
     m_Floats:
     - PixelSnap: 0
-    - _BlendStrength: 0.77
-    - _Cutoff: 0.082
+    - _BlendStrength: 1
+    - _Cutoff: 0.1
     - _EdgeWidth: 0.181
     - _EnableExternalAlpha: 0
     - _FillAlpha: 0.23
@@ -57,12 +57,12 @@ Material:
     - _LineSpeed: 2.81
     - _OutlineWidth: 0.0265
     - _PulseSpeed: 1.89
-    - _WaveFrequency: 21.8
-    - _WaveSpeed: 4.96
-    - _WaveStrength: 0.218
-    - _WindFrequency: 2.51
-    - _WindSpeed: 1.63
-    - _WindStrength: 0.093
+    - _WaveFrequency: 22
+    - _WaveSpeed: 5.5
+    - _WaveStrength: 0.2
+    - _WindFrequency: 2.5
+    - _WindSpeed: 5
+    - _WindStrength: 0.1
     - _ZWrite: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}

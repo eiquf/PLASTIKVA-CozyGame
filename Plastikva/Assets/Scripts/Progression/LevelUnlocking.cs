@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class LevelUnlocking : MonoBehaviour
 {
+#if UNITY_EDITOR
+    public bool finished;
+#endif
     [SerializeField] private TrashLevelSet _levelSet;
 
     private ISaveService _save;
@@ -51,6 +54,13 @@ public class LevelUnlocking : MonoBehaviour
         .Where(x => x)
         .Subscribe(value => _isTrashSort.Value = value)
         .AddTo(_disposables);
+
+#if UNITY_EDITOR
+        if (finished == true)
+        {
+            UnlockLevel();
+        }
+#endif
     }
     public void ReportTrashCollected() => _isTrashCollected.Value = true;
     public void ReportAnimalsRescued() => _isAnimalRescued.Value = true;

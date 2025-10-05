@@ -16,6 +16,7 @@ public class Bootstrapper : MonoBehaviour
 
     private LevelUnlocking _levelUnlocking;
     private LocationGenerator _generator;
+    private FrustumCulling _frustumCulling;
 
     private Player _playerInstance;
     private IsometricCamera _cameraInstance;
@@ -25,6 +26,8 @@ public class Bootstrapper : MonoBehaviour
 
     private TrashCollector _trashCollector;
     private TrashSorter _trashSorter;
+
+    private AnimalsMovement _animalsMove;
     private AnimalsRescue _animals;
 
     private ISaveService _save;
@@ -52,6 +55,8 @@ public class Bootstrapper : MonoBehaviour
 
         _generator = _diContainer.InstantiatePrefab(_locationGenerator).GetComponent<LocationGenerator>();
         _generator.Initialize(_save);
+        _frustumCulling = _generator.GetComponent<FrustumCulling>();
+        _animalsMove = _generator.GetComponent<AnimalsMovement>();
 
         _trashCollector = _diContainer.InstantiatePrefab(_trashCollectorPref).GetComponent<TrashCollector>();
         _trashSorter = _trashCollector.GetComponent<TrashSorter>();
@@ -83,6 +88,8 @@ public class Bootstrapper : MonoBehaviour
         _trashSorter.Initialize();
         _animals.Initialize(_save);
         _score.Initialize(_scores, _save);
+        _frustumCulling.Initialize(_cameraInstance);
+        _animalsMove.Initialize(_save);
     }
     //private void OnDestroy() => _save.Save();
 }

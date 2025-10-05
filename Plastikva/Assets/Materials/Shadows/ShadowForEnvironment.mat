@@ -62,7 +62,7 @@ Material:
     - _WaveStrength: 0.2
     - _WindFrequency: 3
     - _WindSpeed: 5
-    - _WindStrength: 0.1
+    - _WindStrength: 0.118
     - _ZWrite: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}

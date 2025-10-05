@@ -5,6 +5,9 @@ using Zenject;
 
 public class TrashCollector : MonoBehaviour, IScore
 {
+#if UNITY_EDITOR
+    public bool finished;
+#endif
     private TrashInputHandler _input;
     private readonly TrashView _view = new();
     private readonly TrashCollectorModel _model = new();
@@ -41,6 +44,13 @@ public class TrashCollector : MonoBehaviour, IScore
 
         _view.SetUp(_ui);
         _model.Setup(_save);
+
+#if UNITY_EDITOR
+        if (finished == true)
+        {
+            _levelUnlocking.ReportTrashCollected();
+        }
+#endif
 
         _model.CurrentCount
               .DistinctUntilChanged()

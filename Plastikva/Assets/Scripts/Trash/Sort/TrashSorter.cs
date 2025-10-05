@@ -5,6 +5,9 @@ using Zenject;
 
 public sealed class TrashSorter : MonoBehaviour, IScore
 {
+#if UNITY_EDITOR
+    public bool finished;
+#endif
     private readonly TrashSortModel _model = new();
     private TrashSortView _view;
 
@@ -24,6 +27,13 @@ public sealed class TrashSorter : MonoBehaviour, IScore
     }
     public void Initialize()
     {
+
+#if UNITY_EDITOR
+        if (finished == true)
+        {
+            _unlock.ReportTrashSorted();
+        }
+#endif
         _view.SetUp(_ui);
 
         _unlock.CurrentLevel

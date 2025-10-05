@@ -38,18 +38,28 @@ MonoBehaviour:
     <IsRecyclable>k__BackingField: 1
   <Animals>k__BackingField:
   - <PersistentId>k__BackingField: 10
+    <Flip>k__BackingField: 1
+    <IsStatic>k__BackingField: 0
     <Icon>k__BackingField: {fileID: 21300000, guid: c9b2e2e93f46559488c4e6465040dc4d, type: 2}
     <ChangeIcon>k__BackingField: {fileID: 21300000, guid: 023b58dc5197f904db70c422c32fee44, type: 2}
   - <PersistentId>k__BackingField: 11
+    <Flip>k__BackingField: 1
+    <IsStatic>k__BackingField: 1
     <Icon>k__BackingField: {fileID: 21300000, guid: 79fd48909a3c1df46ad9def4df495fb0, type: 2}
     <ChangeIcon>k__BackingField: {fileID: 21300000, guid: 34ece7b4ea0707e41931bede0cbcdbaf, type: 2}
   - <PersistentId>k__BackingField: 12
+    <Flip>k__BackingField: 0
+    <IsStatic>k__BackingField: 0
     <Icon>k__BackingField: {fileID: 21300000, guid: 890595893e1f9b4479b75c27ed5ad1bd, type: 2}
     <ChangeIcon>k__BackingField: {fileID: 21300000, guid: a08dd507cb58e284b99e91d7b9ae9f90, type: 2}
   - <PersistentId>k__BackingField: 13
+    <Flip>k__BackingField: 1
+    <IsStatic>k__BackingField: 0
     <Icon>k__BackingField: {fileID: 21300000, guid: 01febc21b5d363248972a6f4f4b94675, type: 2}
     <ChangeIcon>k__BackingField: {fileID: 21300000, guid: a53f6b7ff12db11468f7a9b5b3bd7bdd, type: 2}
   - <PersistentId>k__BackingField: 14
+    <Flip>k__BackingField: 0
+    <IsStatic>k__BackingField: 0
     <Icon>k__BackingField: {fileID: 21300000, guid: 9bb5d2f9ab460e34bb88e0762bef5099, type: 2}
     <ChangeIcon>k__BackingField: {fileID: 21300000, guid: 80b95922a1692404fbedcffd7f90a665, type: 2}
   <RequiredTrashCount>k__BackingField: 7

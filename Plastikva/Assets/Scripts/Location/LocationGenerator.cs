@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using R3;
 using UnityEngine;
 using Zenject;
@@ -11,6 +10,7 @@ public class LocationGenerator : MonoBehaviour
     private LevelUnlocking _unlocking;
     private UI _ui;
 
+    [SerializeField] private Transform[] _stuffPos;
     [SerializeField] private Transform[] _planes;
     [SerializeField] private Transform[] _walls;
     [SerializeField] private GameObject _trashPref;
@@ -30,24 +30,24 @@ public class LocationGenerator : MonoBehaviour
     {
         _save = save;
 
-        _model.SetupPrefs(_trashPref, _animalPref, _save);
+        _model.SetupPrefs(_trashPref, _animalPref, _save, _stuffPos);
         _view.Setup(_ui);
 
         _unlocking.CurrentLevel
         .Subscribe(level =>
         {
             if (level == null) return;
-        
+
             _view.ShowPanel(level.Title);
-        
+
             if (_planes == null || _planes.Length == 0)
                 return;
-        
+
             var idx = Mathf.Clamp(level.ID, 0, _planes.Length - 1);
             var plane = _planes[idx];
             if (plane == null)
                 return;
-        
+
             _model.SetupData(level.Trash, level.Animals);
             _model.SetupPlane(plane);
             _model.Generate();
