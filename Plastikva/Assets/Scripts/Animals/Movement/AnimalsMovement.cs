@@ -26,15 +26,6 @@ public class AnimalsMovement : MonoBehaviour
     {
         _save = save;
 
-        _save.Data.wallsIds ??= new List<int>();
-
-        if (_save.Data.wallsIds.Count < 2)
-        {
-            _save.Data.wallsIds.Clear();
-            _save.Data.wallsIds.Add(0);
-            _save.Data.wallsIds.Add(1);
-        }
-
         _unlocking.CurrentLevel
             .Subscribe(level =>
             {
@@ -56,15 +47,9 @@ public class AnimalsMovement : MonoBehaviour
                         _animalsPos.Add(animal.transform);
                     }
                 }
-
-
                 Debug.Log(_save.Data.wallsIds[0] + "and" + _save.Data.wallsIds[1]);
             })
             .AddTo(_disposables);
-
-        _unlocking.CurrentLevel
-            .Skip(1)
-            .Subscribe(level => { AdvanceWallPair(); Debug.Log("AdvanceWallPair called"); }).AddTo(_disposables);
     }
 
     private void FixedUpdate()
@@ -100,16 +85,6 @@ public class AnimalsMovement : MonoBehaviour
 
         int index = Random.value < 0.5f ? first : second;
         return _walls[index].position;
-    }
-    private void AdvanceWallPair()
-    {
-        int nextFirst = _save.Data.wallsIds[1];
-        int nextSecond = nextFirst + 1;
-
-        _save.Data.wallsIds[0] = nextFirst;
-        _save.Data.wallsIds[1] = nextSecond;
-
-        Debug.Log($"{_save.Data.wallsIds[0]} and {_save.Data.wallsIds[1]}");
     }
 
     private void OnDestroy() => _disposables.Dispose();

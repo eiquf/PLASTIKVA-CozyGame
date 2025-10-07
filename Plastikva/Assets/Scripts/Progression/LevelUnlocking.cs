@@ -1,5 +1,6 @@
 using R3;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelUnlocking : MonoBehaviour
@@ -31,6 +32,14 @@ public class LevelUnlocking : MonoBehaviour
             _save.Data.currentLevelIndex = 0;
             _save.Data.currentEnvironment = EnvironmentType.Sewerage;
             _save.Data.isFirstLaunch = false;
+            _save.Data.wallsIds ??= new List<int>();
+
+            if (_save.Data.wallsIds.Count < 2)
+            {
+                _save.Data.wallsIds.Clear();
+                _save.Data.wallsIds.Add(0);
+                _save.Data.wallsIds.Add(1);
+            }
         }
 
         if (_levelSet.Levels == null || _levelSet.Levels.Length == 0)
@@ -72,6 +81,8 @@ public class LevelUnlocking : MonoBehaviour
 
         if (nextIdx != _save.Data.currentLevelIndex)
         {
+            AdvanceWallPair();
+
             _save.Data.currentLevelIndex = nextIdx;
             _currentLevel.Value = _levelSet.Levels[nextIdx];
 
@@ -103,6 +114,16 @@ public class LevelUnlocking : MonoBehaviour
             _save.Data.isTrashSorted = value;
             SaveGameData();
         });
+    }
+    private void AdvanceWallPair()
+    {
+        int nextFirst = _save.Data.wallsIds[1];
+        int nextSecond = nextFirst + 1;
+
+        _save.Data.wallsIds[0] = nextFirst;
+        _save.Data.wallsIds[1] = nextSecond;
+
+        Debug.Log($"{_save.Data.wallsIds[0]} and {_save.Data.wallsIds[1]}");
     }
     private void OnDestroy() => _disposables?.Dispose();
 }

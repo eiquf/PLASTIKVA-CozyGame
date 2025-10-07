@@ -30,6 +30,8 @@ public class Bootstrapper : MonoBehaviour
     private AnimalsMovement _animalsMove;
     private AnimalsRescue _animals;
 
+    private SharksMovement _shark;
+
     private ISaveService _save;
     private readonly List<IScore> _scores = new();
 
@@ -57,6 +59,7 @@ public class Bootstrapper : MonoBehaviour
         _generator.Initialize(_save);
         _frustumCulling = _generator.GetComponent<FrustumCulling>();
         _animalsMove = _generator.GetComponent<AnimalsMovement>();
+        _shark = _generator.GetComponent<SharksMovement>();
 
         _trashCollector = _diContainer.InstantiatePrefab(_trashCollectorPref).GetComponent<TrashCollector>();
         _trashSorter = _trashCollector.GetComponent<TrashSorter>();
@@ -90,6 +93,8 @@ public class Bootstrapper : MonoBehaviour
         _score.Initialize(_scores, _save);
         _frustumCulling.Initialize(_cameraInstance);
         _animalsMove.Initialize(_save);
+        _shark.Initialize(_save);
+        _shark.SetFollowTarget(_playerInstance.transform);
     }
     //private void OnDestroy() => _save.Save();
 }
