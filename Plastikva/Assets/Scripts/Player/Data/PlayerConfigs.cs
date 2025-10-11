@@ -1,4 +1,5 @@
 ﻿public class PlayerConfigs
 {
-    public const string IDLE_ANIM = "Idle";
+    public const string SWIM_FRONT = "IsSwimFront";
+    public const string SWIM_BACK = "IsSwimBack";
 }

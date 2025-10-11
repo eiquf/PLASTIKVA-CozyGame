@@ -25,7 +25,7 @@ public class CameraZoom : ICamera<Vector2>
         _camera.orthographicSize = Mathf.Lerp(
             _camera.orthographicSize,
             _currentZoom,
-            _context.ZoomSmoothnes * Time.deltaTime
+            _context.ZoomSmoothness * Time.deltaTime
         );
     }
 }

@@ -8,7 +8,7 @@ public interface ICameraContext
     #region Параметры гспд
     float DragSpeed { get; }
     float FollowSmoothSpeed { get; }
-    float ZoomSmoothnes { get; }
+    float ZoomSmoothness { get; }
     float ZoomSpeed { get; }
 
     float MinZoom { get; }

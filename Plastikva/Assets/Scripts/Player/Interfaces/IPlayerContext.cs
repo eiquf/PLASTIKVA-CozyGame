@@ -8,13 +8,10 @@ public interface IPlayerContext
     #endregion
     Vector2 CurrentInput { get; }
     bool IsSprinting { get; }
+    bool IsFacingRight {  get; }
     Transform Bubbles { get; }
     Rigidbody Rigidbody { get; }
     Animator Animator { get; }
-    //part time
-    SpriteRenderer Renderer { get; }
-    Sprite[] Sprites { get; }
-
     #region State Machine
     PlayerStateMachine StateMachine { get; }
     //states

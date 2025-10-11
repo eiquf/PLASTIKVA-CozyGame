@@ -141,5 +141,5 @@ MonoBehaviour:
   <MinZoom>k__BackingField: 5
   <MaxZoom>k__BackingField: 10
   <ZoomSpeed>k__BackingField: 200
-  <ZoomSmoothnes>k__BackingField: 5
+  <ZoomSmoothness>k__BackingField: 5
   <FollowSmoothSpeed>k__BackingField: 5

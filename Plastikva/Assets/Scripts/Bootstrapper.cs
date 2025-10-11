@@ -69,8 +69,8 @@ public class Bootstrapper : MonoBehaviour
         _scores.Add(_trashSorter);
         _scores.Add(_animals);
 
-        _playerInstance.Initialize();
         _cameraInstance.Initialize();
+        _playerInstance.Initialize(_cameraInstance);
 
         _cameraInstance.SetFollowTarget(_playerInstance.transform);
 
@@ -93,7 +93,7 @@ public class Bootstrapper : MonoBehaviour
         _score.Initialize(_scores, _save);
         _frustumCulling.Initialize(_cameraInstance);
         _animalsMove.Initialize(_save);
-        _shark.Initialize(_save);
+        _shark.Initialize(_save, _cameraInstance);
         _shark.SetFollowTarget(_playerInstance.transform);
     }
     //private void OnDestroy() => _save.Save();

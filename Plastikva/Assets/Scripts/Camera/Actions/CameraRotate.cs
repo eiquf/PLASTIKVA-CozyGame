@@ -13,6 +13,7 @@ public class CameraRotate : ICamera<Vector2>
         _minRot = context.MinRot;
         _maxRot = context.MaxRot;
     }
+
     public void Execute(Transform transform, Vector2 delta)
     {
         float deltaX = delta.x;
@@ -25,7 +26,9 @@ public class CameraRotate : ICamera<Vector2>
         }
         else
         {
-            float targetRot = Mathf.Abs(_currentRot - _minRot) < Mathf.Abs(_currentRot - _maxRot) ? _minRot : _maxRot;
+            float targetRot = Mathf.Abs(_currentRot - _minRot) < Mathf.Abs(_currentRot - _maxRot)
+                ? _minRot
+                : _maxRot;
             _currentRot = Mathf.Lerp(_currentRot, targetRot, Time.deltaTime * _context.SnapSpeed);
         }
 

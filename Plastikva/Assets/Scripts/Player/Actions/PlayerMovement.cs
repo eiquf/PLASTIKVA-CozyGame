@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerMovement : IMovementBehaviour
+public class PlayerMovement : IMovementBehavior
 {
     private readonly float _slowSpeed;
     private readonly float _accelerationSpeed;
@@ -14,8 +14,6 @@ public class PlayerMovement : IMovementBehaviour
     private readonly Transform _bubblesPos;
     private readonly float _bubblesOffsetX;
 
-    private readonly SpriteRenderer _spriteRenderer;
-    private readonly Sprite[] _sprites;
 
     public PlayerMovement(IPlayerContext context)
     {
@@ -26,8 +24,6 @@ public class PlayerMovement : IMovementBehaviour
 
         _slowSpeed = context.SlowSpeed;
         _accelerationSpeed = context.AccelerationSpeed;
-        _spriteRenderer = context.Renderer;
-        _sprites = context.Sprites;
     }
 
     public void Execute(Vector2 input, bool isSprinting)
@@ -47,25 +43,21 @@ public class PlayerMovement : IMovementBehaviour
         if (_moveDirection.x > 0 && _facingRight)
         {
             Flip();
-            _spriteRenderer.sprite = _sprites[1]; 
             SetBubblesOffset(-_bubblesOffsetX);
         }
         else if (_moveDirection.x < 0 && !_facingRight)
         {
             Flip();
-            _spriteRenderer.sprite = _sprites[0];
             SetBubblesOffset(_bubblesOffsetX);
         }
     }
 
-    private void Flip()
-    {
-        _facingRight = !_facingRight;
-        _spriteRenderer.flipX = !_spriteRenderer.flipX;
-    }
+    private void Flip() => _facingRight = !_facingRight;
 
-    private void SetBubblesOffset(float offsetX)
-    {
-        _bubblesPos.localPosition = new Vector3(offsetX, _bubblesPos.localPosition.y, _bubblesPos.localPosition.z);
-    }
+    private void SetBubblesOffset(float offsetX) =>
+        _bubblesPos.localPosition = new Vector3(
+            offsetX, 
+            _bubblesPos.localPosition.y, 
+            _bubblesPos.localPosition.z);
+    public bool FacingRight() => _facingRight;
 }

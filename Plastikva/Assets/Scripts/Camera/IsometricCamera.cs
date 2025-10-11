@@ -1,3 +1,4 @@
+using R3;
 using UnityEngine;
 using Zenject;
 
@@ -8,7 +9,6 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
 
     public Camera Camera { get; private set; }
     public Transform Target { get; private set; }
-
     [field: SerializeField] public float DragSpeed { get; private set; } = 0.5f;
     private bool _isDragging;
 
@@ -16,7 +16,7 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
     [field: SerializeField] public float MinZoom { get; private set; } = 5f;
     [field: SerializeField] public float MaxZoom { get; private set; } = 10f;
     [field: SerializeField] public float ZoomSpeed { get; private set; } = 5f;
-    [field: SerializeField] public float ZoomSmoothnes { get; private set; } = 5f;
+    [field: SerializeField] public float ZoomSmoothness { get; private set; } = 5f;
 
     public float RotationSpeed { get; private set; } = 1f;
     public float SnapSpeed { get; private set; } = 6f;
@@ -34,7 +34,11 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
     private ICamera<Transform> _follow;
     private ICamera<Vector2> _rotate;
     private ICamera<Vector2> _zoom;
+    private Quaternion _prevCamLocalRot;
     #endregion
+
+    private readonly ReactiveProperty<bool> _isBackSide = new();
+    public Observable<bool> IsBackSide => _isBackSide;
 
     public void Initialize()
     {
@@ -43,6 +47,7 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
 
         Camera = Camera.main;
         Camera.orthographicSize = MaxZoom;
+        _prevCamLocalRot = Camera.transform.rotation;
 
         Init();
 
@@ -51,27 +56,30 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
 
     private void FixedUpdate()
     {
-        if (_initialized)
-        {
-            CheckTargetMovement();
+        if (!_initialized) return;
 
-            Vector2 delta = _input.Delta();
-            Vector2 deltaScroll = _input.DeltaScroll();
+        CheckTargetMovement();
 
-            if (_isDragging && !_followEnabled)
-                _drag.Execute(transform, delta);
+        Vector2 delta = _input.Delta();
+        Vector2 deltaScroll = _input.DeltaScroll();
 
-            if (_followEnabled && Target != null)
-                _follow.Execute(transform);
+        if (_isDragging && !_followEnabled)
+            _drag.Execute(transform, delta);
+
+        if (_followEnabled && Target != null)
+            _follow.Execute(transform);
 
             _rotate.Execute(transform, delta);
 
-            _zoom?.Execute(transform, deltaScroll);
-        }
+        _zoom?.Execute(transform, deltaScroll);
+
+        float yaw = Camera.transform.eulerAngles.y;
+        bool backSide = yaw > 90f && yaw < 270f;
+        _isBackSide.Value = backSide;
     }
+
     private void HandleLeftClick(bool isPressed) => _isDragging = isPressed;
     private void HandleRightClick(bool isPressed) => IsRotating = isPressed;
-
     private void Init()
     {
         _drag = new CameraDrag(this);
