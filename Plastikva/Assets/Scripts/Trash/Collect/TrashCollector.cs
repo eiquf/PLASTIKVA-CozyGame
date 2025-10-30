@@ -26,6 +26,8 @@ public class TrashCollector : MonoBehaviour, IScore
     private readonly CompositeDisposable _disposables = new();
     public ReactiveCommand<int> TakenCommand { get; } = new ReactiveCommand<int>();
 
+    private readonly PickUpAnimation _pickUpAnimation = new();
+
     [Inject]
     private void Container(LevelUnlocking levelUnlocking, TrashInputHandler input, UI ui)
     {
@@ -38,6 +40,9 @@ public class TrashCollector : MonoBehaviour, IScore
     {
         _save = save;
         _input.LeftMouseClicked += Collect;
+
+        _pickUpAnimation.SetUp(_ui);
+        _pickUpAnimation.Prewarm(ScoresConst.DEFAULT);
 
         _hitDetector = new CameraRayHitDetector(Camera.main);
         _animationContext.SetAnimationStrategy(new TapAnimation());
@@ -123,7 +128,8 @@ public class TrashCollector : MonoBehaviour, IScore
 _model.Collect();
         Destroy(hitGo);
         });
-        
+
+        _pickUpAnimation.PlayCollectAnimation(hitGo.transform.position, ScoresConst.DEFAULT);
     }
 
 

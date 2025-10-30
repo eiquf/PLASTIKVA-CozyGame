@@ -17,6 +17,8 @@ public sealed class TrashSorter : MonoBehaviour, IScore
     private readonly CompositeDisposable _disposables = new();
 
     public ReactiveCommand<int> TakenCommand { get; } = new ReactiveCommand<int>();
+    private readonly PickUpAnimation _pickUpAnimation = new();
+
 
     [Inject]
     public void Container(LevelUnlocking unlocking, TrashSortView view, UI ui)
@@ -35,6 +37,8 @@ public sealed class TrashSorter : MonoBehaviour, IScore
         }
 #endif
         _view.SetUp(_ui);
+        _pickUpAnimation.SetUp(_ui);
+        _pickUpAnimation.Prewarm(ScoresConst.TRASH_SORTED);
 
         _unlock.CurrentLevel
             .Subscribe(level =>
@@ -74,7 +78,10 @@ public sealed class TrashSorter : MonoBehaviour, IScore
                 bool allCorrect = x.score == x.progress.total;
 
                 if (allCorrect)
+                {
                     TakenCommand.Execute(ScoresConst.TRASH_SORTED);
+                    _pickUpAnimation.PlayCollectAnimation(_ui.transform.position, ScoresConst.TRASH_SORTED);
+                }
                 else
                     TakenCommand.Execute(-ScoresConst.TRASH_SORTED);
 

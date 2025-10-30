@@ -29,6 +29,7 @@ public class AnimalsRescue : MonoBehaviour, IScore
     private readonly CompositeDisposable _disposables = new();
 
     public ReactiveCommand<int> TakenCommand { get; } = new ReactiveCommand<int>();
+    private readonly PickUpAnimation _pickUpAnimation = new();
 
     [Inject]
     private void Container(LevelUnlocking levelUnlocking, AnimalsInputHandler input, UI ui, ISaveService save)
@@ -48,6 +49,9 @@ public class AnimalsRescue : MonoBehaviour, IScore
 
         _hitDetector = new CameraRayHitDetector(Camera.main);
         _animationContext.SetAnimationStrategy(new TapAnimation());
+
+        _pickUpAnimation.SetUp(_ui);
+        _pickUpAnimation.Prewarm(ScoresConst.DEFAULT);
 
         _view.Setup(_ui);
         _model.Setup(_save);
@@ -141,6 +145,7 @@ public class AnimalsRescue : MonoBehaviour, IScore
             _model.Rescue();
             if (icon != null && inst.Render != null)
                 inst.Render.sprite = icon;
+            _pickUpAnimation.PlayCollectAnimation(_lastAnimal.transform.position, ScoresConst.DEFAULT);
         }
     }
     private Sprite GetRescuedIconById(int id)

@@ -58,6 +58,41 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!1 &1060973878191498900
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6581350929775962147}
+  m_Layer: 5
+  m_Name: Stars
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6581350929775962147
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060973878191498900}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4706930920873888640}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1160967257174649717
 GameObject:
   m_ObjectHideFlags: 0
@@ -2498,6 +2533,8 @@ MonoBehaviour:
   _finalText: {fileID: 787335798078379041}
   _sortCanvasGroup: {fileID: 2853283657496367164}
   _scoreBar: {fileID: 6623583994632922357}
+  _coin: {fileID: 6881603550281222535, guid: 50d6540caa012374aabace2c4e252226, type: 3}
+  _starsPos: {fileID: 6581350929775962147}
   _trashCountText: {fileID: 7430648245584468389}
   _animalsCountText: {fileID: 4739192114993914346}
   _levelText: {fileID: 2735395253384192903}
@@ -2845,6 +2882,7 @@ RectTransform:
   - {fileID: 4249991729266317289}
   - {fileID: 5179651788570421255}
   - {fileID: 804281640432180116}
+  - {fileID: 6581350929775962147}
   m_Father: {fileID: 5347267206904879242}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

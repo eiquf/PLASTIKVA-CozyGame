@@ -15,6 +15,8 @@ public sealed class UI : MonoBehaviour
 
     [Header("Score UI")]
     [SerializeField] private Image _scoreBar;
+    [SerializeField] private GameObject _coin;
+    [SerializeField] private Transform _starsPos;
 
     [Header("Counts")]
     [SerializeField] private TextMeshProUGUI _trashCountText;
@@ -41,4 +43,6 @@ public sealed class UI : MonoBehaviour
     public TextMeshProUGUI LevelText => _levelText;
     public RectTransform FishPos => _fishPos;
     public List<GameObject> Points => _points;
+    public GameObject Star => _coin;
+    public Transform StarsPos => _starsPos;
 }
