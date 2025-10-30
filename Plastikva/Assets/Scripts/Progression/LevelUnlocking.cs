@@ -1,4 +1,4 @@
-using R3;
+﻿using R3;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -95,6 +95,12 @@ public class LevelUnlocking : MonoBehaviour
     {
         var nextIdx = Mathf.Clamp(_save.Data.currentLevelIndex + 1, 0, _levelSet.Levels.Length - 1);
 
+        if (_save.Data.currentLevelIndex >= _levelSet.Levels.Length - 1)
+        {
+            HandleLastLevelCompleted();
+            return;
+        }
+
         if (nextIdx != _save.Data.currentLevelIndex)
         {
             AdvanceWallPair();
@@ -143,5 +149,9 @@ public class LevelUnlocking : MonoBehaviour
         Debug.Log($"{_save.Data.wallsIds[0]} and {_save.Data.wallsIds[1]}");
     }
 
+    private void HandleLastLevelCompleted()
+    {
+        _ui.LOL.SetActive(true);
+    }
     private void OnDestroy() => _disposables?.Dispose();
 }

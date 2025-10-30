@@ -13,6 +13,9 @@ public class Bootstrapper : MonoBehaviour
     [SerializeField] private TrashCollector _trashCollectorPref;
     [SerializeField] private UI _uiPrefab;
     [SerializeField] private IsometricCamera _cameraPrefab;
+    [SerializeField] private TutorialSystem _tutorialSystem;
+
+    private TutorialSystem _tutor;
 
     private LevelUnlocking _levelUnlocking;
     private LocationGenerator _generator;
@@ -45,6 +48,8 @@ public class Bootstrapper : MonoBehaviour
         _save.LoadOrCreate();
 
         _diContainer.Bind<ISaveService>().FromInstance(_save).AsSingle();
+
+        if(_save.Data.isFirstLaunch) _tutor = _diContainer.InstantiatePrefab(_tutorialSystem).GetComponent<TutorialSystem>();
 
         _playerInstance = _diContainer.InstantiatePrefab(_playerPrefab).GetComponent<Player>();
         _cameraInstance = _diContainer.InstantiatePrefab(_cameraPrefab).GetComponent<IsometricCamera>();
