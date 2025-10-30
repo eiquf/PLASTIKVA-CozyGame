@@ -2,6 +2,6 @@
 
 public interface IScore
 {
-    public ReactiveCommand TakenCommand { get; }
+    public ReactiveCommand<int> TakenCommand { get; }
 
 }

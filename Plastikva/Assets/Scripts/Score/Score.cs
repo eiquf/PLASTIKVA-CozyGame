@@ -32,7 +32,7 @@ public class Score : MonoBehaviour
         foreach (var s in _scores)
         {
             s.TakenCommand
-             .Subscribe(_ => _model.UpdateCount())
+             .Subscribe(score => _model.UpdateCount(score))
              .AddTo(_disposables);
         }
     }

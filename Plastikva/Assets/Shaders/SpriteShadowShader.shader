@@ -38,7 +38,7 @@
         }
 
         Cull Off
-        ZWrite On
+        ZWrite Off   // <— only change: stop writing to depth to prevent overlap glitches
         ZTest LEqual
         Blend One OneMinusSrcAlpha
 
@@ -68,15 +68,12 @@
         float _BlendStrength;
 
         UNITY_INSTANCING_BUFFER_START(Props)
-        // If you want per-instance properties, declare them here, e.g.:
-        // UNITY_DEFINE_INSTANCED_PROP(float, _PerInstanceValue)
         UNITY_INSTANCING_BUFFER_END(Props)
 
         void vert(inout appdata_full v, out Input o)
         {
             v.vertex = UnityFlipSprite(v.vertex, _Flip);
 
-            // Wind sway only modifies X
             float wave = sin(_Time.y * _WindSpeed + v.vertex.y * _WindFrequency);
             v.vertex.x += wave * _WindStrength;
 
@@ -92,10 +89,8 @@
         {
             fixed4 c = SampleSpriteTexture(IN.uv_MainTex) * IN.color;
 
-            // Base color
             fixed3 finalCol = c.rgb;
 
-            // Wave highlight overlay
             float wave = sin((IN.uv_MainTex.y * _WaveFrequency) + (_Time.y * _WaveSpeed));
             wave = (wave * 0.5 + 0.5);
             wave *= _WaveStrength;

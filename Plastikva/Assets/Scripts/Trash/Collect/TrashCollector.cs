@@ -24,7 +24,7 @@ public class TrashCollector : MonoBehaviour, IScore
     private ISaveService _save;
 
     private readonly CompositeDisposable _disposables = new();
-    public ReactiveCommand TakenCommand { get; } = new ReactiveCommand();
+    public ReactiveCommand<int> TakenCommand { get; } = new ReactiveCommand<int>();
 
     [Inject]
     private void Container(LevelUnlocking levelUnlocking, TrashInputHandler input, UI ui)
@@ -57,7 +57,7 @@ public class TrashCollector : MonoBehaviour, IScore
               .Subscribe(count =>
               {
                   _view.Render(count);
-                  TakenCommand.Execute(Unit.Default);
+                  TakenCommand.Execute(ScoresConst.DEFAULT);
               })
               .AddTo(_disposables);
 

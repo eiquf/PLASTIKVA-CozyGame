@@ -16,7 +16,7 @@ public sealed class TrashSorter : MonoBehaviour, IScore
 
     private readonly CompositeDisposable _disposables = new();
 
-    public ReactiveCommand TakenCommand { get; } = new ReactiveCommand();
+    public ReactiveCommand<int> TakenCommand { get; } = new ReactiveCommand<int>();
 
     [Inject]
     public void Container(LevelUnlocking unlocking, TrashSortView view, UI ui)
@@ -72,17 +72,15 @@ public sealed class TrashSorter : MonoBehaviour, IScore
             .Subscribe(x =>
             {
                 bool allCorrect = x.score == x.progress.total;
+
                 if (allCorrect)
-                {
-                    _unlock.ReportTrashSorted();
-                    _view.ShowPanel(false);
-                }
+                    TakenCommand.Execute(ScoresConst.TRASH_SORTED);
                 else
-                {
-                    //можно крч сделать эффект текста или попа
-                    // _view.ShowRetry(); 
-                    // _model.SetData(_model.GetLastData()); 
-                }
+                    TakenCommand.Execute(-ScoresConst.TRASH_SORTED);
+
+                _view.ShowFinal(x.score, x.progress.total);
+                _view.ShowPanel(false);
+                _unlock.ReportTrashSorted();
             })
             .AddTo(_disposables);
             
@@ -90,7 +88,6 @@ public sealed class TrashSorter : MonoBehaviour, IScore
             .Subscribe(_ =>
             {
                 _model.Submit(true);
-                TakenCommand.Execute(Unit.Default);
             })
             .AddTo(_disposables);
         

@@ -32,7 +32,6 @@ public class Player : MonoBehaviour, IPlayerContext
     private readonly CompositeDisposable _disposables = new();
 
     private Transform _shield;
-    private bool _flippedZ = false;
 
     [Inject]
     public void Container(ISaveService save, PlayerInputHandler inputHandler)

@@ -70,7 +70,6 @@ public class TrashSortView : IDisposable
            .Append(" max");
         _finalText.text = _sb.ToString();
     }
-
     public void SetButtonsInteractable(bool interactable)
     {
         if (_yesButton != null) _yesButton.interactable = interactable;

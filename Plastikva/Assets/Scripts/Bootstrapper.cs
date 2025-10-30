@@ -30,10 +30,13 @@ public class Bootstrapper : MonoBehaviour
     private AnimalsMovement _animalsMove;
     private AnimalsRescue _animals;
 
-    private SharksMovement _shark;
+    private Shark _shark;
 
     private ISaveService _save;
     private readonly List<IScore> _scores = new();
+
+    private BoxCollider _plane;
+    private List<Transform> _walls = new();
 
     private void Start()
     {
@@ -57,9 +60,13 @@ public class Bootstrapper : MonoBehaviour
 
         _generator = _diContainer.InstantiatePrefab(_locationGenerator).GetComponent<LocationGenerator>();
         _generator.Initialize(_save);
+
+        _plane = _generator.Ground();
+        _walls.AddRange(_generator.Walls());
+
         _frustumCulling = _generator.GetComponent<FrustumCulling>();
         _animalsMove = _generator.GetComponent<AnimalsMovement>();
-        _shark = _generator.GetComponent<SharksMovement>();
+        _shark = _generator.GetComponentInChildren<Shark>();
 
         _trashCollector = _diContainer.InstantiatePrefab(_trashCollectorPref).GetComponent<TrashCollector>();
         _trashSorter = _trashCollector.GetComponent<TrashSorter>();
@@ -68,6 +75,7 @@ public class Bootstrapper : MonoBehaviour
         _scores.Add(_trashCollector);
         _scores.Add(_trashSorter);
         _scores.Add(_animals);
+        _scores.Add(_shark);
 
         _cameraInstance.Initialize();
         _playerInstance.Initialize(_cameraInstance);
@@ -93,8 +101,9 @@ public class Bootstrapper : MonoBehaviour
         _score.Initialize(_scores, _save);
         _frustumCulling.Initialize(_cameraInstance);
         _animalsMove.Initialize(_save);
-        _shark.Initialize(_save, _cameraInstance);
+
         _shark.SetFollowTarget(_playerInstance.transform);
+        _shark.Initialize(_save, _cameraInstance,_plane, _walls);
     }
     //private void OnDestroy() => _save.Save();
 }

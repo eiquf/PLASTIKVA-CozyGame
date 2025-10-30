@@ -3,10 +3,14 @@ using UnityEngine;
 
 public class LevelGeneratorModel
 {
+    private GameObject _spritesPref;
     private GameObject _trashPref;
     private GameObject _animalPref;
 
     private Transform[] _stuffPos = new Transform[2];
+    private Transform[] _walls = new Transform[3];
+    private int _wallID;
+
     private Transform _currentPlane;
     private readonly List<Vector2> _points = new();
 
@@ -15,22 +19,26 @@ public class LevelGeneratorModel
     private TrashData[] _trashData;
     private AnimalsData[] _animalsData;
     private ISaveService _save;
-    public void SetupPrefs(GameObject trashPref, GameObject animalPref, ISaveService save, Transform[] stuffPos)
+    public void Initialize(GameObject trashPref, GameObject animalPref, GameObject spritesPref, ISaveService save, Transform[] stuffPos, Transform[] walls)
     {
         _trashPref = trashPref;
         _animalPref = animalPref;
+        _spritesPref = spritesPref;
+
         _save = save;
         _stuffPos = stuffPos;
+        _walls = walls;
     }
     public void SetupPlane(Transform plane)
     {
         _currentPlane = plane;
         _currentPlane.gameObject.SetActive(true);
     }
-    public void SetupData(TrashData[] trashData, AnimalsData[] animalsData)
+    public void SetupData(TrashData[] trashData, AnimalsData[] animalsData, int id)
     {
         _trashData = trashData;
         _animalsData = animalsData;
+        _wallID = id;
     }
     public void Generate()
     {
@@ -39,6 +47,9 @@ public class LevelGeneratorModel
         Vector3 center = _currentPlane.position;
 
         var collected = _save.Data.collectedTrashIds;
+
+        var trashStackPref = Object.Instantiate(_spritesPref, _walls[_wallID].position, Quaternion.identity);
+        var trashStack = trashStackPref.GetComponentsInChildren<SpriteRenderer>();
 
         for (int i = 0; i < _trashData.Length; i++)
         {
@@ -56,6 +67,9 @@ public class LevelGeneratorModel
 
             var inst = go.GetComponent<TrashInstance>() ?? go.AddComponent<TrashInstance>();
             inst.Id = td.PersistentId;
+
+            trashStack[i].sprite = td.Icon;
+            trashStack[i].gameObject.SetActive(false);
         }
 
         var rescued = _save.Data.rescuedAnimalsIds;

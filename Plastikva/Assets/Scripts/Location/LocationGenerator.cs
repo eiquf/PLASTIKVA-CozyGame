@@ -13,8 +13,12 @@ public class LocationGenerator : MonoBehaviour
     [SerializeField] private Transform[] _stuffPos;
     [SerializeField] private Transform[] _planes;
     [SerializeField] private Transform[] _walls;
+
+    [SerializeField] private GameObject _spritesPref;
     [SerializeField] private GameObject _trashPref;
     [SerializeField] private GameObject _animalPref;
+    [SerializeField] private Transform _ground;
+    private BoxCollider _groundCollider;
 
     private ISaveService _save;
     private readonly CompositeDisposable _disposables = new();
@@ -30,13 +34,24 @@ public class LocationGenerator : MonoBehaviour
     {
         _save = save;
 
-        _model.SetupPrefs(_trashPref, _animalPref, _save, _stuffPos);
+        _model.Initialize
+            (_trashPref, 
+            _animalPref,
+            _spritesPref,
+            _save, 
+            _stuffPos, 
+            _walls);
+
         _view.Setup(_ui);
+
+        _groundCollider = _ground.GetComponent<BoxCollider>();
 
         _unlocking.CurrentLevel
         .Subscribe(level =>
         {
             if (level == null) return;
+
+            int id = _save.Data.currentLevelIndex;
 
             _view.ShowPanel(level.Title);
 
@@ -48,7 +63,7 @@ public class LocationGenerator : MonoBehaviour
             if (plane == null)
                 return;
 
-            _model.SetupData(level.Trash, level.Animals);
+            _model.SetupData(level.Trash, level.Animals, id);
             _model.SetupPlane(plane);
             _model.Generate();
         })
@@ -64,5 +79,7 @@ public class LocationGenerator : MonoBehaviour
             })
             .AddTo(_disposables);
     }
+    public BoxCollider Ground() => _groundCollider;
+    public Transform[] Walls() => _walls;
     private void OnDestroy() => _disposables.Dispose();
 }

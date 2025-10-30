@@ -36,7 +36,7 @@ public sealed class TrashSortModel
 
         bool correct = (_data[_index].IsRecyclable == answerYes);
         _isCorrect.Value = correct;
-        if (correct) _score.Value++;
+        if (correct == true) _score.Value++;
 
         _index++;
         if (_index >= _total)

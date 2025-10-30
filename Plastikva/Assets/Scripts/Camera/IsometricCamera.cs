@@ -34,7 +34,6 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
     private ICamera<Transform> _follow;
     private ICamera<Vector2> _rotate;
     private ICamera<Vector2> _zoom;
-    private Quaternion _prevCamLocalRot;
     #endregion
 
     private readonly ReactiveProperty<bool> _isBackSide = new();
@@ -47,7 +46,6 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
 
         Camera = Camera.main;
         Camera.orthographicSize = MaxZoom;
-        _prevCamLocalRot = Camera.transform.rotation;
 
         Init();
 
@@ -91,6 +89,7 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
     {
         Target = target;
         _followEnabled = target != null;
+        _lastTargetPosition = Target.position;
     }
     private void CheckTargetMovement()
     {

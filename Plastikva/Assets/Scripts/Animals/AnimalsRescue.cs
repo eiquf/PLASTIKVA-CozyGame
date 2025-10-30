@@ -28,7 +28,7 @@ public class AnimalsRescue : MonoBehaviour, IScore
 
     private readonly CompositeDisposable _disposables = new();
 
-    public ReactiveCommand TakenCommand { get; } = new ReactiveCommand();
+    public ReactiveCommand<int> TakenCommand { get; } = new ReactiveCommand<int>();
 
     [Inject]
     private void Container(LevelUnlocking levelUnlocking, AnimalsInputHandler input, UI ui, ISaveService save)
@@ -62,7 +62,7 @@ if(finished == true)
             .Subscribe(count =>
             {
                 _view.Render(count);
-                TakenCommand.Execute(Unit.Default);
+                TakenCommand.Execute(ScoresConst.DEFAULT);
             })
             .AddTo(_disposables);
 
