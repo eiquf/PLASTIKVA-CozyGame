@@ -53,7 +53,7 @@ public class AnimalsRescue : MonoBehaviour, IScore
         _model.Setup(_save);
 
 #if UNITY_EDITOR
-if(finished == true)
+        if (finished == true)
         {
             _levelUnlocking.ReportAnimalsRescued();
         }
@@ -72,28 +72,31 @@ if(finished == true)
              .AddTo(_disposables);
 
         _levelUnlocking.CurrentLevel
-           .Take(1)
-           .Subscribe(level =>
-           {
-               _currentLevel = level;
-               if (_currentLevel == null) return;
-
-               _model.UpdateGoal(_currentLevel.RequiredAnimalsCount, resetProgress: false);
-               _animalsData = level.Animals ?? System.Array.Empty<AnimalsData>();
-           })
-           .AddTo(_disposables);
-
-        _levelUnlocking.CurrentLevel
-          .Skip(1)
+            .Take(1)
             .Subscribe(level =>
             {
                 _currentLevel = level;
                 if (_currentLevel == null) return;
 
-                _model.UpdateGoal(_currentLevel.RequiredAnimalsCount, resetProgress: true);
-                _view.Render(0);
+                _model.UpdateGoal(_currentLevel.RequiredAnimalsCount, resetProgress: false);
+                _animalsData = level.Animals ?? System.Array.Empty<AnimalsData>();
             })
-            .AddTo(_disposables);
+             .AddTo(_disposables);
+
+        _levelUnlocking.CurrentLevel
+          .Skip(1)
+          .Subscribe(level =>
+          {
+              _currentLevel = level;
+              if (_currentLevel == null) return;
+
+              _model.UpdateGoal(_currentLevel.RequiredAnimalsCount, resetProgress: true);
+              _view.Render(0);
+
+              _animalsData = level.Animals ?? System.Array.Empty<AnimalsData>();
+          })
+          .AddTo(_disposables);
+
     }
     private void Help()
     {

@@ -38,7 +38,7 @@ public class LevelGeneratorModel
     {
         _trashData = trashData;
         _animalsData = animalsData;
-        _wallID = id;
+        _wallID = id+1;
     }
     public void Generate()
     {
