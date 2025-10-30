@@ -2,12 +2,12 @@
 using UnityEngine;
 using Zenject;
 
-
 public sealed class TrashSorter : MonoBehaviour, IScore
 {
 #if UNITY_EDITOR
     public bool finished;
 #endif
+
     private readonly TrashSortModel _model = new();
     private TrashSortView _view;
 
@@ -25,9 +25,9 @@ public sealed class TrashSorter : MonoBehaviour, IScore
         _view = view;
         _ui = ui;
     }
+
     public void Initialize()
     {
-
 #if UNITY_EDITOR
         if (finished == true)
         {
@@ -37,21 +37,21 @@ public sealed class TrashSorter : MonoBehaviour, IScore
         _view.SetUp(_ui);
 
         _unlock.CurrentLevel
-               .Subscribe(level =>
-               {
-                   if (level == null || level.Trash == null || level.Trash.Length == 0)
-                   {
-                       _model.SetData(System.Array.Empty<TrashData>());
-                       _view.SetButtonsInteractable(false);
-                       _view.SetSprite(null);
-                       return;
-                   }
+            .Subscribe(level =>
+            {
+                if (level == null || level.Trash == null || level.Trash.Length == 0)
+                {
+                    _model.SetData(System.Array.Empty<TrashData>());
+                    _view.SetButtonsInteractable(false);
+                    _view.SetSprite(null);
+                    return;
+                }
 
-                   _view.ShowPanel(false);
-                   _model.SetData(level.Trash);
-                   _view.SetButtonsInteractable(true);
-               })
-               .AddTo(_disposables);
+                _view.ShowPanel(false);
+                _model.SetData(level.Trash);
+                _view.SetButtonsInteractable(true);
+            })
+            .AddTo(_disposables);
 
         _unlock.IsTrashSortLevel
             .Subscribe(show => { _view.ShowPanel(show); })
@@ -59,7 +59,7 @@ public sealed class TrashSorter : MonoBehaviour, IScore
 
         _model.OnCompleted
             .Where(done => done)
-            .Subscribe(x =>
+            .Subscribe(_ =>
             {
                 _unlock.ReportTrashSorted();
                 _view.ShowPanel(false);
@@ -83,22 +83,23 @@ public sealed class TrashSorter : MonoBehaviour, IScore
                 _unlock.ReportTrashSorted();
             })
             .AddTo(_disposables);
-            
+
         _view.YesClicks
-            .Subscribe(_ =>
+            .Subscribe(_ => _model.Submit(true))
+            .AddTo(_disposables);
+
+        _view.NoClicks
+            .Subscribe(_ => _model.Submit(false))
+            .AddTo(_disposables);
+
+        _model.OnSprite
+            .Subscribe(sprite =>
             {
-                _model.Submit(true);
+                _view.SetSprite(sprite);
+                if (sprite == null)
+                    _view.SetButtonsInteractable(false);
             })
             .AddTo(_disposables);
-        
-        _view.NoClicks.Subscribe(_ => _model.Submit(false)).AddTo(_disposables);
-        
-        _model.OnSprite.Subscribe(sprite =>
-        {
-            _view.SetSprite(sprite);
-            if (sprite == null)
-                _view.SetButtonsInteractable(false);
-        }).AddTo(_disposables);
     }
 
     private void OnDestroy() => _disposables.Dispose();

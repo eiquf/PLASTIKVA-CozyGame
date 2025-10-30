@@ -14,7 +14,6 @@ public class LocationGenerator : MonoBehaviour
     [SerializeField] private Transform[] _planes;
     [SerializeField] private Transform[] _walls;
 
-    [SerializeField] private GameObject _spritesPref;
     [SerializeField] private GameObject _trashPref;
     [SerializeField] private GameObject _animalPref;
     [SerializeField] private Transform _ground;
@@ -37,7 +36,6 @@ public class LocationGenerator : MonoBehaviour
         _model.Initialize
             (_trashPref, 
             _animalPref,
-            _spritesPref,
             _save, 
             _stuffPos, 
             _walls);

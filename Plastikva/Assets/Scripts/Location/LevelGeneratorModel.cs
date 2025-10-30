@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class LevelGeneratorModel
 {
-    private GameObject _spritesPref;
     private GameObject _trashPref;
     private GameObject _animalPref;
 
@@ -19,11 +18,10 @@ public class LevelGeneratorModel
     private TrashData[] _trashData;
     private AnimalsData[] _animalsData;
     private ISaveService _save;
-    public void Initialize(GameObject trashPref, GameObject animalPref, GameObject spritesPref, ISaveService save, Transform[] stuffPos, Transform[] walls)
+    public void Initialize(GameObject trashPref, GameObject animalPref, ISaveService save, Transform[] stuffPos, Transform[] walls)
     {
         _trashPref = trashPref;
         _animalPref = animalPref;
-        _spritesPref = spritesPref;
 
         _save = save;
         _stuffPos = stuffPos;
@@ -48,9 +46,6 @@ public class LevelGeneratorModel
 
         var collected = _save.Data.collectedTrashIds;
 
-        var trashStackPref = Object.Instantiate(_spritesPref, _walls[_wallID].position, Quaternion.identity);
-        var trashStack = trashStackPref.GetComponentsInChildren<SpriteRenderer>();
-
         for (int i = 0; i < _trashData.Length; i++)
         {
             if (collected != null && collected.Contains(_trashData[i].PersistentId))
@@ -65,11 +60,9 @@ public class LevelGeneratorModel
             if (go.TryGetComponent<SpriteRenderer>(out var render))
                 render.sprite = td.Icon;
 
+
             var inst = go.GetComponent<TrashInstance>() ?? go.AddComponent<TrashInstance>();
             inst.Id = td.PersistentId;
-
-            trashStack[i].sprite = td.Icon;
-            trashStack[i].gameObject.SetActive(false);
         }
 
         var rescued = _save.Data.rescuedAnimalsIds;

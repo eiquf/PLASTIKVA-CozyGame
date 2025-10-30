@@ -2,15 +2,19 @@ using R3;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class LevelUnlocking : MonoBehaviour
 {
 #if UNITY_EDITOR
     public bool finished;
 #endif
+
     [SerializeField] private TrashLevelSet _levelSet;
 
     private ISaveService _save;
+
+    private readonly MapView _mapView = new();
 
     private readonly ReactiveProperty<TrashLevelDef> _currentLevel = new();
     public Observable<TrashLevelDef> CurrentLevel => _currentLevel;
@@ -23,9 +27,16 @@ public class LevelUnlocking : MonoBehaviour
 
     private readonly CompositeDisposable _disposables = new();
 
+    private UI _ui;
+
+    [Inject]
+    public void Container(UI ui) => _ui = ui;
+
     public void Initialize(ISaveService save)
     {
         _save = save;
+
+        _mapView.SetUp(_ui);
 
         if (_save.Data.isFirstLaunch)
         {
@@ -42,27 +53,25 @@ public class LevelUnlocking : MonoBehaviour
             }
         }
 
-        if (_levelSet.Levels == null || _levelSet.Levels.Length == 0)
+        if (_levelSet == null || _levelSet.Levels == null || _levelSet.Levels.Length == 0)
             return;
 
         _save.Data.currentLevelIndex = Mathf.Clamp(_save.Data.currentLevelIndex, 0, _levelSet.Levels.Length - 1);
 
         _currentLevel.Value = _levelSet.Levels[_save.Data.currentLevelIndex];
 
-        _isTrashCollected.Value = _save.Data.isTrashCollected;
-        _isAnimalRescued.Value = _save.Data.isAnimalRescued;
-        _isTrashSort.Value = _save.Data.isTrashSorted;
+        _isTrashCollected.Value = false;
+        _isAnimalRescued.Value = false;
 
         SaveGameData();
 
         ChangeStates();
 
         Observable
-        .CombineLatest(_isTrashCollected, _isAnimalRescued, (t, a) => t && a)
-        .DistinctUntilChanged()
-        .Where(x => x)
-        .Subscribe(value => _isTrashSort.Value = value)
-        .AddTo(_disposables);
+            .CombineLatest(_isTrashCollected, _isAnimalRescued, (t, a) => t && a)
+            .DistinctUntilChanged()
+            .Subscribe(value => _isTrashSort.Value = value)
+            .AddTo(_disposables);
 
 #if UNITY_EDITOR
         if (finished == true)
@@ -71,10 +80,17 @@ public class LevelUnlocking : MonoBehaviour
         }
 #endif
     }
+
     public void ReportTrashCollected() => _isTrashCollected.Value = true;
     public void ReportAnimalsRescued() => _isAnimalRescued.Value = true;
+
     public void ReportTrashSorted() => UnlockLevel();
-    private void SaveGameData() => _save.Data.currentLevelIndex = Array.IndexOf(_levelSet.Levels, _currentLevel.Value);
+
+    private void SaveGameData()
+    {
+        _save.Data.currentLevelIndex = Array.IndexOf(_levelSet.Levels, _currentLevel.Value);
+    }
+
     private void UnlockLevel()
     {
         var nextIdx = Mathf.Clamp(_save.Data.currentLevelIndex + 1, 0, _levelSet.Levels.Length - 1);
@@ -86,35 +102,36 @@ public class LevelUnlocking : MonoBehaviour
             _save.Data.currentLevelIndex = nextIdx;
             _currentLevel.Value = _levelSet.Levels[nextIdx];
 
+            _mapView.UpdateView(_save.Data.currentLevelIndex);
+
             _isAnimalRescued.Value = false;
             _isTrashCollected.Value = false;
-            _isTrashSort.Value = false;
 
             _save.Data.collectedTrashIds?.Clear();
 
             SaveGameData();
         }
     }
+
     private void ChangeStates()
     {
-        _isAnimalRescued.Subscribe(value =>
-        {
-            _save.Data.isAnimalRescued = value;
-            SaveGameData();
-        });
+        _isAnimalRescued
+            .Subscribe(value =>
+            {
+                _save.Data.isAnimalRescued = value;
+                SaveGameData();
+            })
+            .AddTo(_disposables);
 
-        _isTrashCollected.Subscribe(value =>
-        {
-            _save.Data.isTrashCollected = value;
-            SaveGameData();
-        });
-
-        _isTrashSort.Subscribe(value =>
-        {
-            _save.Data.isTrashSorted = value;
-            SaveGameData();
-        });
+        _isTrashCollected
+            .Subscribe(value =>
+            {
+                _save.Data.isTrashCollected = value;
+                SaveGameData();
+            })
+            .AddTo(_disposables);
     }
+
     private void AdvanceWallPair()
     {
         int nextFirst = _save.Data.wallsIds[1];
@@ -125,5 +142,6 @@ public class LevelUnlocking : MonoBehaviour
 
         Debug.Log($"{_save.Data.wallsIds[0]} and {_save.Data.wallsIds[1]}");
     }
+
     private void OnDestroy() => _disposables?.Dispose();
 }

@@ -21,6 +21,9 @@ public class TrashSortView : IDisposable
     private Button _noButton;
     private TextMeshProUGUI _finalText;
 
+    private CanvasGroup _canvasGroup;
+    private readonly AnimationContext<CanvasGroup> _animContext = new();
+
     private UnityAction _yesHandler;
     private UnityAction _noHandler;
 
@@ -31,6 +34,9 @@ public class TrashSortView : IDisposable
         _yesButton = ui.YesButton;
         _noButton = ui.NoButton;
         _finalText = ui.FinalText;
+        _canvasGroup = ui.SortTextGroup;
+
+        _animContext.SetAnimationStrategy(new ShowupAnimation());
 
         _yesHandler = () => _yesClicks.OnNext(Unit.Default);
         _noHandler = () => _noClicks.OnNext(Unit.Default);
@@ -61,7 +67,6 @@ public class TrashSortView : IDisposable
     public void ShowFinal(int score, int total)
     {
         if (_finalText == null) return;
-
         _sb.Clear();
         _sb.Append("Wooooah! You've got: ")
            .Append(score)
@@ -69,6 +74,7 @@ public class TrashSortView : IDisposable
            .Append(total)
            .Append(" max");
         _finalText.text = _sb.ToString();
+        _animContext.PlayAnimation(_canvasGroup);
     }
     public void SetButtonsInteractable(bool interactable)
     {
