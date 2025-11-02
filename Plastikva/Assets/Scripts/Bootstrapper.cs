@@ -39,7 +39,7 @@ public class Bootstrapper : MonoBehaviour
     private readonly List<IScore> _scores = new();
 
     private BoxCollider _plane;
-    private List<Transform> _walls = new();
+    private readonly List<Transform> _walls = new();
 
     private void Start()
     {

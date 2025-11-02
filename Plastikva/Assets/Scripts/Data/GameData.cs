@@ -17,6 +17,11 @@ public class GameData
     public bool isTrashSorted;
     public bool isAnimalRescued;
 
+    public bool isMovementTaught;
+    public bool isEnemyTaught;
+    public bool isCameraTaught;
+    public bool isTapTaught;
+
     public int currentScore;
     public int trashCount;
     public int animalsCount;

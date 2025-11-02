@@ -154,7 +154,7 @@ MonoBehaviour:
   _trashCollectorPref: {fileID: 8372662664204164496, guid: a1cd055f5c231e54c9a46d4bb04d3f76, type: 3}
   _uiPrefab: {fileID: 352215816784450711, guid: decc6f2326e0a2a46bcc86273f60afb1, type: 3}
   _cameraPrefab: {fileID: 8277187692977897337, guid: f65c20a1d5b263a4fab2caa287cfc412, type: 3}
-  _tutorialSystem: {fileID: 0}
+  _tutorialSystem: {fileID: 7638855284866468418, guid: 9d58e8099e9f7114891044f6dc861c67, type: 3}
 --- !u!4 &460273275
 Transform:
   m_ObjectHideFlags: 0
@@ -272,37 +272,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &679555913
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 679555914}
-  m_Layer: 0
-  m_Name: '[TutorialSystem]'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &679555914
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 679555913}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,4 +768,3 @@ SceneRoots:
   - {fileID: 1336022980}
   - {fileID: 460273275}
   - {fileID: 568101338}
-  - {fileID: 679555914}

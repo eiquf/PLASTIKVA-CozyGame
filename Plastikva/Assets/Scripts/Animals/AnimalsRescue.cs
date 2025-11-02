@@ -125,12 +125,12 @@ public class AnimalsRescue : MonoBehaviour, IScore
         bool collected = _hitDetector.TryHit(AnimalMask, mousePos);
 
         if (_save == null || _save.Data == null) return;
-
         if (_lastAnimal == null) return;
 
         if (!_lastAnimal.TryGetComponent<AnimalInstance>(out var inst))
         {
             Destroy(_lastAnimal);
+            _lastAnimal = null;
             return;
         }
 
@@ -145,7 +145,11 @@ public class AnimalsRescue : MonoBehaviour, IScore
             _model.Rescue();
             if (icon != null && inst.Render != null)
                 inst.Render.sprite = icon;
+
             _pickUpAnimation.PlayCollectAnimation(_lastAnimal.transform.position, ScoresConst.DEFAULT);
+            _pickUpAnimation.PlayCenterToDeliverAnimation(icon, onDelivered: () => { Debug.Log("Animals"); });
+
+            _lastAnimal = null;
         }
     }
     private Sprite GetRescuedIconById(int id)

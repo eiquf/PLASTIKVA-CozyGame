@@ -44,11 +44,12 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
         _input.OnLeftMouseClick += HandleLeftClick;
         _input.OnRightMouseClick += HandleRightClick;
 
-        Camera = Camera.main;
-        Camera.orthographicSize = MaxZoom;
+        Camera = GetComponentInChildren<Camera>();
+        Camera.orthographicSize = 10f;
 
         Init();
 
+        _zoom?.Execute(transform, new Vector2(0, -1f));
         _initialized = true;
     }
 
@@ -64,10 +65,9 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
         if (_isDragging && !_followEnabled)
             _drag.Execute(transform, delta);
 
-        if (_followEnabled && Target != null)
-            _follow.Execute(transform);
+        _follow.Execute(transform);
 
-            _rotate.Execute(transform, delta);
+        _rotate.Execute(transform, delta);
 
         _zoom?.Execute(transform, deltaScroll);
 

@@ -1,4 +1,5 @@
-﻿using R3;
+﻿using DG.Tweening;
+using R3;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -105,15 +106,12 @@ public class TrashCollector : MonoBehaviour, IScore
         Vector3 mousePos = _input.GetMousePosition();
 
         var hitGo = _hitDetector.TryGetHitObject(TrashMask, mousePos);
-        if (hitGo == null)
-            return;
+        if (hitGo == null) return;
 
-        if (!hitGo.TryGetComponent<TrashInstance>(out var inst))
-        {
-            Destroy(hitGo);
-            _model.Collect();
-            return;
-        }
+        var inst = hitGo.GetComponentInParent<TrashInstance>();
+        if (inst == null) return;
+
+        var rootGo = inst.gameObject;
 
         var list = _save.Data.collectedTrashIds;
         if (!list.Contains(inst.Id))
@@ -122,14 +120,14 @@ public class TrashCollector : MonoBehaviour, IScore
             _save.Save();
         }
 
-        _animationContext.PlayAnimation(hitGo.transform, ()=>
+        _animationContext.PlayAnimation(rootGo.transform, () =>
         {
-            Debug.Log("JEu");
-_model.Collect();
-        Destroy(hitGo);
+            _model.Collect();
+            Destroy(rootGo);
         });
 
-        _pickUpAnimation.PlayCollectAnimation(hitGo.transform.position, ScoresConst.DEFAULT);
+        _pickUpAnimation.PlayCollectAnimation(rootGo.transform.position, ScoresConst.DEFAULT);
+        _pickUpAnimation.PlayCenterToDeliverAnimation(inst.sprite.sprite, onDelivered: () => { Debug.Log("trash"); });
     }
 
 

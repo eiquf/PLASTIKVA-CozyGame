@@ -30,6 +30,8 @@ public sealed class UI : MonoBehaviour
     [SerializeField] private RectTransform _fishPos;
     [SerializeField] private List<GameObject> _points;
 
+    [SerializeField] private RectTransform _centerAnchor;
+
     [SerializeField] private GameObject _LOL;
     public Image TrashImage => _trashImage;
     public Button YesButton => _yesButton;
@@ -47,4 +49,5 @@ public sealed class UI : MonoBehaviour
     public GameObject Star => _coin;
     public Transform StarsPos => _starsPos;
     public GameObject LOL => _LOL;
+    public RectTransform CenterAnchor => _centerAnchor;
 }
