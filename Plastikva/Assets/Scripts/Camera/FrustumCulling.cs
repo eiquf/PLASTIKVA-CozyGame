@@ -5,7 +5,7 @@ public class FrustumCulling : MonoBehaviour
 {
     [Header("Objects to Cull")]
     [SerializeField] private Transform[] _envPos; 
-    private List<GameObject> _objectsToCull = new();
+    private readonly List<GameObject> _objectsToCull = new();
 
     private IsometricCamera _camera;
 
@@ -39,9 +39,6 @@ public class FrustumCulling : MonoBehaviour
             if (obj.TryGetComponent(out Renderer rend))
             {
                 bool isVisible = GeometryUtility.TestPlanesAABB(planes, rend.bounds);
-
-                rend.enabled = isVisible;
-
                 obj.SetActive(isVisible);
             }
         }

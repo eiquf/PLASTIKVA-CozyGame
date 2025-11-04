@@ -129,8 +129,30 @@
                 },
                 {
                     "name": "",
+                    "id": "4073b84a-5387-4204-ab29-109c8b3819a2",
+                    "path": "<Touchscreen>/touch0/tap",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Collecting",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "a3b7e0ea-29c9-4d64-a0ae-112237bdc6d1",
                     "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Drag",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7d92ca29-9155-4a5e-ad7d-ba93874ad898",
+                    "path": "<Touchscreen>/touch0/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -151,8 +173,30 @@
                 },
                 {
                     "name": "",
+                    "id": "eaca05d2-cda2-4854-926c-74ab011eb08f",
+                    "path": "<Touchscreen>/touch1/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PointerPos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "8daee4c7-0978-4447-9350-7536c8c4eac1",
                     "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rescue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e182a1b2-327f-4523-8f3f-b18d80c15422",
+                    "path": "<Touchscreen>/touch1/tap",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

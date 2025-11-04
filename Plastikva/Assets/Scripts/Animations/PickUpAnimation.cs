@@ -14,17 +14,17 @@ public class PickUpAnimation
     private Transform _centerAnchor;
     private Sprite _defaultStarSprite;
 
-    [Header("Scatter Settings")]
-    [SerializeField] private float moveDuration = 0.8f;
-    [SerializeField] private float spreadRadius = 1f;
+    //Scatter Settings
+    private readonly float _moveDuration= 0.8f;
+    private readonly float _spreadRadius = 1f;
 
-    [Header("Center-to-Deliver Settings")]
-    [SerializeField] private float centerPopDuration = 0.25f;
-    [SerializeField] private float centerPopOvershoot = 1.15f;
-    [SerializeField] private float centerHoldDelay = 0.5f;
-    [SerializeField] private float centerFlyDuration = 0.8f;
-    [SerializeField] private Ease centerFlyEase = Ease.InQuad;
-    [SerializeField] private bool timeScaleIndependent = false;
+    //Center-to-Deliver Settings
+    private float _centerPopDuration = 0.25f;
+    private float centerPopOvershoot = 1.15f;
+    private float centerHoldDelay = 0.5f;
+    private float centerFlyDuration = 0.8f;
+    private Ease centerFlyEase = Ease.InQuad;
+    private bool timeScaleIndependent = false;
 
     private ObjectPool<GameObject> _coinPool;
 
@@ -98,15 +98,15 @@ public class PickUpAnimation
             var rect = coin.transform as RectTransform;
             if (rect == null) { _coinPool.Release(coin); continue; }
 
-            Vector3 startPos = screenPos + 100f * spreadRadius * (Vector3)UnityEngine.Random.insideUnitCircle;
+            Vector3 startPos = screenPos + 100f * _spreadRadius * (Vector3)UnityEngine.Random.insideUnitCircle;
             rect.position = startPos;
 
             Vector3 targetPos = targetRect.position;
 
             Sequence seq = DOTween.Sequence().SetUpdate(timeScaleIndependent);
             seq.AppendInterval(UnityEngine.Random.Range(0f, 0.2f));
-            seq.Append(rect.DOMove(targetPos, moveDuration).SetEase(Ease.InOutQuad));
-            seq.Join(rect.DOScale(0.5f, moveDuration).From(1f).SetEase(Ease.InBack));
+            seq.Append(rect.DOMove(targetPos, _moveDuration).SetEase(Ease.InOutQuad));
+            seq.Join(rect.DOScale(0.5f, _moveDuration).From(1f).SetEase(Ease.InBack));
             seq.OnComplete(() => _coinPool.Release(coin));
         }
     }
@@ -136,7 +136,7 @@ public class PickUpAnimation
             : _targetDown.position;
 
         Sequence seq = DOTween.Sequence().SetUpdate(timeScaleIndependent);
-        seq.Append(rect.DOScale(centerPopOvershoot, centerPopDuration).SetEase(Ease.OutBack));
+        seq.Append(rect.DOScale(centerPopOvershoot, _centerPopDuration).SetEase(Ease.OutBack));
         seq.AppendInterval(centerHoldDelay);
         seq.Append(rect.DOMove(targetPos, centerFlyDuration).SetEase(centerFlyEase));
         seq.Join(rect.DOScale(0.7f, centerFlyDuration).SetEase(centerFlyEase));
