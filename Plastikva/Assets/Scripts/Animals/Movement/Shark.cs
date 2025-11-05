@@ -21,8 +21,11 @@ public class Shark : MonoBehaviour, IEnemyContext, IScore
     public float ZigzagFrequency => 2f;
     public float DesyncDelay => 0.5f;
 
+    // You can keep hardcoded masks, but serialized is nicer in Inspector.
     public LayerMask ObstacleMask => 1 << 7;
     public LayerMask PlayerMask => 1 << 10;
+
+    [SerializeField] private LayerMask _shellMask;
 
     public float AvoidDistance => 1.5f;
     public float SideProbeDistance => 1.2f;
@@ -51,8 +54,13 @@ public class Shark : MonoBehaviour, IEnemyContext, IScore
 
     private readonly Collider[] _hits = new Collider[8];
 
+    private bool _wasMovingToPlayer = false;
+    [SerializeField] private float _scoreCooldown = 1.0f;
+    private float _nextScoreTime = 0f;
+
     [Inject]
     private void Container(LevelUnlocking unlocking) => _unlocking = unlocking;
+
     public void Initialize(ISaveService save, IsometricCamera camera, BoxCollider plane, List<Transform> walls)
     {
         _save = save;
@@ -81,43 +89,78 @@ public class Shark : MonoBehaviour, IEnemyContext, IScore
 
         _movement.Initialize(_startPos, this);
     }
+
     private void FixedUpdate()
     {
+        if (_followTarget == null)
+        {
+            _movingToPlayer = false;
+            _movement.Execute();
+            return;
+        }
+
         int count = Physics.OverlapSphereNonAlloc(
-       transform.position,
-       _detectRadius,
-       _hits,
-       PlayerMask,
-       QueryTriggerInteraction.Ignore
-   );
+            transform.position,
+            _detectRadius,
+            _hits,
+            PlayerMask,
+            QueryTriggerInteraction.Ignore
+        );
 
         bool seesPlayer = false;
+        bool shellBlocking = false; 
 
         if (count > 0)
         {
             Vector3 toPlayer = _followTarget.position - transform.position;
             float dist = toPlayer.magnitude + _losPadding;
             Vector3 dir = toPlayer / Mathf.Max(dist, 0.0001f);
-            if (!Physics.Raycast(
-                    transform.position,
-                    dir,
-                    out _,
-                    dist,
-                    ObstacleMask,
-                    QueryTriggerInteraction.Ignore))
+            int losMask = PlayerMask | ObstacleMask;
+
+            if (Physics.Raycast(transform.position, dir, out RaycastHit hit, dist, losMask, QueryTriggerInteraction.Ignore))
             {
-                seesPlayer = true;
+                int playerLayer = LayerMask.NameToLayer("Player");
+                if (hit.collider.gameObject.layer == playerLayer) seesPlayer = true;               
+                else if (((1 << hit.collider.gameObject.layer) & ObstacleMask) != 0)
+                {
+                    shellBlocking = true;    
+                    seesPlayer = false;
+                }
+                else seesPlayer = false;
             }
 
-            Debug.DrawRay(transform.position, dir * dist, seesPlayer ? Color.green : Color.red, 0f, false);
+            Debug.DrawRay(transform.position, dir * dist,
+                seesPlayer ? Color.green : (shellBlocking ? Color.yellow : Color.red),
+                0f, false);
         }
 
         _movingToPlayer = seesPlayer;
         _movement.Execute();
 
-        if (Mathf.Abs(transform.position.x - _followTarget.position.x) < 0.01f && _movingToPlayer == true)
+
+        if (_wasMovingToPlayer && !_movingToPlayer && Time.time >= _nextScoreTime)
+        {
             TakenCommand.Execute(-ScoresConst.DEFAULT);
+            _nextScoreTime = Time.time + _scoreCooldown;
+        }
+
+        if (_movingToPlayer &&
+            Mathf.Abs(transform.position.x - _followTarget.position.x) < 0.01f &&
+            Time.time >= _nextScoreTime)
+        {
+            TakenCommand.Execute(-ScoresConst.DEFAULT);
+            _nextScoreTime = Time.time + _scoreCooldown;
+        }
+
+        if (shellBlocking && Time.time >= _nextScoreTime)
+        {
+            TakenCommand.Execute(-ScoresConst.DEFAULT);
+            _nextScoreTime = Time.time + _scoreCooldown;
+        }
+
+        _wasMovingToPlayer = _movingToPlayer;
     }
+
     private Vector3 GetRandomPosition()
     {
         if (_walls == null || _walls.Count < 2 || _save == null || _save.Data == null || _save.Data.wallsIds.Count < 2)
@@ -134,6 +177,8 @@ public class Shark : MonoBehaviour, IEnemyContext, IScore
 
         return new Vector3(posX, transform.position.y, posZ);
     }
+
     public void SetFollowTarget(Transform player) => _followTarget = player;
+
     private void OnDestroy() => _disposables.Dispose();
 }
