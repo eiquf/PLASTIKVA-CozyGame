@@ -70,6 +70,17 @@ public class Shark : MonoBehaviour, IEnemyContext, IScore
             .AddTo(_disposables);
 
 
+       
+        if (_startPos == Vector3.zero)
+            _startPos = GetRandomPosition();
+
+        _movement.Initialize(_startPos, this);
+    }
+    private void FixedUpdate()
+    {
+        _movement.Execute();
+        if(transform.position.x == _followTarget.position.x) TakenCommand.Execute(-ScoresConst.DEFAULT);
+
         Vector3 direction = (_followTarget.position - transform.position).normalized;
         float distance = Vector3.Distance(transform.position, _followTarget.position) + 1f; // Add some buffer
 
@@ -88,7 +99,8 @@ public class Shark : MonoBehaviour, IEnemyContext, IScore
         }
 
 
-        if (Physics.Raycast(transform.position, direction, out RaycastHit hitt, distance, ObstacleMask | PlayerMask)){
+        if (Physics.Raycast(transform.position, direction, out RaycastHit hitt, distance, ObstacleMask | PlayerMask))
+        {
             if (hitt.collider.gameObject.layer == LayerMask.NameToLayer("Player")) _movingToPlayer = true;
             else _movingToPlayer = false;
 
@@ -99,15 +111,6 @@ public class Shark : MonoBehaviour, IEnemyContext, IScore
             Debug.Log("Raycast did not hit anything.");
         }
 
-        if (_startPos == Vector3.zero)
-            _startPos = GetRandomPosition();
-
-        _movement.Initialize(_startPos, this);
-    }
-    private void FixedUpdate()
-    {
-        _movement.Execute();
-        if(transform.position.x == _followTarget.position.x) TakenCommand.Execute(-ScoresConst.DEFAULT);
     }
     private Vector3 GetRandomPosition()
     {
