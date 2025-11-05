@@ -237,6 +237,17 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""3203a0a8-d905-4707-b43e-65be36374024"",
+                    ""path"": ""<Touchscreen>/primaryTouch/delta"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drag"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""5d5c6f2b-a1c8-4968-8215-efb72ec0bcaf"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",

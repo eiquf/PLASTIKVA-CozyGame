@@ -44,6 +44,8 @@ public class TrashCollectorModel : IDisposable
 
             _save.Data.trashCount = _currentCount.Value;
         }
+
+        _save.Data.isTapTaught = true;
     }
     public void Dispose()
     {

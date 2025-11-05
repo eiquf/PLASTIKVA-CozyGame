@@ -1,24 +1,22 @@
-﻿Shader "Custom/SpriteShadowShader3D"
+﻿Shader "Custom/SpriteShadowShader3D_Cutout"
 {
     Properties
     {
         [PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
         _Color("Tint", Color) = (1,1,1,1)
-
         [MaterialToggle] PixelSnap("Pixel snap", Float) = 0
         [HideInInspector] _RendererColor("RendererColor", Color) = (1,1,1,1)
         [HideInInspector] _Flip("Flip", Vector) = (1,1,1,1)
         [PerRendererData] _AlphaTex("External Alpha", 2D) = "white" {}
         [PerRendererData] _EnableExternalAlpha("Enable External Alpha", Float) = 0
+        _Cutoff("Alpha Cutoff", Range(0,1)) = 0.33
 
-        _Cutoff("Alpha Cutoff", Range(0,1)) = 0.5
-
-        // Wind controls
+        // Wind
         _WindStrength("Wind Strength", Range(0,0.2)) = 0.05
         _WindSpeed("Wind Speed", Range(0,10)) = 2.0
         _WindFrequency("Wind Frequency", Range(0,10)) = 3.0
 
-        // Highlight wave controls
+        // Highlight wave
         _HighlightColor("Highlight Color", Color) = (1,1,0,1)
         _WaveStrength("Wave Strength", Range(0,1)) = 0.4
         _WaveSpeed("Wave Speed", Range(0,10)) = 2.0
@@ -28,19 +26,20 @@
 
     SubShader
     {
-        Tags 
-        { 
-            "Queue"="Transparent" 
-            "IgnoreProjector"="True" 
-            "RenderType"="Transparent" 
-            "PreviewType"="Plane" 
-            "CanUseSpriteAtlas"="True" 
+        Tags
+        {
+            "Queue"="AlphaTest"
+            "IgnoreProjector"="True"
+            "RenderType"="TransparentCutout"
+            "PreviewType"="Plane"
+            "CanUseSpriteAtlas"="True"
         }
 
         Cull Off
-        ZWrite Off   // <— only change: stop writing to depth to prevent overlap glitches
         ZTest LEqual
-        Blend One OneMinusSrcAlpha
+        ZWrite On
+        // no Blend in cutout (opaque where alpha >= cutoff)
+        AlphaToMask On   // nicer MSAA edges
 
         CGPROGRAM
         #pragma surface surf Lambert vertex:vert alphatest:_Cutoff addshadow nofog nolightmap nodynlightmap keepalpha
@@ -56,16 +55,11 @@
         };
 
         // Wind
-        float _WindStrength;
-        float _WindSpeed;
-        float _WindFrequency;
+        float _WindStrength, _WindSpeed, _WindFrequency;
 
         // Highlight wave
         fixed4 _HighlightColor;
-        float _WaveStrength;
-        float _WaveSpeed;
-        float _WaveFrequency;
-        float _BlendStrength;
+        float _WaveStrength, _WaveSpeed, _WaveFrequency, _BlendStrength;
 
         UNITY_INSTANCING_BUFFER_START(Props)
         UNITY_INSTANCING_BUFFER_END(Props)
@@ -74,11 +68,12 @@
         {
             v.vertex = UnityFlipSprite(v.vertex, _Flip);
 
+            // Wind sway in X
             float wave = sin(_Time.y * _WindSpeed + v.vertex.y * _WindFrequency);
             v.vertex.x += wave * _WindStrength;
 
             #if defined(PIXELSNAP_ON)
-            v.vertex = UnityPixelSnap(v.vertex);
+                v.vertex = UnityPixelSnap(v.vertex);
             #endif
 
             UNITY_INITIALIZE_OUTPUT(Input, o);
@@ -89,19 +84,17 @@
         {
             fixed4 c = SampleSpriteTexture(IN.uv_MainTex) * IN.color;
 
-            fixed3 finalCol = c.rgb;
-
-            float wave = sin((IN.uv_MainTex.y * _WaveFrequency) + (_Time.y * _WaveSpeed));
-            wave = (wave * 0.5 + 0.5);
+            fixed3 baseCol = c.rgb;
+            float wave = sin(IN.uv_MainTex.y * _WaveFrequency + _Time.y * _WaveSpeed);
+            wave = wave * 0.5 + 0.5;
             wave *= _WaveStrength;
+            baseCol = lerp(baseCol, _HighlightColor.rgb, wave * _BlendStrength);
 
-            finalCol = lerp(finalCol, _HighlightColor.rgb, wave * _BlendStrength);
-
-            o.Albedo = finalCol * c.a;
-            o.Alpha  = c.a;
+            o.Albedo = baseCol; // opaque (cutout)
+            o.Alpha  = c.a;     // used by alphatest:_Cutoff
         }
         ENDCG
     }
 
-    Fallback "Transparent/VertexLit"
+    Fallback "Transparent/Cutout/VertexLit"
 }

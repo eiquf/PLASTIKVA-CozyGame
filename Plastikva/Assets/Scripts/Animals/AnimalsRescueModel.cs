@@ -46,6 +46,8 @@ public class AnimalsRescueModel : System.IDisposable
 
         _save.Data.animalsCount = _currentCount.Value;
         _save.Save();
+
+        _save.Data.isTapTaught = true;
     }
 
     public void Dispose()

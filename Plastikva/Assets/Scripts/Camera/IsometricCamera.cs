@@ -65,7 +65,8 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
         if (_isDragging && !_followEnabled)
             _drag.Execute(transform, delta);
 
-        _follow.Execute(transform);
+        if (_followEnabled && Target != null)
+            _follow.Execute(transform);
 
         _rotate.Execute(transform, delta);
 
