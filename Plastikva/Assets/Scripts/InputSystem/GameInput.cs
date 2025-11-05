@@ -104,7 +104,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""name"": ""Acceleration"",
                     ""type"": ""Button"",
                     ""id"": ""3b692505-6385-4eb3-ad36-95e4d3290c35"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -113,7 +113,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""name"": ""Collecting"",
                     ""type"": ""Button"",
                     ""id"": ""866fd669-41b0-4baf-8a9e-78ce8fb1b85f"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -140,7 +140,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""name"": ""Rescue"",
                     ""type"": ""Button"",
                     ""id"": ""229924be-aad7-487a-99c7-a8c93a995586"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""MultiTap(tapCount=5)"",
                     ""initialStateCheck"": false
@@ -183,7 +183,18 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""bc4112b3-0141-4d55-b81f-d4b6b89322b9"",
-                    ""path"": ""<Keyboard>/leftShift"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Acceleration"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fad7d91a-9b63-4735-8c58-235e300a35b1"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -215,8 +226,8 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4073b84a-5387-4204-ab29-109c8b3819a2"",
-                    ""path"": ""<Touchscreen>/touch0/tap"",
+                    ""id"": ""6204a193-e6e7-4c6d-811e-a7431a77b2dd"",
+                    ""path"": ""<Touchscreen>/Press"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -272,17 +283,6 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""8daee4c7-0978-4447-9350-7536c8c4eac1"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Rescue"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e182a1b2-327f-4523-8f3f-b18d80c15422"",
-                    ""path"": ""<Touchscreen>/touch1/tap"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

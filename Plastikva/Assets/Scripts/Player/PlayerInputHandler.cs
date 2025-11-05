@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 using Zenject;
 
 public class PlayerInputHandler : IInitializable, IDisposable
@@ -12,6 +13,9 @@ public class PlayerInputHandler : IInitializable, IDisposable
 
     public event Action<bool> OnSprintChanged;
     public event Action<Vector2> OnMoveInputChanged;
+
+    private float _lastTapTime = 0f;
+    private float _doubleTapTime = 0.3f;
 
     [Inject]
     public PlayerInputHandler(InputController inputController) => _inputController = inputController;
@@ -38,14 +42,18 @@ public class PlayerInputHandler : IInitializable, IDisposable
     {
         if (_wasSprinting) return;
 
-        _wasSprinting = true;
-        OnSprintChanged?.Invoke(_wasSprinting);
+        if (Time.time - _lastTapTime <= _doubleTapTime)
+        {
+            _wasSprinting = true;
+            OnSprintChanged?.Invoke(_wasSprinting);
+        }
+
+        _lastTapTime = Time.time;
     }
 
     private void OnSprintCanceled(InputAction.CallbackContext ctx)
     {
         if (!_wasSprinting) return;
-
         _wasSprinting = false;
         OnSprintChanged?.Invoke(_wasSprinting);
     }
