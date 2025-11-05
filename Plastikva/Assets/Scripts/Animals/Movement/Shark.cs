@@ -21,8 +21,9 @@ public class Shark : MonoBehaviour, IEnemyContext, IScore
     public float ZigzagFrequency => 2f;
     public float DesyncDelay => 0.5f;
 
-    public LayerMask ObstacleMask => 7;
-    public LayerMask PlayerMask => 10;
+    public LayerMask ObstacleMask => 1 << 7;
+    public LayerMask PlayerMask => 1 << 10;
+
     public float AvoidDistance => 1.5f;
     public float SideProbeDistance => 1.2f;
     public float AvoidWeight => 2f;
@@ -45,6 +46,11 @@ public class Shark : MonoBehaviour, IEnemyContext, IScore
     private ISaveService _save;
     private readonly CompositeDisposable _disposables = new();
 
+    [SerializeField] private float _detectRadius = 6f;
+    [SerializeField] private float _losPadding = 0.1f;
+
+    private readonly Collider[] _hits = new Collider[8];
+
     [Inject]
     private void Container(LevelUnlocking unlocking) => _unlocking = unlocking;
     public void Initialize(ISaveService save, IsometricCamera camera, BoxCollider plane, List<Transform> walls)
@@ -63,14 +69,13 @@ public class Shark : MonoBehaviour, IEnemyContext, IScore
             .AddTo(_disposables);
 
         _camera.IsBackSide
-            .Subscribe(_ => { 
-                _movingToPlayer = false; 
-                _movement.UpdateMoving(); 
+            .Subscribe(_ =>
+            {
+                _movingToPlayer = false;
+                _movement.UpdateMoving();
             })
             .AddTo(_disposables);
 
-
-       
         if (_startPos == Vector3.zero)
             _startPos = GetRandomPosition();
 
@@ -78,39 +83,40 @@ public class Shark : MonoBehaviour, IEnemyContext, IScore
     }
     private void FixedUpdate()
     {
+        int count = Physics.OverlapSphereNonAlloc(
+       transform.position,
+       _detectRadius,
+       _hits,
+       PlayerMask,
+       QueryTriggerInteraction.Ignore
+   );
+
+        bool seesPlayer = false;
+
+        if (count > 0)
+        {
+            Vector3 toPlayer = _followTarget.position - transform.position;
+            float dist = toPlayer.magnitude + _losPadding;
+            Vector3 dir = toPlayer / Mathf.Max(dist, 0.0001f);
+            if (!Physics.Raycast(
+                    transform.position,
+                    dir,
+                    out _,
+                    dist,
+                    ObstacleMask,
+                    QueryTriggerInteraction.Ignore))
+            {
+                seesPlayer = true;
+            }
+
+            Debug.DrawRay(transform.position, dir * dist, seesPlayer ? Color.green : Color.red, 0f, false);
+        }
+
+        _movingToPlayer = seesPlayer;
         _movement.Execute();
-        if(transform.position.x == _followTarget.position.x) TakenCommand.Execute(-ScoresConst.DEFAULT);
 
-        Vector3 direction = (_followTarget.position - transform.position).normalized;
-        float distance = Vector3.Distance(transform.position, _followTarget.position) + 1f; // Add some buffer
-
-        Debug.Log("Raycast Direction: " + direction);
-        Debug.Log("Raycast Distance: " + distance);
-
-        Debug.DrawRay(transform.position, direction * distance, Color.red, 1f); // This will show the ray in the editor
-
-        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, distance, ObstacleMask | PlayerMask))
-        {
-            Debug.Log("Hit something: " + hit.collider.gameObject.name);
-        }
-        else
-        {
-            Debug.Log("Raycast did not hit anything.");
-        }
-
-
-        if (Physics.Raycast(transform.position, direction, out RaycastHit hitt, distance, ObstacleMask | PlayerMask))
-        {
-            if (hitt.collider.gameObject.layer == LayerMask.NameToLayer("Player")) _movingToPlayer = true;
-            else _movingToPlayer = false;
-
-            Debug.Log(hitt.collider.gameObject.layer);
-        }
-        else
-        {
-            Debug.Log("Raycast did not hit anything.");
-        }
-
+        if (Mathf.Abs(transform.position.x - _followTarget.position.x) < 0.01f && _movingToPlayer == true)
+            TakenCommand.Execute(-ScoresConst.DEFAULT);
     }
     private Vector3 GetRandomPosition()
     {
