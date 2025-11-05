@@ -68,14 +68,31 @@ public class Shark : MonoBehaviour, IEnemyContext, IScore
                 _movement.UpdateMoving(); 
             })
             .AddTo(_disposables);
-       
+
+
         Vector3 direction = (_followTarget.position - transform.position).normalized;
-        float distance = Vector3.Distance(transform.position, _followTarget.position) + 1;  
-        if(Physics.Raycast(transform.position, direction, out RaycastHit hit, distance, ObstacleMask | PlayerMask)){
-            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Player")) _movingToPlayer = true;
+        float distance = Vector3.Distance(transform.position, _followTarget.position) + 1f; // Add some buffer
+
+        Debug.Log("Raycast Direction: " + direction);
+        Debug.Log("Raycast Distance: " + distance);
+
+        Debug.DrawRay(transform.position, direction * distance, Color.red, 1f); // This will show the ray in the editor
+
+        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, distance, ObstacleMask | PlayerMask))
+        {
+            Debug.Log("Hit something: " + hit.collider.gameObject.name);
+        }
+        else
+        {
+            Debug.Log("Raycast did not hit anything.");
+        }
+
+
+        if (Physics.Raycast(transform.position, direction, out RaycastHit hitt, distance, ObstacleMask | PlayerMask)){
+            if (hitt.collider.gameObject.layer == LayerMask.NameToLayer("Player")) _movingToPlayer = true;
             else _movingToPlayer = false;
 
-            Debug.Log(hit.collider.gameObject.layer);
+            Debug.Log(hitt.collider.gameObject.layer);
         }
         else
         {
