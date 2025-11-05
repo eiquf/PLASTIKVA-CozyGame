@@ -22,6 +22,7 @@ public class Shark : MonoBehaviour, IEnemyContext, IScore
     public float DesyncDelay => 0.5f;
 
     public LayerMask ObstacleMask => 7;
+    public LayerMask PlayerMask => 10;
     public float AvoidDistance => 1.5f;
     public float SideProbeDistance => 1.2f;
     public float AvoidWeight => 2f;
@@ -67,6 +68,19 @@ public class Shark : MonoBehaviour, IEnemyContext, IScore
                 _movement.UpdateMoving(); 
             })
             .AddTo(_disposables);
+       
+        Vector3 direction = (_followTarget.position - transform.position).normalized;
+        float distance = Vector3.Distance(transform.position, _followTarget.position) + 1;  
+        if(Physics.Raycast(transform.position, direction, out RaycastHit hit, distance, ObstacleMask | PlayerMask)){
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Player")) _movingToPlayer = true;
+            else _movingToPlayer = false;
+
+            Debug.Log(hit.collider.gameObject.layer);
+        }
+        else
+        {
+            Debug.Log("Raycast did not hit anything.");
+        }
 
         if (_startPos == Vector3.zero)
             _startPos = GetRandomPosition();
