@@ -49,7 +49,6 @@ public class Bootstrapper : MonoBehaviour
 
         _diContainer.Bind<ISaveService>().FromInstance(_save).AsSingle();
 
-        if(_save.Data.isFirstLaunch) _tutor = _diContainer.InstantiatePrefab(_tutorialSystem).GetComponent<TutorialSystem>();
 
         _playerInstance = _diContainer.InstantiatePrefab(_playerPrefab).GetComponent<Player>();
         _cameraInstance = _diContainer.InstantiatePrefab(_cameraPrefab).GetComponent<IsometricCamera>();
@@ -57,6 +56,15 @@ public class Bootstrapper : MonoBehaviour
         _uiInstance = _diContainer.InstantiatePrefab(_uiPrefab).GetComponent<UI>();
         _diContainer.Bind<UI>().FromInstance(_uiInstance).AsSingle();
         _score = _uiInstance.GetComponent<Score>();
+
+        if (_save.Data.isFirstLaunch)
+        {
+            _tutor = _diContainer.InstantiatePrefabForComponent<TutorialSystem>(_tutorialSystem);
+            _tutor.Initialize(_uiInstance);
+
+        }
+
+        _uiInstance.Initialize();
 
         _levelUnlocking = _diContainer.InstantiatePrefab(_levelUnlockingPref).GetComponent<LevelUnlocking>();
         _diContainer.Bind<LevelUnlocking>().FromInstance(_levelUnlocking).AsSingle();
@@ -108,7 +116,7 @@ public class Bootstrapper : MonoBehaviour
         _animalsMove.Initialize(_save);
 
         _shark.SetFollowTarget(_playerInstance.transform);
-        _shark.Initialize(_save, _cameraInstance,_plane, _walls);
+        _shark.Initialize(_save, _cameraInstance, _plane, _walls);
     }
     //private void OnDestroy() => _save.Save();
 }

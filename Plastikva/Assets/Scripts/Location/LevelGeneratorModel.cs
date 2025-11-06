@@ -62,9 +62,6 @@ public class LevelGeneratorModel
 
             var inst = go.GetComponent<TrashInstance>() ?? go.AddComponent<TrashInstance>();
             inst.Id = td.PersistentId;
-
-            if(_save.Data.isTapTaught == false) inst.Arrow.SetActive(true);
-            else inst.Arrow.SetActive(false);
         }
 
         var rescued = _save.Data.rescuedAnimalsIds;
@@ -88,9 +85,6 @@ public class LevelGeneratorModel
 
             if (inst.Render != null)
                 inst.Render.sprite = spriteToUse;
-
-            if (_save.Data.isTapTaught == false) inst.Arrow.SetActive(true);
-            else inst.Arrow.SetActive(false);
         }
     }
     Vector3 GeneratePoint(Vector3 center, float planeXSize, float planeZSize)

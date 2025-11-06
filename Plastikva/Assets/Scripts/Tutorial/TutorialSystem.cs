@@ -4,111 +4,75 @@ using Zenject;
 
 public class TutorialSystem : MonoBehaviour
 {
-    private enum Index
-    {
-        Movement = 0, Camera = 1, Tap = 2, Enemy = 3
-    }
+    private enum Index { Movement = 0, Camera = 1, Tap = 2, Enemy = 3 }
 
-    private readonly TutorInputHandler _tutorInput;
+    [SerializeField] private List<GameObject> _tutorialUI = new();
+    protected const string REQUEST_COMMAND = "Next";
 
-    [SerializeField] private List<GameObject> _moveTutorialUI = new();
+    private Tutorial _currentTutor;
 
     private Tutorial _moveTutor;
+    private Tutorial _cameraTutor;
+    private Tutorial _tapTutor;
+    private Tutorial _enemyTutor;
 
-    private readonly float _tutorialDelay = 2f;
+    private float _tutorialDelay = 2f;
     private float _timer;
-
     private float _checkTimer;
-    private float _checkInterval = 1f;
-
-    private bool _hasMoved;
+    private float _checkInterval = 0.5f;
 
     private ISaveService _save;
+    private TutorInputHandler _tutorInput;
 
-    public TutorialSystem(TutorInputHandler handler) => _tutorInput = handler;
-    private void Initialize(ISaveService save)
+    [Inject]
+    public void Container(ISaveService save, TutorInputHandler handler)
     {
         _save = save;
+        _tutorInput = handler;
+    }
 
-        _moveTutor = new MoveTutor(_moveTutorialUI[(int)Index.Movement], _save, _tutorInput);
+    public void Initialize(UI ui)
+    {
+        _tutorialUI = ui.Tutorials;
 
-        _checkInterval = Mathf.Max(0.1f, 0.5f);
+        _moveTutor = new MoveTutor(_tutorialUI[(int)Index.Movement], _save, _tutorInput);
+        _cameraTutor = new CameraTutor(_tutorialUI[(int)Index.Camera], _save, _tutorInput);
+        _tapTutor = new TapTutor(_tutorialUI[(int)Index.Tap], _save, _tutorInput);
+        _enemyTutor = new EnemyTutor(_tutorialUI[(int)Index.Enemy], _save, _tutorInput);
+
+        _moveTutor.SetNext(_cameraTutor);
+        _cameraTutor.SetNext(_tapTutor);
+        _tapTutor.SetNext(_enemyTutor);
+        _enemyTutor.SetNext(null);
+
+        _currentTutor = _moveTutor;
     }
 
     private void FixedUpdate()
     {
-        _timer += Time.deltaTime;
+        _tutorInput.Update();
 
+        _timer += Time.deltaTime;
         if (_timer < _tutorialDelay) return;
 
         _checkTimer += Time.deltaTime;
+        if (_checkTimer < _checkInterval) return;
+        _checkTimer = 0f;
 
+        if (_currentTutor == null) return;
 
-        if (_checkTimer >= _checkInterval)
-        {
-            _checkTimer = 0f;
+        _currentTutor.Handle(REQUEST_COMMAND);
 
-            _moveTutor.Execute();
-        }
-
+        if (IsTutorCompleted(_currentTutor))
+            _currentTutor = _currentTutor.NextHandler;
     }
-}
 
-public abstract class Tutorial
-{
-    protected GameObject tutor;
-    protected ISaveService save;
-    protected TutorInputHandler input;
-    public Tutorial(GameObject tutorial, ISaveService service, TutorInputHandler handler)
+    private bool IsTutorCompleted(Tutorial tutor)
     {
-        tutor = tutorial;
-        save = service;
-        input = handler;
+        if (tutor is MoveTutor && _save.Data.isMovementTaught) return true;
+        if (tutor is CameraTutor && _save.Data.isCameraTaught) return true;
+        if (tutor is TapTutor && _save.Data.isTapTaught) return true;
+        if (tutor is EnemyTutor && _save.Data.isEnemyTaught) return true;
+        return false;
     }
-    public abstract void Execute();
-}
-public class MoveTutor : Tutorial
-{
-    public MoveTutor(GameObject tutorial, ISaveService service, TutorInputHandler handler) : base(tutorial, service, handler) { }
-    public override void Execute()
-    {
-        if (save.Data.isMovementTaught == false)
-        {
-            tutor.SetActive(true);
-            if (input.MovementInput().sqrMagnitude > 0.01f)
-                save.Data.isMovementTaught = true;
-        }
-        else
-        {
-            tutor.SetActive(false);
-            save.Data.isMovementTaught = true;
-        }
-    }
-}
-public class CameraTutor : Tutorial
-{
-    public CameraTutor(GameObject tutorial, ISaveService service, TutorInputHandler handler) : base(tutorial, service, handler) { }
-    public override void Execute()
-    {
-        if (save.Data.isCameraTaught == false)
-        {
-            tutor.SetActive(true);
-            if (input.CameraInput().sqrMagnitude > 0.01f)
-                save.Data.isCameraTaught = true;
-        }
-        else
-        {
-            tutor.SetActive(false);
-            save.Data.isCameraTaught = true;
-        }
-    }
-}
-
-public class TutorInputHandler
-{
-    private readonly InputController _inputController;
-    [Inject]
-    public TutorInputHandler(InputController inputController) => _inputController = inputController;
-    public Vector2 MovementInput() => _inputController.Input.Gameplay.Move.ReadValue<Vector2>();
-    public Vector2 CameraInput() => _inputController.Input.Camera.MouseDelta.ReadValue<Vector2>();
 }

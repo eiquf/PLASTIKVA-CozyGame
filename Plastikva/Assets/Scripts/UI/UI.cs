@@ -33,6 +33,17 @@ public sealed class UI : MonoBehaviour
     [SerializeField] private RectTransform _centerAnchor;
 
     [SerializeField] private GameObject _LOL;
+
+    [SerializeField] private List<GameObject> _tutorialUI = new();
+
+    //references
+    [SerializeField] private Button _refButton;
+    [SerializeField] private Transform _buttonsParent;
+
+    private readonly AnimationContext<Transform> _animationContext = new();
+    private readonly ButtonsPopUpAnimation _anim = new();
+    private bool _isOpen = false;
+
     public Image TrashImage => _trashImage;
     public Button YesButton => _yesButton;
     public Button NoButton => _noButton;
@@ -46,8 +57,18 @@ public sealed class UI : MonoBehaviour
     public TextMeshProUGUI LevelText => _levelText;
     public RectTransform FishPos => _fishPos;
     public List<GameObject> Points => _points;
+    public List<GameObject> Tutorials => _tutorialUI;
     public GameObject Star => _coin;
     public Transform StarsPos => _starsPos;
     public GameObject LOL => _LOL;
     public RectTransform CenterAnchor => _centerAnchor;
+
+    public void Initialize() => _animationContext.SetAnimationStrategy(_anim);
+    public void Preferences()
+    {
+        _isOpen = !_isOpen;
+        _anim.SetBool(_isOpen);
+
+        _animationContext.PlayAnimation(_buttonsParent);
+    }
 }
