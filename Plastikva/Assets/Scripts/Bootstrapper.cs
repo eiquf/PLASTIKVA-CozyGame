@@ -14,6 +14,7 @@ public class Bootstrapper : MonoBehaviour
     [SerializeField] private UI _uiPrefab;
     [SerializeField] private IsometricCamera _cameraPrefab;
     [SerializeField] private TutorialSystem _tutorialSystem;
+    [SerializeField] private SoundSystem _soundSystem;
 
     private TutorialSystem _tutor;
 
@@ -34,6 +35,8 @@ public class Bootstrapper : MonoBehaviour
     private AnimalsRescue _animals;
 
     private Shark _shark;
+
+    private SoundSystem _soundInstance;
 
     private ISaveService _save;
     private readonly List<IScore> _scores = new();
@@ -61,7 +64,6 @@ public class Bootstrapper : MonoBehaviour
         {
             _tutor = _diContainer.InstantiatePrefabForComponent<TutorialSystem>(_tutorialSystem);
             _tutor.Initialize(_uiInstance);
-
         }
 
         _uiInstance.Initialize();
@@ -85,6 +87,8 @@ public class Bootstrapper : MonoBehaviour
         _trashSorter = _trashCollector.GetComponent<TrashSorter>();
         _animals = _trashCollector.GetComponent<AnimalsRescue>();
 
+        _soundInstance = _diContainer.InstantiatePrefab(_soundSystem).GetComponent<SoundSystem>();
+
         _scores.Add(_trashCollector);
         _scores.Add(_trashSorter);
         _scores.Add(_animals);
@@ -107,6 +111,7 @@ public class Bootstrapper : MonoBehaviour
         _score.Initialize(_scores, _save);
         _frustumCulling.Initialize(_cameraInstance);
         _animalsMove.Initialize(_save);
+        _soundInstance.Initialize();
 
         _shark.SetFollowTarget(_playerInstance.transform);
         _shark.Initialize(_save, _cameraInstance, _plane, _walls);

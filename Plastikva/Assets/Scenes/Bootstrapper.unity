@@ -250,6 +250,7 @@ MonoBehaviour:
   _uiPrefab: {fileID: 352215816784450711, guid: decc6f2326e0a2a46bcc86273f60afb1, type: 3}
   _cameraPrefab: {fileID: 8277187692977897337, guid: f65c20a1d5b263a4fab2caa287cfc412, type: 3}
   _tutorialSystem: {fileID: 7638855284866468418, guid: 9d58e8099e9f7114891044f6dc861c67, type: 3}
+  _soundSystem: {fileID: 1952049394821023815, guid: 721099d9bdcdbab489e87f00bc71783c, type: 3}
 --- !u!4 &460273275
 Transform:
   m_ObjectHideFlags: 0

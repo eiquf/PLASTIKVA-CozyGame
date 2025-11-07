@@ -27,6 +27,8 @@ public class GameData
     public int animalsCount;
 
     public Vector3 playerPos;
+
+    public int sound;
 }
 public enum EnvironmentType
 {

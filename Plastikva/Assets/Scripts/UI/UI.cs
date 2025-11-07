@@ -40,15 +40,18 @@ public sealed class UI : MonoBehaviour
 
     //references
     [SerializeField] private Button _refButton;
+    [SerializeField] private List<Sprite> _refButtonSprites;
+
+    //sound
+    [SerializeField] private Sprite[] _soundSprites = new Sprite[2];
+
     [SerializeField] private Transform _buttonsParent;
 
     private readonly AnimationContext<Transform> _animationContext = new();
     private readonly ButtonsPopUpAnimation _anim = new();
     private bool _isOpen = false;
 
-    [SerializeField] List<AudioSource> _sources = new();
-    private bool _isShut = false;
-
+    [SerializeField] private Button _soundButton;
     public Image TrashImage => _trashImage;
     public Button YesButton => _yesButton;
     public Button NoButton => _noButton;
@@ -67,14 +70,24 @@ public sealed class UI : MonoBehaviour
     public Transform StarsPos => _starsPos;
     public GameObject LOL => _LOL;
     public RectTransform CenterAnchor => _centerAnchor;
+    public Sprite[] SoundSprites => _soundSprites;
+    public Button SoundButton => _soundButton;
 
     [Inject] private ISaveService _save;
+
     public void Initialize() => _animationContext.SetAnimationStrategy(_anim);
 
     //just lazy code ok
     public void Preferences()
     {
         _isOpen = !_isOpen;
+
+        if (_refButtonSprites.Count >= 2)
+        {
+            _refButton.image.sprite = _isOpen
+                ? _refButtonSprites[1]
+                : _refButtonSprites[0];
+        }
         _anim.SetBool(_isOpen);
 
         _animationContext.PlayAnimation(_buttonsParent);
@@ -85,16 +98,4 @@ public sealed class UI : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void ExitGame() => Application.Quit();
-    public void Sound()
-    {
-        _isShut = !_isShut;
-
-        foreach (var item in _sources)
-        {
-            if (_isShut == true)
-                item.volume = 0;
-            else item.volume = 1;
-        }
-    }
 }
-
