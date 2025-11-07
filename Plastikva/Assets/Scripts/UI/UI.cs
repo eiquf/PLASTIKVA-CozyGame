@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Zenject;
 
 public sealed class UI : MonoBehaviour
 {
@@ -44,6 +46,9 @@ public sealed class UI : MonoBehaviour
     private readonly ButtonsPopUpAnimation _anim = new();
     private bool _isOpen = false;
 
+    [SerializeField] List<AudioSource> _sources = new();
+    private bool _isShut = false;
+
     public Image TrashImage => _trashImage;
     public Button YesButton => _yesButton;
     public Button NoButton => _noButton;
@@ -63,7 +68,10 @@ public sealed class UI : MonoBehaviour
     public GameObject LOL => _LOL;
     public RectTransform CenterAnchor => _centerAnchor;
 
+    [Inject] private ISaveService _save;
     public void Initialize() => _animationContext.SetAnimationStrategy(_anim);
+
+    //just lazy code ok
     public void Preferences()
     {
         _isOpen = !_isOpen;
@@ -71,4 +79,22 @@ public sealed class UI : MonoBehaviour
 
         _animationContext.PlayAnimation(_buttonsParent);
     }
+    public void ClearData()
+    {
+        _save.Clear();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    public void ExitGame() => Application.Quit();
+    public void Sound()
+    {
+        _isShut = !_isShut;
+
+        foreach (var item in _sources)
+        {
+            if (_isShut == true)
+                item.volume = 0;
+            else item.volume = 1;
+        }
+    }
 }
+

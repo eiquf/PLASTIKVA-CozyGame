@@ -10,6 +10,7 @@ public class ButtonsPopUpAnimation : IAnimation<Transform>
     private const float DELAY_STEP = 0.08f;   
     private const float SCALE_POP = 1.1f;     
 
+    //also red flag
     public void SetBool(bool isOpening) => _isOpening = isOpening;
 
     public void PlayAnimation(Transform buttonParent, Action onComplete = null)

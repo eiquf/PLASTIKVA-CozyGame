@@ -99,13 +99,6 @@ public class Bootstrapper : MonoBehaviour
 
         _save.Save();
     }
-#if UNITY_EDITOR
-    public void ClearData()
-    {
-        _save.Clear();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-#endif
     private void Initializing()
     {
         _trashCollector.Initialize(_save);
