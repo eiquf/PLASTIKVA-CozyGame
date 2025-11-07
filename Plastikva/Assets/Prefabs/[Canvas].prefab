@@ -468,7 +468,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3257187858870416460
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2650,9 +2650,9 @@ RectTransform:
   m_Children:
   - {fileID: 4706930920873888640}
   - {fileID: 2172760554501666670}
-  - {fileID: 2468635519466290735}
   - {fileID: 2294154686878083604}
   - {fileID: 3257187858870416460}
+  - {fileID: 2468635519466290735}
   - {fileID: 905135293191099389}
   m_Father: {fileID: 7543163749060260471}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4963,10 +4963,11 @@ MonoBehaviour:
   _refButton: {fileID: 8366358918511061509}
   _refButtonSprites: []
   _soundSprites:
-  - {fileID: 21300000, guid: c53ca27ed1084dd4881a5faddb50267b, type: 2}
   - {fileID: 21300000, guid: e0d7e7e65cb4c9a47833b47cad399f61, type: 2}
+  - {fileID: 21300000, guid: c53ca27ed1084dd4881a5faddb50267b, type: 2}
   _buttonsParent: {fileID: 905135293191099389}
   _soundButton: {fileID: 4771697907752841056}
+  _arrows: {fileID: 639615368052716060}
 --- !u!114 &2173115358521343022
 MonoBehaviour:
   m_ObjectHideFlags: 0

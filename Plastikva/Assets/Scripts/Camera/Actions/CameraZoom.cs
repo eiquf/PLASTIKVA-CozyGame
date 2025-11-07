@@ -10,6 +10,7 @@ public class CameraZoom : ICamera<Vector2>
     {
         _context = context;
         _camera = _context.Camera;
+        _currentZoom = _camera.orthographicSize;
     }
     public void Execute(Transform transform, Vector2 deltaScroll)
     {

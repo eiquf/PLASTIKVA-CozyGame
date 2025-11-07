@@ -52,6 +52,7 @@ public sealed class UI : MonoBehaviour
     private bool _isOpen = false;
 
     [SerializeField] private Button _soundButton;
+    [SerializeField] private GameObject _arrows;
     public Image TrashImage => _trashImage;
     public Button YesButton => _yesButton;
     public Button NoButton => _noButton;
@@ -75,7 +76,15 @@ public sealed class UI : MonoBehaviour
 
     [Inject] private ISaveService _save;
 
-    public void Initialize() => _animationContext.SetAnimationStrategy(_anim);
+    public void Initialize()
+    {
+        _animationContext.SetAnimationStrategy(_anim);
+
+        if (Application.isMobilePlatform) _arrows.SetActive(true);
+        else _arrows.SetActive(false);
+
+        Debug.Log("ASpplication ,obile" + Application.isMobilePlatform);
+    }
 
     //just lazy code ok
     public void Preferences()

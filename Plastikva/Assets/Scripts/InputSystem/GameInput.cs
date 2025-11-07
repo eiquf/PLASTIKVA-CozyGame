@@ -226,6 +226,17 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""e7da50ee-e118-46d8-9729-4db848bdb408"",
+                    ""path"": ""<Touchscreen>/Press"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Collecting"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""a3b7e0ea-29c9-4d64-a0ae-112237bdc6d1"",
                     ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
@@ -237,9 +248,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3203a0a8-d905-4707-b43e-65be36374024"",
-                    ""path"": ""<Touchscreen>/primaryTouch/delta"",
-                    ""interactions"": ""Tap"",
+                    ""id"": ""43e0d12d-0472-4e9e-acd8-93191f57cecd"",
+                    ""path"": ""<Touchscreen>/position"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Drag"",
@@ -250,6 +261,17 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""5d5c6f2b-a1c8-4968-8215-efb72ec0bcaf"",
                     ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PointerPos"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""216f6a29-aa8c-4b8b-bf5b-911b93d472d7"",
+                    ""path"": ""<Touchscreen>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -315,7 +337,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""name"": ""MouseClick"",
                     ""type"": ""Button"",
                     ""id"": ""b766d7df-2e2f-4320-bd4f-00e9179c13e1"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -324,6 +346,33 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""name"": ""MouseDelta"",
                     ""type"": ""Value"",
                     ""id"": ""790034b8-5f25-407e-a237-db27d2b6c5c9"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Touch0Pos"",
+                    ""type"": ""Value"",
+                    ""id"": ""cfee5310-6141-4273-935c-fb355e98f998"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Touch1Pos"",
+                    ""type"": ""Value"",
+                    ""id"": ""80fb74f5-de6c-44d0-bb28-cd49be2dfb3e"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""TouchRotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""5b561d1b-2fcc-4a93-a3f0-b1f9c7b70672"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -374,6 +423,87 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""action"": ""MouseDelta"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""07eac112-4239-4cb4-877c-4928dd2bdf7a"",
+                    ""path"": ""<Touchscreen>/touch0/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Touch0Pos"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1f586484-5fc4-49a3-81d6-902aa4a9b85e"",
+                    ""path"": ""<Touchscreen>/touch1/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Touch1Pos"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""85a559cb-fcbf-4f9c-8d60-994edcd6c8d6"",
+                    ""path"": ""<Touchscreen>/touch0/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TouchRotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Mobile"",
+            ""id"": ""7ccd4185-cfbb-4406-9a24-8e3ef95f6b3b"",
+            ""actions"": [
+                {
+                    ""name"": ""TouchPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""6eec83ab-56b2-40f4-b438-9a005294317e"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""TouchPress"",
+                    ""type"": ""Button"",
+                    ""id"": ""0135ece5-ef66-4242-88d9-e9309d5813fd"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""4ddd28e3-7b1b-40f2-b7c3-b2d7998db337"",
+                    ""path"": ""<Touchscreen>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TouchPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5ecb76a2-e5fd-4143-bffd-ec16b86b6f03"",
+                    ""path"": ""<Touchscreen>/Press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TouchPress"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -396,6 +526,13 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Camera_MouseScroll = m_Camera.FindAction("MouseScroll", throwIfNotFound: true);
         m_Camera_MouseClick = m_Camera.FindAction("MouseClick", throwIfNotFound: true);
         m_Camera_MouseDelta = m_Camera.FindAction("MouseDelta", throwIfNotFound: true);
+        m_Camera_Touch0Pos = m_Camera.FindAction("Touch0Pos", throwIfNotFound: true);
+        m_Camera_Touch1Pos = m_Camera.FindAction("Touch1Pos", throwIfNotFound: true);
+        m_Camera_TouchRotate = m_Camera.FindAction("TouchRotate", throwIfNotFound: true);
+        // Mobile
+        m_Mobile = asset.FindActionMap("Mobile", throwIfNotFound: true);
+        m_Mobile_TouchPosition = m_Mobile.FindAction("TouchPosition", throwIfNotFound: true);
+        m_Mobile_TouchPress = m_Mobile.FindAction("TouchPress", throwIfNotFound: true);
     }
 
     ~@GameInput()
@@ -403,6 +540,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_Gameplay.enabled, "This will cause a leak and performance issues, GameInput.Gameplay.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, GameInput.UI.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Camera.enabled, "This will cause a leak and performance issues, GameInput.Camera.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Mobile.enabled, "This will cause a leak and performance issues, GameInput.Mobile.Disable() has not been called.");
     }
 
     /// <summary>
@@ -728,6 +866,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Camera_MouseScroll;
     private readonly InputAction m_Camera_MouseClick;
     private readonly InputAction m_Camera_MouseDelta;
+    private readonly InputAction m_Camera_Touch0Pos;
+    private readonly InputAction m_Camera_Touch1Pos;
+    private readonly InputAction m_Camera_TouchRotate;
     /// <summary>
     /// Provides access to input actions defined in input action map "Camera".
     /// </summary>
@@ -751,6 +892,18 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Camera/MouseDelta".
         /// </summary>
         public InputAction @MouseDelta => m_Wrapper.m_Camera_MouseDelta;
+        /// <summary>
+        /// Provides access to the underlying input action "Camera/Touch0Pos".
+        /// </summary>
+        public InputAction @Touch0Pos => m_Wrapper.m_Camera_Touch0Pos;
+        /// <summary>
+        /// Provides access to the underlying input action "Camera/Touch1Pos".
+        /// </summary>
+        public InputAction @Touch1Pos => m_Wrapper.m_Camera_Touch1Pos;
+        /// <summary>
+        /// Provides access to the underlying input action "Camera/TouchRotate".
+        /// </summary>
+        public InputAction @TouchRotate => m_Wrapper.m_Camera_TouchRotate;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -786,6 +939,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @MouseDelta.started += instance.OnMouseDelta;
             @MouseDelta.performed += instance.OnMouseDelta;
             @MouseDelta.canceled += instance.OnMouseDelta;
+            @Touch0Pos.started += instance.OnTouch0Pos;
+            @Touch0Pos.performed += instance.OnTouch0Pos;
+            @Touch0Pos.canceled += instance.OnTouch0Pos;
+            @Touch1Pos.started += instance.OnTouch1Pos;
+            @Touch1Pos.performed += instance.OnTouch1Pos;
+            @Touch1Pos.canceled += instance.OnTouch1Pos;
+            @TouchRotate.started += instance.OnTouchRotate;
+            @TouchRotate.performed += instance.OnTouchRotate;
+            @TouchRotate.canceled += instance.OnTouchRotate;
         }
 
         /// <summary>
@@ -806,6 +968,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @MouseDelta.started -= instance.OnMouseDelta;
             @MouseDelta.performed -= instance.OnMouseDelta;
             @MouseDelta.canceled -= instance.OnMouseDelta;
+            @Touch0Pos.started -= instance.OnTouch0Pos;
+            @Touch0Pos.performed -= instance.OnTouch0Pos;
+            @Touch0Pos.canceled -= instance.OnTouch0Pos;
+            @Touch1Pos.started -= instance.OnTouch1Pos;
+            @Touch1Pos.performed -= instance.OnTouch1Pos;
+            @Touch1Pos.canceled -= instance.OnTouch1Pos;
+            @TouchRotate.started -= instance.OnTouchRotate;
+            @TouchRotate.performed -= instance.OnTouchRotate;
+            @TouchRotate.canceled -= instance.OnTouchRotate;
         }
 
         /// <summary>
@@ -839,6 +1010,113 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="CameraActions" /> instance referencing this action map.
     /// </summary>
     public CameraActions @Camera => new CameraActions(this);
+
+    // Mobile
+    private readonly InputActionMap m_Mobile;
+    private List<IMobileActions> m_MobileActionsCallbackInterfaces = new List<IMobileActions>();
+    private readonly InputAction m_Mobile_TouchPosition;
+    private readonly InputAction m_Mobile_TouchPress;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Mobile".
+    /// </summary>
+    public struct MobileActions
+    {
+        private @GameInput m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public MobileActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Mobile/TouchPosition".
+        /// </summary>
+        public InputAction @TouchPosition => m_Wrapper.m_Mobile_TouchPosition;
+        /// <summary>
+        /// Provides access to the underlying input action "Mobile/TouchPress".
+        /// </summary>
+        public InputAction @TouchPress => m_Wrapper.m_Mobile_TouchPress;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Mobile; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="MobileActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(MobileActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="MobileActions" />
+        public void AddCallbacks(IMobileActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MobileActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MobileActionsCallbackInterfaces.Add(instance);
+            @TouchPosition.started += instance.OnTouchPosition;
+            @TouchPosition.performed += instance.OnTouchPosition;
+            @TouchPosition.canceled += instance.OnTouchPosition;
+            @TouchPress.started += instance.OnTouchPress;
+            @TouchPress.performed += instance.OnTouchPress;
+            @TouchPress.canceled += instance.OnTouchPress;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="MobileActions" />
+        private void UnregisterCallbacks(IMobileActions instance)
+        {
+            @TouchPosition.started -= instance.OnTouchPosition;
+            @TouchPosition.performed -= instance.OnTouchPosition;
+            @TouchPosition.canceled -= instance.OnTouchPosition;
+            @TouchPress.started -= instance.OnTouchPress;
+            @TouchPress.performed -= instance.OnTouchPress;
+            @TouchPress.canceled -= instance.OnTouchPress;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="MobileActions.UnregisterCallbacks(IMobileActions)" />.
+        /// </summary>
+        /// <seealso cref="MobileActions.UnregisterCallbacks(IMobileActions)" />
+        public void RemoveCallbacks(IMobileActions instance)
+        {
+            if (m_Wrapper.m_MobileActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="MobileActions.AddCallbacks(IMobileActions)" />
+        /// <seealso cref="MobileActions.RemoveCallbacks(IMobileActions)" />
+        /// <seealso cref="MobileActions.UnregisterCallbacks(IMobileActions)" />
+        public void SetCallbacks(IMobileActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MobileActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MobileActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="MobileActions" /> instance referencing this action map.
+    /// </summary>
+    public MobileActions @Mobile => new MobileActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Gameplay" which allows adding and removing callbacks.
     /// </summary>
@@ -932,5 +1210,48 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMouseDelta(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Touch0Pos" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTouch0Pos(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Touch1Pos" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTouch1Pos(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "TouchRotate" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTouchRotate(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Mobile" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="MobileActions.AddCallbacks(IMobileActions)" />
+    /// <seealso cref="MobileActions.RemoveCallbacks(IMobileActions)" />
+    public interface IMobileActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "TouchPosition" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTouchPosition(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "TouchPress" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTouchPress(InputAction.CallbackContext context);
     }
 }

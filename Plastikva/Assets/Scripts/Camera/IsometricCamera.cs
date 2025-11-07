@@ -9,10 +9,8 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
 
     public Camera Camera { get; private set; }
     public Transform Target { get; private set; }
-    [field: SerializeField] public float DragSpeed { get; private set; } = 0.5f;
-    private bool _isDragging;
 
-    [field: Header("Zoom")]
+    [field: SerializeField] public float DragSpeed { get; private set; } = 0.5f;
     [field: SerializeField] public float MinZoom { get; private set; } = 5f;
     [field: SerializeField] public float MaxZoom { get; private set; } = 10f;
     [field: SerializeField] public float ZoomSpeed { get; private set; } = 5f;
@@ -22,19 +20,18 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
     public float SnapSpeed { get; private set; } = 6f;
     public float MinRot { get; private set; } = -20f;
     public float MaxRot { get; private set; } = 110f;
+
+    private bool _isDragging;
     public bool IsRotating { get; private set; }
 
     private bool _followEnabled;
     [field: SerializeField] public float FollowSmoothSpeed { get; private set; } = 5f;
-
     private Vector3 _lastTargetPosition;
 
-    #region Functions
     private ICamera<Vector2> _drag;
     private ICamera<Transform> _follow;
     private ICamera<Vector2> _rotate;
     private ICamera<Vector2> _zoom;
-    #endregion
 
     private readonly ReactiveProperty<bool> _isBackSide = new();
     public Observable<bool> IsBackSide => _isBackSide;
@@ -43,6 +40,8 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
     {
         _input.OnLeftMouseClick += HandleLeftClick;
         _input.OnRightMouseClick += HandleRightClick;
+        _input.OnZoom += HandleZoom;
+        _input.OnRotate += HandleRotate;
 
         Camera = GetComponentInChildren<Camera>();
         Camera.orthographicSize = 10f;
@@ -50,6 +49,7 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
         Init();
 
         _zoom?.Execute(transform, new Vector2(0, -1f));
+
         _initialized = true;
     }
 
@@ -68,7 +68,8 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
         if (_followEnabled && Target != null)
             _follow.Execute(transform);
 
-        _rotate.Execute(transform, delta);
+        if (IsRotating)
+            _rotate.Execute(transform, delta);
 
         _zoom?.Execute(transform, deltaScroll);
 
@@ -79,6 +80,22 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
 
     private void HandleLeftClick(bool isPressed) => _isDragging = isPressed;
     private void HandleRightClick(bool isPressed) => IsRotating = isPressed;
+
+    private void HandleZoom(float zoomDelta)
+    {
+        float newSize = Mathf.Clamp(Camera.orthographicSize + zoomDelta * ZoomSpeed, MinZoom, MaxZoom);
+        Camera.orthographicSize = Mathf.Lerp(Camera.orthographicSize, newSize, Time.deltaTime * ZoomSmoothness);
+    }
+    private void HandleRotate(Vector2 delta)
+    {
+        if (!IsRotating)
+        {
+            IsRotating = true;
+            _rotate.Execute(transform, delta);
+            IsRotating = false;
+        }
+    }
+
     private void Init()
     {
         _drag = new CameraDrag(this);
@@ -86,25 +103,28 @@ public class IsometricCamera : MonoBehaviour, ICameraContext
         _rotate = new CameraRotate(this);
         _zoom = new CameraZoom(this);
     }
+
     public void SetFollowTarget(Transform target)
     {
         Target = target;
         _followEnabled = target != null;
         _lastTargetPosition = Target.position;
     }
+
     private void CheckTargetMovement()
     {
         if (Target == null) return;
 
         float movedDistance = Vector3.Distance(Target.position, _lastTargetPosition);
-
         _followEnabled = movedDistance > 0.001f;
-
         _lastTargetPosition = Target.position;
     }
+
     private void OnDestroy()
     {
         _input.OnLeftMouseClick -= HandleLeftClick;
         _input.OnRightMouseClick -= HandleRightClick;
+        _input.OnZoom -= HandleZoom;
+        _input.OnRotate -= HandleRotate;
     }
 }
