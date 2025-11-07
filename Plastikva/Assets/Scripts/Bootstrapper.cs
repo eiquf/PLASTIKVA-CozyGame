@@ -39,6 +39,7 @@ public class Bootstrapper : MonoBehaviour
 
     private ISaveService _save;
     private readonly List<IScore> _scores = new();
+    private readonly List<ISound> _sourcesAudio = new();
 
     private BoxCollider _plane;
     private readonly List<Transform> _walls = new();
@@ -88,10 +89,8 @@ public class Bootstrapper : MonoBehaviour
 
         _soundInstance = _diContainer.InstantiatePrefab(_soundSystem).GetComponent<SoundSystem>();
 
-        _scores.Add(_trashCollector);
-        _scores.Add(_trashSorter);
-        _scores.Add(_animals);
-        _scores.Add(_shark);
+        ScoresSetup();
+        AudioSetup();
 
         _cameraInstance.Initialize();
         _playerInstance.Initialize(_cameraInstance);
@@ -102,6 +101,20 @@ public class Bootstrapper : MonoBehaviour
 
         _save.Save();
     }
+    private void ScoresSetup()
+    {
+        _scores.Add(_trashCollector);
+        _scores.Add(_trashSorter);
+        _scores.Add(_animals);
+        _scores.Add(_shark);
+    }
+    private void AudioSetup()
+    {
+        _sourcesAudio.Add(_trashCollector);
+        _sourcesAudio.Add(_animals);
+        _sourcesAudio.Add(_trashCollector);
+        _sourcesAudio.Add(_levelUnlocking);
+    }
     private void Initializing()
     {
         _trashCollector.Initialize(_save);
@@ -110,10 +123,9 @@ public class Bootstrapper : MonoBehaviour
         _score.Initialize(_scores, _save);
         _frustumCulling.Initialize(_cameraInstance);
         _animalsMove.Initialize(_save);
-        _soundInstance.Initialize();
+        _soundInstance.Initialize(_sourcesAudio);
 
         _shark.SetFollowTarget(_playerInstance.transform);
         _shark.Initialize(_save, _cameraInstance, _plane, _walls);
     }
-    //private void OnDestroy() => _save.Save();
 }

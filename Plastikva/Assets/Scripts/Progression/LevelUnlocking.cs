@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class LevelUnlocking : MonoBehaviour
+public class LevelUnlocking : MonoBehaviour, ISound
 {
 #if UNITY_EDITOR
     public bool finished;
@@ -21,6 +21,8 @@ public class LevelUnlocking : MonoBehaviour
 
     private readonly ReactiveProperty<bool> _isTrashSort = new(false);
     public Observable<bool> IsTrashSortLevel => _isTrashSort;
+
+    public ReactiveCommand<int> PlayCommand { get; } = new ReactiveCommand<int>();
 
     private readonly ReactiveProperty<bool> _isTrashCollected = new(false);
     private readonly ReactiveProperty<bool> _isAnimalRescued = new(false);
@@ -103,6 +105,8 @@ public class LevelUnlocking : MonoBehaviour
 
         if (nextIdx != _save.Data.currentLevelIndex)
         {
+            PlayCommand.Execute((int)GameSound.Level_Unlock);
+
             AdvanceWallPair();
 
             _save.Data.currentLevelIndex = nextIdx;

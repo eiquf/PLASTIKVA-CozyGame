@@ -2,7 +2,7 @@ using R3;
 using UnityEngine;
 using Zenject;
 
-public class AnimalsRescue : MonoBehaviour, IScore
+public class AnimalsRescue : MonoBehaviour, ISound, IScore
 {
 #if UNITY_EDITOR
     public bool finished;
@@ -28,7 +28,10 @@ public class AnimalsRescue : MonoBehaviour, IScore
 
     private readonly CompositeDisposable _disposables = new();
 
+    public ReactiveCommand<int> PlayCommand { get; } = new ReactiveCommand<int>();
+
     public ReactiveCommand<int> TakenCommand { get; } = new ReactiveCommand<int>();
+
     private readonly PickUpAnimation _pickUpAnimation = new();
 
     [Inject]
@@ -145,6 +148,8 @@ public class AnimalsRescue : MonoBehaviour, IScore
             _model.Rescue();
             if (icon != null && inst.Render != null)
                 inst.Render.sprite = icon;
+
+            PlayCommand.Execute((int)GameSound.Rescue);
 
             _pickUpAnimation.PlayCollectAnimation(_lastAnimal.transform.position, ScoresConst.DEFAULT);
             _pickUpAnimation.PlayCenterToDeliverAnimation(icon, onDelivered: () => { Debug.Log("Animals"); });

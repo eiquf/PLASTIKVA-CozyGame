@@ -176,8 +176,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sources:
-  - {fileID: 237289043013188445}
   - {fileID: 525941632883823530}
+  - {fileID: 237289043013188445}
+  _library: {fileID: 11400000, guid: d1280ef4fe856ac49a959ff9619721f8, type: 2}
 --- !u!1 &8458812020715243275
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +226,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

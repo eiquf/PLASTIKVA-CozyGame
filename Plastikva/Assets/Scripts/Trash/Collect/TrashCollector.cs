@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class TrashCollector : MonoBehaviour, IScore
+public class TrashCollector : MonoBehaviour, IScore, ISound
 {
 #if UNITY_EDITOR
     public bool finished;
@@ -25,6 +25,7 @@ public class TrashCollector : MonoBehaviour, IScore
 
     private readonly CompositeDisposable _disposables = new();
     public ReactiveCommand<int> TakenCommand { get; } = new ReactiveCommand<int>();
+    public ReactiveCommand<int> PlayCommand { get; } = new ReactiveCommand<int>();
 
     private readonly PickUpAnimation _pickUpAnimation = new();
 
@@ -115,18 +116,20 @@ public class TrashCollector : MonoBehaviour, IScore
         var list = _save.Data.collectedTrashIds;
         if (!list.Contains(inst.Id))
         {
+            _animationContext.PlayAnimation(rootGo.transform, () =>
+            {
+                _model.Collect();
+                Destroy(rootGo);
+            });
+
+            PlayCommand.Execute((int)GameSound.Trash_PickUp);
+
+            _pickUpAnimation.PlayCollectAnimation(rootGo.transform.position, ScoresConst.DEFAULT);
+            _pickUpAnimation.PlayCenterToDeliverAnimation(inst.sprite.sprite, onDelivered: () => { Debug.Log("trash"); });
+
             list.Add(inst.Id);
             _save.Save();
         }
-
-        _animationContext.PlayAnimation(rootGo.transform, () =>
-        {
-            _model.Collect();
-            Destroy(rootGo);
-        });
-
-        _pickUpAnimation.PlayCollectAnimation(rootGo.transform.position, ScoresConst.DEFAULT);
-        _pickUpAnimation.PlayCenterToDeliverAnimation(inst.sprite.sprite, onDelivered: () => { Debug.Log("trash"); });
     }
 
 

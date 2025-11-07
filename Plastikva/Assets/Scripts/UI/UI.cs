@@ -1,3 +1,4 @@
+using R3;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Zenject;
 
-public sealed class UI : MonoBehaviour
+public sealed class UI : MonoBehaviour, ISound
 {
     [Header("Trash Sort UI")]
     [SerializeField] private GameObject _panelSort;
@@ -74,6 +75,8 @@ public sealed class UI : MonoBehaviour
     public Sprite[] SoundSprites => _soundSprites;
     public Button SoundButton => _soundButton;
 
+    public ReactiveCommand<int> PlayCommand { get; } = new ReactiveCommand<int>();
+
     [Inject] private ISaveService _save;
 
     public void Initialize()
@@ -89,6 +92,8 @@ public sealed class UI : MonoBehaviour
     //just lazy code ok
     public void Preferences()
     {
+        PlayCommand.Execute((int)GameSound.Shell);
+
         _isOpen = !_isOpen;
 
         if (_refButtonSprites.Count >= 2)
