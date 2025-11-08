@@ -44,6 +44,7 @@ public class Bootstrapper : MonoBehaviour
     private BoxCollider _plane;
     private readonly List<Transform> _walls = new();
 
+
     private void Start()
     {
         //_save.Clear();
@@ -51,7 +52,6 @@ public class Bootstrapper : MonoBehaviour
         _save.LoadOrCreate();
 
         _diContainer.Bind<ISaveService>().FromInstance(_save).AsSingle();
-
 
         _playerInstance = _diContainer.InstantiatePrefab(_playerPrefab).GetComponent<Player>();
         _cameraInstance = _diContainer.InstantiatePrefab(_cameraPrefab).GetComponent<IsometricCamera>();
@@ -71,7 +71,7 @@ public class Bootstrapper : MonoBehaviour
         _levelUnlocking = _diContainer.InstantiatePrefab(_levelUnlockingPref).GetComponent<LevelUnlocking>();
         _diContainer.Bind<LevelUnlocking>().FromInstance(_levelUnlocking).AsSingle();
 
-        _levelUnlocking.Initialize(_save);
+        _levelUnlocking.Initialize(_save, _soundSystem);
 
         _generator = _diContainer.InstantiatePrefab(_locationGenerator).GetComponent<LocationGenerator>();
         _generator.Initialize(_save);
@@ -88,14 +88,15 @@ public class Bootstrapper : MonoBehaviour
         _animals = _trashCollector.GetComponent<AnimalsRescue>();
 
         _soundInstance = _diContainer.InstantiatePrefab(_soundSystem).GetComponent<SoundSystem>();
+        _diContainer.Bind<SoundSystem>().FromInstance(_soundInstance).AsSingle();
 
         ScoresSetup();
         AudioSetup();
+        _cameraInstance.SetFollowTarget(_playerInstance.transform);
 
         _cameraInstance.Initialize();
         _playerInstance.Initialize(_cameraInstance);
 
-        _cameraInstance.SetFollowTarget(_playerInstance.transform);
 
         Initializing();
 
@@ -114,6 +115,7 @@ public class Bootstrapper : MonoBehaviour
         _sourcesAudio.Add(_animals);
         _sourcesAudio.Add(_trashCollector);
         _sourcesAudio.Add(_levelUnlocking);
+        _sourcesAudio.Add(_playerInstance);
     }
     private void Initializing()
     {

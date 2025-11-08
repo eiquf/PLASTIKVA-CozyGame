@@ -10,6 +10,7 @@ public enum GameSound
     Trash_PickUp = 0,
     Level_Unlock = 1,
     Shell = 2,
-    Rescue = 3
+    Rescue = 3,
+    Asking = 4
     // Add
 }

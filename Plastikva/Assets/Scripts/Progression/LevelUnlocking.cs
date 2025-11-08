@@ -12,6 +12,8 @@ public class LevelUnlocking : MonoBehaviour, ISound
 
     [SerializeField] private TrashLevelSet _levelSet;
 
+    private SoundSystem _soundSystem;
+
     private ISaveService _save;
 
     private readonly MapView _mapView = new();
@@ -32,10 +34,15 @@ public class LevelUnlocking : MonoBehaviour, ISound
     private UI _ui;
 
     [Inject]
-    public void Container(UI ui) => _ui = ui;
-
-    public void Initialize(ISaveService save)
+    public void Container(UI ui)
     {
+        _ui = ui;
+    }
+
+    public void Initialize(ISaveService save, SoundSystem soundSystem)
+    {
+        _soundSystem = soundSystem;
+
         _save = save;
 
         _mapView.SetUp(_ui);
@@ -155,6 +162,7 @@ public class LevelUnlocking : MonoBehaviour, ISound
 
     private void HandleLastLevelCompleted()
     {
+        _soundSystem?.MuteAll(true, stopCurrentlyPlaying: true);
         _ui.LOL.SetActive(true);
     }
     private void OnDestroy() => _disposables?.Dispose();

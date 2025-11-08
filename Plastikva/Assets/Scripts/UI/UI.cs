@@ -53,6 +53,7 @@ public sealed class UI : MonoBehaviour, ISound
     private bool _isOpen = false;
 
     [SerializeField] private Button _soundButton;
+    [SerializeField] private Button _endButton;
     [SerializeField] private GameObject _arrows;
     public Image TrashImage => _trashImage;
     public Button YesButton => _yesButton;
@@ -77,23 +78,33 @@ public sealed class UI : MonoBehaviour, ISound
 
     public ReactiveCommand<int> PlayCommand { get; } = new ReactiveCommand<int>();
 
+    [SerializeField] private TextMeshProUGUI _moveText;
     [Inject] private ISaveService _save;
 
     public void Initialize()
     {
         _animationContext.SetAnimationStrategy(_anim);
 
-        if (Application.isMobilePlatform) _arrows.SetActive(true);
-        else _arrows.SetActive(false);
+        if (Application.isMobilePlatform)
+        {
+            _arrows.SetActive(true);
+            _moveText.text = "Use arrows to move, double tap to accelerate";
+        }
+        else
+        {
+            _moveText.text = "Use W and S to move, double tap to accelerate";
+            _arrows.SetActive(false);
+        }
+
+        _refButton.onClick.AddListener(Preferences);
+        _endButton.onClick.AddListener(ClearData);
 
         Debug.Log("ASpplication ,obile" + Application.isMobilePlatform);
     }
 
     //just lazy code ok
-    public void Preferences()
+    private void Preferences()
     {
-        PlayCommand.Execute((int)GameSound.Shell);
-
         _isOpen = !_isOpen;
 
         if (_refButtonSprites.Count >= 2)
@@ -103,13 +114,14 @@ public sealed class UI : MonoBehaviour, ISound
                 : _refButtonSprites[0];
         }
         _anim.SetBool(_isOpen);
+        PlayCommand.Execute((int)GameSound.Shell);
 
         _animationContext.PlayAnimation(_buttonsParent);
     }
     public void ClearData()
     {
         _save.Clear();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(0);
     }
     public void ExitGame() => Application.Quit();
 }

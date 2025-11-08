@@ -44,8 +44,8 @@ public class CameraInputHandler : IDisposable, IInitializable
         }
         else
         {
-            _controller.Input.Camera.Touch0Pos.performed += _ => DetectTouch();
-            _controller.Input.Camera.Touch1Pos.performed += _ => DetectTouch();
+            _controller.Input.Camera.Touch0Pos.performed += OnTouchPerformed;
+            _controller.Input.Camera.Touch1Pos.performed += OnTouchPerformed;
         }
     }
 
@@ -58,11 +58,11 @@ public class CameraInputHandler : IDisposable, IInitializable
         }
         else
         {
-            _controller.Input.Camera.Touch0Pos.performed -= _ => DetectTouch();
-            _controller.Input.Camera.Touch1Pos.performed -= _ => DetectTouch();
+            _controller.Input.Camera.Touch0Pos.performed -= OnTouchPerformed;
+            _controller.Input.Camera.Touch1Pos.performed -= OnTouchPerformed;
         }
     }
-
+    private void OnTouchPerformed(InputAction.CallbackContext context) => DetectTouch();
     private void OnMouseClick(InputAction.CallbackContext context)
     {
         bool isDown = context.performed;

@@ -30,6 +30,8 @@ public class SoundSystem : MonoBehaviour
         _view.SetUp(_ui);
         _model.SetUp(_save);
 
+        if(_save.Data.isFirstLaunch) _save.Data.sound = 1;
+
         _isShut = _save.Data.sound == 0;
 
         _view.Execute(_isShut);
@@ -71,6 +73,26 @@ public class SoundSystem : MonoBehaviour
 
         _sources[0].PlayOneShot(clip);
     }
+    public bool IsMuted => _isShut;
 
-    private void OnDestroy() => _disposables.Dispose();
+    public void MuteAll(bool mute, bool stopCurrentlyPlaying = true)
+    {
+        _isShut = mute;
+        _save.Data.sound = mute ? 0 : 1;
+
+        _view.Execute(_isShut);
+
+        foreach (var src in _sources)
+        {
+            src.volume = _model.ChangeVolume(_isShut);
+            if (mute && stopCurrentlyPlaying)
+                src.Stop();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        _disposables.Dispose();
+        if (_ui != null) _ui.SoundButton.onClick.RemoveListener(Execute);
+    }
 }

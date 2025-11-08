@@ -12,7 +12,7 @@ public class MovementAnimator : IMovable
             currentPos.position = Vector3.MoveTowards(
                 currentPos.position,
                 targetPosition,
-                _moveSpeed * Time.deltaTime
+                (_moveSpeed + Random.Range(-0.1f, 0.1f)) * Time.deltaTime
             );
             return false;
         }

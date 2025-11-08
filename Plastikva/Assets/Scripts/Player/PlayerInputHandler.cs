@@ -8,68 +8,94 @@ public class PlayerInputHandler : IInitializable, IDisposable
     private readonly InputController _inputController;
 
     private bool _wasSprinting;
+    private Vector2 _sprintDir = Vector2.zero;
+
     private Vector2 _lastInput;
+    private bool _isMoving;
+
+    private float _lastTapTime = -999f;
+    private Vector2 _lastTapDir = Vector2.zero;
+
+    private const float DoubleTapWindow = 0.30f;   
+    private const float DirDotThreshold = 0.80f;   
+    private const float TurnOffDot = 0.20f;        
+    private const float MinTapMag = 0.50f;       
 
     public event Action<bool> OnSprintChanged;
     public event Action<Vector2> OnMoveInputChanged;
 
-    private float _lastTapTime = 0f;
-    private float _doubleTapTime = 0.3f;
-
     [Inject]
-    public PlayerInputHandler(InputController inputController) => _inputController = inputController;
+    public PlayerInputHandler(InputController inputController)
+    {
+        _inputController = inputController;
+    }
 
     public void Initialize()
     {
-        _inputController.Input.Gameplay.Acceleration.performed += OnSprintStarted;
-        _inputController.Input.Gameplay.Acceleration.canceled += OnSprintCanceled;
+        var gameplay = _inputController.Input.Gameplay;
 
-        _inputController.Input.Gameplay.Move.performed += OnMovePerformed;
-        _inputController.Input.Gameplay.Move.canceled += OnMoveCanceled;
+        gameplay.Move.performed += OnMovePerformed;
+        gameplay.Move.canceled += OnMoveCanceled;
     }
 
     public void Dispose()
     {
-        _inputController.Input.Gameplay.Acceleration.performed -= OnSprintStarted;
-        _inputController.Input.Gameplay.Acceleration.canceled -= OnSprintCanceled;
-
-        _inputController.Input.Gameplay.Move.performed -= OnMovePerformed;
-        _inputController.Input.Gameplay.Move.canceled -= OnMoveCanceled;
-    }
-
-    private void OnSprintStarted(InputAction.CallbackContext ctx)
-    {
-        if (_wasSprinting) return;
-
-        if (Time.time - _lastTapTime <= _doubleTapTime)
-        {
-            _wasSprinting = true;
-            OnSprintChanged?.Invoke(_wasSprinting);
-        }
-
-        _lastTapTime = Time.time;
-    }
-
-    private void OnSprintCanceled(InputAction.CallbackContext ctx)
-    {
-        if (!_wasSprinting) return;
-        _wasSprinting = false;
-        OnSprintChanged?.Invoke(_wasSprinting);
+        var gameplay = _inputController.Input.Gameplay;
+        gameplay.Move.performed -= OnMovePerformed;
+        gameplay.Move.canceled -= OnMoveCanceled;
     }
 
     private void OnMovePerformed(InputAction.CallbackContext ctx)
     {
         var input = ctx.ReadValue<Vector2>();
-        if (input == _lastInput) return;
+        OnMoveInputChanged?.Invoke(input);
+
+        bool wasMoving = _isMoving;
+        _isMoving = input.sqrMagnitude > 0.0001f;
+
+        if (_wasSprinting && input.sqrMagnitude > 0.0001f)
+        {
+            var curDir = input.normalized;
+            if (Vector2.Dot(curDir, _sprintDir) < TurnOffDot)
+            {
+                _wasSprinting = false;
+                OnSprintChanged?.Invoke(false);
+            }
+        }
+
+        if (!wasMoving && _isMoving)
+        {
+            var tapDir = input.magnitude >= MinTapMag ? input.normalized : Vector2.zero;
+
+            if (tapDir != Vector2.zero)
+            {
+                if (Time.time - _lastTapTime <= DoubleTapWindow &&
+                    Vector2.Dot(tapDir, _lastTapDir) >= DirDotThreshold)
+                {
+                    _wasSprinting = true;
+                    _sprintDir = tapDir; // lock sprint direction
+                    OnSprintChanged?.Invoke(true);
+                }
+
+                _lastTapTime = Time.time;
+                _lastTapDir = tapDir;
+            }
+        }
 
         _lastInput = input;
-        OnMoveInputChanged?.Invoke(_lastInput);
     }
 
     private void OnMoveCanceled(InputAction.CallbackContext ctx)
     {
         _lastInput = Vector2.zero;
-        OnMoveInputChanged?.Invoke(_lastInput);
+        _isMoving = false;
+        OnMoveInputChanged?.Invoke(Vector2.zero);
+
+        if (_wasSprinting)
+        {
+            _wasSprinting = false;
+            OnSprintChanged?.Invoke(false);
+        }
     }
 
     public Vector2 CurrentInput() => _lastInput;
